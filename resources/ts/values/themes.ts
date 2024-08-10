@@ -13,12 +13,7 @@ export const Themes = {
 /**
  * テーマ名の型定義
  */
-export type ThemeName = keyof typeof Themes;
-
-/**
- * テーマ値の型定義
- */
-export type ThemeValue = (typeof Themes)[ThemeName];
+export type ThemeName = (typeof Themes)[keyof typeof Themes];
 
 /**
  * テーマをローカルストレージに保存する際のキー

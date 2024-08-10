@@ -11,7 +11,7 @@ import { Themes, ThemeName } from "../values/themes";
 export const setThemeInDOM = (theme: ThemeName): void => {
   const html: HTMLHtmlElement | null = document.querySelector("html");
   if (html) {
-    html.setAttribute("data-theme", Themes[theme]);
+    html.setAttribute("data-theme", theme);
   }
 };
 
