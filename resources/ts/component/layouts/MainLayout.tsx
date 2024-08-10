@@ -25,7 +25,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     changeTheme(currentTheme)
   }, []);
 
-  return <div className="t">{children}</div>;
+  return <main className="t bg-base-content">{children}</main>;
 };
 
 export default MainLayout;
