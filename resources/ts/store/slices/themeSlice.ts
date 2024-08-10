@@ -12,7 +12,7 @@ interface ThemeState {
 }
 
 const initialState: ThemeState = {
-  activeTheme: (localStorage.getItem(ThemeStorageKey) as ThemeName) || "light",
+  activeTheme: (window.localStorage.getItem(ThemeStorageKey) as ThemeName) || "light",
 };
 
 /**

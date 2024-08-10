@@ -21,7 +21,7 @@ export const useTheme = () => {
    * @returns 現在のテーマ名
    */
   const getCurrent = (): string => {
-    return localStorage.getItem(ThemeStorageKey) || Themes.light;
+    return window.localStorage.getItem(ThemeStorageKey) || Themes.light;
   };
 
   /**
