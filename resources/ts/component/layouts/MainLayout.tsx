@@ -5,8 +5,8 @@
 
 import React, { ReactNode, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useTheme } from "../hooks/useTheme";
-import { setTheme } from "../store/slices/themeSlice";
+import { useTheme } from "../../hooks/useTheme";
+import { setTheme } from "../../store/slices/themeSlice";
 
 interface MainLayoutProps {
   children: ReactNode;
