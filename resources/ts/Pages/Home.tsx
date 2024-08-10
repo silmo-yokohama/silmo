@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const Home = () => {
-  console.log('test');
-
-  return <div>Home</div>;
+const Home: React.FC = () => {
+  return (
+    <div className="flex justify-center">
+      <span className="">test</span>
+    </div>
+  );
 };
 
 export default Home;

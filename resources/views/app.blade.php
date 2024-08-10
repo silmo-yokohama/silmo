@@ -7,6 +7,7 @@
         <title>Laravel</title>
 
         @vite('resources/ts/app.tsx')
+        @vite('resources/css/app.css')
         @inertiaHead
     </head>
     <body>
