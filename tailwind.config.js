@@ -31,7 +31,7 @@ export default {
   daisyui: {
     themes: [
       {
-        myLight: {
+        "light-theme": {
           primary: "#00A197",
           "primary-content": "#8CE2DC",
           secondary: "#F8B62B",
@@ -49,7 +49,7 @@ export default {
           warning: "#F4DC22",
           error: "#E90D3E",
         },
-        myDark: {
+        "dark-theme": {
           primary: "#00A197",
           "primary-content": "#00625B",
           secondary: "#F8B62B",

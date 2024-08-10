@@ -39,6 +39,7 @@ export default [
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "no-console": ["error"],
       "eslint@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
     },
     settings: {
       react: {
