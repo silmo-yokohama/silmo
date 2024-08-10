@@ -3,6 +3,7 @@ import tseslint from "typescript-eslint";
 import reactPlugin from "eslint-plugin-react";
 import prettierPlugin from "eslint-plugin-prettier";
 import prettierConfig from "eslint-config-prettier";
+import unusedImports from "eslint-plugin-unused-imports";
 
 export default [
   eslint.configs.recommended,
@@ -14,6 +15,7 @@ export default [
       react: reactPlugin,
       "@typescript-eslint": tseslint.plugin,
       prettier: prettierPlugin,
+      "unused-imports": unusedImports,
     },
     languageOptions: {
       ecmaVersion: 2021,
@@ -40,6 +42,11 @@ export default [
       "no-console": ["error"],
       "eslint@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/no-unused-expressions": "off",
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "warn",
+        { vars: "all", varsIgnorePattern: "^_", args: "after-used", argsIgnorePattern: "^_" },
+      ],
     },
     settings: {
       react: {

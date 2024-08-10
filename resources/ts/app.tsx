@@ -1,3 +1,8 @@
+/**
+ * アプリケーションのエントリーポイント
+ * Inertia.jsとReactを使用してSPAを初期化する
+ */
+
 import "./bootstrap";
 import "../css/app.css";
 import React from "react";
@@ -6,21 +11,24 @@ import { createInertiaApp } from "@inertiajs/inertia-react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { InertiaProgress } from "@inertiajs/progress";
 import { Provider } from "react-redux";
-import { store } from "./Redux/store";
+import { store } from "./store";
 
+/**
+ * Inertia.jsのプログレスバーを初期化
+ */
 InertiaProgress.init({
-  // 色を設定（例: 青色）
   color: "#4B5563",
-  // トランジションの長さをミリ秒で設定
   delay: 250,
-  // プログレスバーを表示する最小時間（ミリ秒）
   includeCSS: true,
   showSpinner: false,
 });
 
+/**
+ * Inertia.jsアプリケーションを作成し、Reduxストアをプロバイド
+ */
 createInertiaApp({
   resolve: (name) =>
-    resolvePageComponent(`./Pages/${name}.tsx`, import.meta.glob("./Pages/**/*.tsx")),
+    resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
   setup({ el, App, props }) {
     const root = createRoot(el);
 
