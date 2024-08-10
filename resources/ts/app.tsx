@@ -5,6 +5,8 @@ import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/inertia-react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { InertiaProgress } from "@inertiajs/progress";
+import { Provider } from "react-redux";
+import { store } from "./Redux/store";
 
 InertiaProgress.init({
   // 色を設定（例: 青色）
@@ -20,6 +22,12 @@ createInertiaApp({
   resolve: (name) =>
     resolvePageComponent(`./Pages/${name}.tsx`, import.meta.glob("./Pages/**/*.tsx")),
   setup({ el, App, props }) {
-    createRoot(el).render(<App {...props} />);
+    const root = createRoot(el);
+
+    root.render(
+      <Provider store={store}>
+        <App {...props} />
+      </Provider>
+    );
   },
 });
