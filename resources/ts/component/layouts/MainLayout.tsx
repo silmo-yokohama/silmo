@@ -5,6 +5,7 @@
 
 import React, { ReactNode, useEffect } from "react";
 import { useTheme } from "../../hooks/useTheme";
+import Header from "./Header";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -25,7 +26,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     changeTheme(currentTheme)
   }, []);
 
-  return <main className="t bg-base-content">{children}</main>;
+  return <main className="t bg-base-content">
+    <Header />
+    {children}</main>;
 };
 
 export default MainLayout;
