@@ -17,18 +17,17 @@ interface MainLayoutProps {
  * @param {ReactNode} children - レイアウト内に表示する子要素
  */
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const dispatch = useDispatch();
-  const { getCurrent } = useTheme();
+  const { getCurrent, changeTheme } = useTheme();
 
   /**
    * コンポーネントマウント時にテーマを初期化
    */
   useEffect(() => {
     const currentTheme = getCurrent();
-    dispatch(setTheme(currentTheme));
+    changeTheme(currentTheme)
   }, []);
 
-  return <div>{children}</div>;
+  return <div className="t">{children}</div>;
 };
 
 export default MainLayout;

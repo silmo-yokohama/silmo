@@ -10,7 +10,6 @@ const ThemeToggleButton: React.FC = () => {
   const onChangeHandler = () => {
     const newTheme: ThemeName = activeTheme === Themes.light ? Themes.dark : Themes.light;
 
-    console.log(newTheme)
     changeTheme(newTheme);
   };
 
