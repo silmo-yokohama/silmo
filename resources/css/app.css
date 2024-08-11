@@ -17,6 +17,10 @@
     font-family: "Zen Maru Gothic", serif;
   }
 
+  body.loading-active {
+    overflow: hidden;
+  }
+
   .digital {
     font-family: "VT323", monospace;
   }

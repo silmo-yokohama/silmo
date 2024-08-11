@@ -6,6 +6,8 @@
 import React, { ReactNode, useEffect } from "react";
 import { useTheme } from "../../hooks/useTheme";
 import Header from "./Header";
+import LoadingOverlay from "./common/LoadingOverlay";
+import { useSilmoAPI } from "../../hooks/useSilmoAPI";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -17,18 +19,23 @@ interface MainLayoutProps {
  */
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { getCurrent, changeTheme } = useTheme();
+  const { isLoading } = useSilmoAPI();
 
   /**
    * コンポーネントマウント時にテーマを初期化
    */
   useEffect(() => {
     const currentTheme = getCurrent();
-    changeTheme(currentTheme)
+    changeTheme(currentTheme);
   }, []);
 
-  return <main className="t bg-base-content">
-    <Header />
-    {children}</main>;
+  return (
+    <main className="t bg-base-content">
+      <LoadingOverlay isLoading={isLoading} />
+      <Header />
+      {children}
+    </main>
+  );
 };
 
 export default MainLayout;
