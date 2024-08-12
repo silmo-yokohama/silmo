@@ -6,7 +6,7 @@
 import React, { ReactNode, useEffect } from "react";
 import { useTheme } from "../../hooks/useTheme";
 import Header from "./Header";
-import LoadingOverlay from "./common/LoadingOverlay";
+import LoadingOverlay from "./loading/LoadingOverlay";
 import { useSilmoAPI } from "../../hooks/useSilmoAPI";
 
 interface MainLayoutProps {
