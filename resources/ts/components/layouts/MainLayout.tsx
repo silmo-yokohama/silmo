@@ -8,6 +8,7 @@ import { useTheme } from "../../hooks/useTheme";
 import Header from "./Header";
 import LoadingOverlay from "./loading/LoadingOverlay";
 import { useSilmoAPI } from "../../hooks/useSilmoAPI";
+import Footer from "../Footer";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -34,6 +35,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <LoadingOverlay isLoading={isLoading} />
       <Header />
       {children}
+      <Footer />
     </main>
   );
 };
