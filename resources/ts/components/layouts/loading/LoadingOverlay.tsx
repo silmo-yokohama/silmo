@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useTransition, animated } from 'react-spring';
+import React, { useState, useEffect } from "react";
+import { useTransition, animated } from "react-spring";
 
 interface LoadingOverlayProps {
   isLoading: boolean;
@@ -26,12 +26,12 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
 
   useEffect(() => {
     if (show) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [show]);
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { router } from '@inertiajs/react';
-import { useMenu } from '../../../hooks/useMenu';
+import React from "react";
+import { router } from "@inertiajs/react";
+import { useMenu } from "../../../hooks/useMenu";
 
 interface MenuLinkProps {
   name: string;
@@ -12,7 +12,7 @@ const MenuLink: React.FC<MenuLinkProps> = ({ name, path }) => {
 
   const handleNavigation = () => {
     router.visit(path, {
-      method: 'get',
+      method: "get",
       preserveState: true,
       preserveScroll: true,
       onSuccess: () => {

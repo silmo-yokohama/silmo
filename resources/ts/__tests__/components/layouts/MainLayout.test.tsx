@@ -1,18 +1,18 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import MainLayout from '../../../component/layouts/MainLayout';
+import React from "react";
+import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
+import MainLayout from "../../../components/layouts/MainLayout";
 
 const mockStore = configureStore([]);
 
-describe('MainLayoutコンポーネント', () => {
+describe("MainLayoutコンポーネント", () => {
   // モックストアの作成
-  const createStore = (initialState = { theme: { activeTheme: 'light' } }) => {
+  const createStore = (initialState = { theme: { activeTheme: "light" } }) => {
     return mockStore(initialState);
   };
 
-  it('子要素が正しくレンダリングされること', () => {
+  it("子要素が正しくレンダリングされること", () => {
     const store = createStore();
 
     const { getByText } = render(
@@ -24,10 +24,10 @@ describe('MainLayoutコンポーネント', () => {
     );
 
     // 子要素のテキストが存在することを確認
-    expect(getByText('テストコンテンツ')).toBeInTheDocument();
+    expect(getByText("テストコンテンツ")).toBeInTheDocument();
   });
 
-  it('マウント時にsetThemeアクションがディスパッチされること', () => {
+  it("マウント時にsetThemeアクションがディスパッチされること", () => {
     const store = createStore();
 
     render(
@@ -40,6 +40,6 @@ describe('MainLayoutコンポーネント', () => {
 
     // ディスパッチされたアクションを確認
     const actions = store.getActions();
-    expect(actions[0].type).toBe('theme/setTheme');
+    expect(actions[0].type).toBe("theme/setTheme");
   });
 });

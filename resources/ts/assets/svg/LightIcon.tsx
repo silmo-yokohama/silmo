@@ -1,6 +1,6 @@
 import React from "react";
 
-interface LightIconProps extends React.SVGProps<SVGSVGElement> { }
+interface LightIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const LightIcon: React.FC<LightIconProps> = (props) => {
   return (

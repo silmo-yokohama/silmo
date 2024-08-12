@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ExternalLinkProps {
   href: string;
@@ -14,7 +14,7 @@ const ExternalMenuLink: React.FC<ExternalLinkProps> = ({ href, children }) => {
       className="footer-link text-sm text-white hover:text-[#ED6D36] transition-colors duration-300"
     >
       {children}
-    </a >
+    </a>
   );
 };
 

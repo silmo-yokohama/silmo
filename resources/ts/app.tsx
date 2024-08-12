@@ -1,8 +1,3 @@
-/**
- * アプリケーションのエントリーポイント
- * Inertia.jsとReactを使用してSPAを初期化する
- */
-
 import "./bootstrap";
 import "../css/app.css";
 import React from "react";
@@ -12,6 +7,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { InertiaProgress } from "@inertiajs/progress";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { ParallaxProvider } from "react-scroll-parallax";
 
 /**
  * Inertia.jsのプログレスバーを初期化
@@ -28,13 +24,15 @@ InertiaProgress.init({
  */
 createInertiaApp({
   resolve: (name) =>
+    // @ts-ignore
     resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
   setup({ el, App, props }) {
     const root = createRoot(el);
-
     root.render(
       <Provider store={store}>
-        <App {...props} />
+        <ParallaxProvider>
+          <App {...props} />
+        </ParallaxProvider>
       </Provider>
     );
   },

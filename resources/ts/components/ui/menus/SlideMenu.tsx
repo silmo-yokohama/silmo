@@ -104,7 +104,6 @@ const SlideMenu: React.FC = () => {
     return polygons;
   };
 
-
   return (
     <div
       ref={menuRef}

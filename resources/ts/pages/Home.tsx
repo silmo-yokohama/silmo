@@ -4,9 +4,9 @@
  */
 
 import React, { useState } from "react";
-import MainLayout from "../component/layouts/MainLayout";
-import FirstView from "../component/layouts/sections/Home/FirstView";
-import OpeningAnimation from "../component/layouts/loading/OpeningAnimation";
+import MainLayout from "../components/layouts/MainLayout";
+import FirstView from "../components/layouts/sections/Home/FirstView";
+import OpeningAnimation from "../components/layouts/loading/OpeningAnimation";
 
 /**
  * ホームページコンポーネント
@@ -19,7 +19,6 @@ const Home: React.FC = () => {
 
   return (
     <MainLayout>
-
       {showOpening && <OpeningAnimation onAnimationComplete={handleAnimationComplete} />}
       <FirstView />
     </MainLayout>

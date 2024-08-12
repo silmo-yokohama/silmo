@@ -22,15 +22,9 @@ const ThemeToggleButton: React.FC = () => {
         onChange={onChangeHandler}
       />
 
-      <LightIcon
-        className="swap-off h-10 w-10 fill-secondary"
-        viewBox="0 0 24 24"
-      />
+      <LightIcon className="swap-off h-10 w-10 fill-secondary" viewBox="0 0 24 24" />
 
-      <DarkIcon
-        className="swap-on h-10 w-10 fill-primary"
-        viewBox="0 0 24 24"
-      />
+      <DarkIcon className="swap-on h-10 w-10 fill-primary" viewBox="0 0 24 24" />
     </label>
   );
 };

@@ -7,8 +7,7 @@ interface HeaderLogoProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 const HeaderLogo: React.FC<HeaderLogoProps> = ({ className, ...options }) => {
-  const { activeTheme } = useTheme()
-
+  const { activeTheme } = useTheme();
 
   const imgPath =
     activeTheme === Themes.light
