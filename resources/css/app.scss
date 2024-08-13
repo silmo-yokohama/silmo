@@ -1,10 +1,13 @@
+// Google Fonts
 @import url("https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Noto+Serif+JP:wght@200;300;400;700&family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=VT323&display=swap");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// Tailwind
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
+// Base styles
 @layer base {
   *,
   *::after,
@@ -13,12 +16,11 @@
   }
 
   body {
-    /* font-family: 'Hina Mincho', serif; */
     font-family: "Zen Maru Gothic", serif;
-  }
 
-  body.loading-active {
-    overflow: hidden;
+    &.loading-active {
+      overflow: hidden;
+    }
   }
 
   .digital {
@@ -33,8 +35,12 @@
   }
 }
 
+// Component styles
 @layer components {
   .t {
     @apply transition-all duration-300;
   }
 }
+
+// Import other component styles
+@import "components/curtain-button";

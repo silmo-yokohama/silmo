@@ -6,11 +6,9 @@
 import React, { useState } from "react";
 import MainLayout from "../components/layouts/MainLayout";
 import FirstView from "../components/layouts/sections/Home/FirstView";
+import About from "../components/layouts/sections/Home/About";
 import OpeningAnimation from "../components/layouts/loading/OpeningAnimation";
 
-/**
- * ホームページコンポーネント
- */
 const Home: React.FC = () => {
   const [showOpening, setShowOpening] = useState(true);
   const handleAnimationComplete = () => {
@@ -21,6 +19,7 @@ const Home: React.FC = () => {
     <MainLayout>
       {showOpening && <OpeningAnimation onAnimationComplete={handleAnimationComplete} />}
       <FirstView />
+      <About />
     </MainLayout>
   );
 };
