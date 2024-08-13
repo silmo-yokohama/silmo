@@ -54,6 +54,7 @@
     "@inertiajs/react": "^1.2.0",
     "@lottiefiles/react-lottie-player": "^3.5.4",
     "@reduxjs/toolkit": "^2.2.7",
+    "date-fns": "^3.6.0",
     "gsap": "^3.12.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

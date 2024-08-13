@@ -46,9 +46,6 @@ const About: React.FC = () => {
             横浜の事務所を拠点に、ホームページ制作やWebアプリ開発などを請け負っております。
             フロントエンド・バックエンドの設計開発、リリース後の運用サポートなど一貫して承っております。
           </p>
-          <p className="text-base md:text-lg mb-10 md:mb-12 max-w-3xl mx-auto text-primary">
-            SilMoは「適格請求書発行事業者」として登録された事業者です。
-          </p>
         </animated.div>
         <SectionButton
           href="/about"
