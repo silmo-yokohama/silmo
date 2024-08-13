@@ -1,6 +1,6 @@
 import React from "react";
-import GitHubIcon from "../assets/svg/GitHubIcon";
-import TwitterIcon from "../assets/svg/TwitterIcon";
+import GitHubIcon from "../../../assets/svg/GitHubIcon";
+import TwitterIcon from "../../../assets/svg/TwitterIcon";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();

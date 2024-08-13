@@ -5,10 +5,10 @@
 
 import React, { ReactNode, useEffect } from "react";
 import { useTheme } from "../../hooks/useTheme";
-import Header from "./Header";
+import Header from "./header/Header";
 import LoadingOverlay from "./loading/LoadingOverlay";
 import { useSilmoAPI } from "../../hooks/useSilmoAPI";
-import Footer from "../Footer";
+import Footer from "./footer/Footer";
 
 interface MainLayoutProps {
   children: ReactNode;

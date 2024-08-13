@@ -1,8 +1,8 @@
 import React from "react";
-import HeaderLogo from "../ui/images/HeaderLogo";
-import ThemeToggleButton from "../ui/buttons/ThemeToggleButton";
-import HamburgerButton from "../ui/buttons/HamburgerButton";
-import SlideMenu from "../ui/menus/SlideMenu";
+import HeaderLogo from "../../ui/images/HeaderLogo";
+import ThemeToggleButton from "../../ui/buttons/ThemeToggleButton";
+import HamburgerButton from "../../ui/buttons/HamburgerButton";
+import SlideMenu from "../../ui/menus/SlideMenu";
 
 const Header: React.FC = () => {
   return (
