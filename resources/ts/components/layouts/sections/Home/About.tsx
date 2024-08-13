@@ -2,6 +2,7 @@ import React from "react";
 import { useSpring, animated, config } from "react-spring";
 import { useInView } from "react-intersection-observer";
 import SectionButton from "../../../ui/buttons/SectionButton";
+import Cording from "../../../../assets/lottie/Cording";
 
 const About: React.FC = () => {
   const [ref, inView] = useInView({
@@ -26,9 +27,9 @@ const About: React.FC = () => {
   return (
     <section
       ref={ref}
-      className="min-h-screen flex items-center justify-center bg-neutral overflow-hidden py-16 md:py-0"
+      className="relative min-h-screen flex items-center justify-center bg-neutral overflow-hidden py-16 md:py-0 "
     >
-      <div className="container mx-auto px-4 text-center">
+      <div className="container mx-auto px-4 text-center z-10">
         <animated.h1
           style={titleAnimation}
           className="en-title text-4xl md:text-6xl font-bold mb-8 md:mb-12 tracking-wider text-neutral-content"
@@ -53,6 +54,9 @@ const About: React.FC = () => {
         >
           ABOUT
         </SectionButton>
+      </div>
+      <div className="absolute bottom-1 right-1 md:bottom-10 md:right-10">
+        <Cording />
       </div>
     </section>
   );
