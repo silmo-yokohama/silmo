@@ -9,6 +9,7 @@ import FirstView from "../components/layouts/sections/Home/FirstView";
 import About from "../components/layouts/sections/Home/About";
 import OpeningAnimation from "../components/layouts/loading/OpeningAnimation";
 import NewsStatus from "../components/layouts/sections/Home/NewsStatus";
+import Service from "../components/layouts/sections/Home/Service";
 
 const Home: React.FC = () => {
   const [showOpening, setShowOpening] = useState(true);
@@ -22,6 +23,8 @@ const Home: React.FC = () => {
       <FirstView />
       <About />
       <NewsStatus />
+
+      <Service />
     </MainLayout>
   );
 };
