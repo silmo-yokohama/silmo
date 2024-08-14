@@ -45,14 +45,14 @@ class WordPressService
   }
 
   /**
-   * 更新日の最新順で3件の投稿を取得
+   * レスポンスを取得
    *
-   * @return array|null 取得した投稿データ、エラー時はnull
+   * @return array|null 取得したデータ、エラー時はnull
    */
   public function get($query): ?array
   {
     $result = $this->executeQuery($query);
 
-    return $result['data']['allNewsStatus']['nodes'] ?? null;
+    return $result['data'] ?? null;
   }
 }
