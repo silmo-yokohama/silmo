@@ -27,7 +27,7 @@ const About: React.FC = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center bg-neutral overflow-hidden py-16 md:py-0 "
+      className="relative md:h-screen flex items-center justify-center bg-neutral overflow-hidden py-40 md:py-0 "
     >
       <div className="container mx-auto px-4 text-center z-10">
         <animated.h1
@@ -48,12 +48,7 @@ const About: React.FC = () => {
             フロントエンド・バックエンドの設計開発、リリース後の運用サポートなど一貫して承っております。
           </p>
         </animated.div>
-        <SectionButton
-          href="/about"
-          className="border-2 border-neutral-content px-6 md:px-8 py-2 md:py-3 text-base md:text-lg font-semibold text-neutral-content rounded-full"
-        >
-          ABOUT
-        </SectionButton>
+        <SectionButton href="/about">ABOUT</SectionButton>
       </div>
       <div className="absolute bottom-1 right-1 md:bottom-10 md:right-10">
         <Cording />

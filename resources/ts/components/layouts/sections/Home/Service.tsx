@@ -128,14 +128,14 @@ const Service: React.FC = () => {
   ];
 
   return (
-    <section className="bg-neutral">
+    <section className="bg-neutral pb-1">
       <SectionHeader
         title="Service"
         subtitle="SilMoにできること。"
         image="/images/photo/monitor.jpg"
       />
       <div className="relative z-10">
-        <div className="container mx-auto px-4 mt-5 md:-mt-[100px] ">
+        <div className="container mx-auto px-4 mt-5 md:-mt-[100px] mb-32 md:mb-40">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <ServiceItem key={index} {...service} />

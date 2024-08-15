@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { gsap } from "gsap";
+import React, { useState, useCallback } from "react";
+import { useSpring, animated } from "react-spring";
 import { router } from "@inertiajs/react";
 
 interface SectionButtonProps {
@@ -8,128 +8,73 @@ interface SectionButtonProps {
   className?: string;
 }
 
+/**
+ * アニメーション付きのセクションボタンコンポーネント
+ * @param href - ボタンのリンク先URL
+ * @param children - ボタン内のコンテンツ
+ * @param className - 追加のCSSクラス
+ */
 const SectionButton: React.FC<SectionButtonProps> = ({ href, children, className = "" }) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    if (!buttonRef.current || !textRef.current || !bgRef.current) return;
+  // ボタンのスケールとテキストのY位置のアニメーション
+  const { scale, y } = useSpring({
+    scale: isHovered ? 1.05 : 1,
+    y: isHovered ? 0 : 100, // ホバー時に0%, 非ホバー時に100%（下に隠れる）
+    config: { tension: 200, friction: 20 },
+  });
 
-    const button = buttonRef.current;
-    const text = textRef.current;
-    const bg = bgRef.current;
-
-    gsap.set(button, { overflow: "hidden" });
-    gsap.set(text, { display: "inline-block" });
-    gsap.set(bg, {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: "rgba(255, 255, 255, 0)", // 透明な背景から開始
-      opacity: 0,
-    });
+  // ホバー状態の変更をハンドル
+  const handleHover = useCallback((enter: boolean) => {
+    setIsHovered(enter);
   }, []);
 
-  const handleHover = (enter: boolean) => {
-    if (!buttonRef.current || !textRef.current || !bgRef.current) return;
-
-    const tl = gsap.timeline();
-    if (enter) {
-      tl.to(buttonRef.current, {
-        scale: 1.05,
-        duration: 0.2,
-        ease: "power2.out",
-      })
-        .to(
-          bgRef.current,
-          {
-            backgroundColor: "rgba(255, 255, 255, 1)", // 白色に変更
-            opacity: 1,
-            duration: 0.2,
-            ease: "power2.inOut",
-          },
-          "<"
-        )
-        .to(
-          textRef.current,
-          {
-            y: "-100%",
-            color: "#000000", // 黒色に変更
-            duration: 0.2,
-            ease: "power2.in",
-          },
-          "<"
-        )
-        .set(textRef.current, { y: "100%" })
-        .to(textRef.current, {
-          y: "0%",
-          duration: 0.2,
-          ease: "power2.out",
-        });
-    } else {
-      tl.to(buttonRef.current, {
-        scale: 1,
-        duration: 0.2,
-        ease: "power2.in",
-      })
-        .to(
-          bgRef.current,
-          {
-            backgroundColor: "rgba(255, 255, 255, 0)", // 透明に戻す
-            opacity: 0,
-            duration: 0.2,
-            ease: "power2.inOut",
-          },
-          "<"
-        )
-        .to(
-          textRef.current,
-          {
-            color: "#ffffff", // 白色に戻す
-            duration: 0.2,
-            ease: "power2.inOut",
-          },
-          "<"
-        );
-    }
-  };
-
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    if (!buttonRef.current) return;
-
-    gsap.to(buttonRef.current, {
-      scale: 0.95,
-      duration: 0.1,
-      ease: "power2.in",
-      onComplete: () => {
-        gsap.to(buttonRef.current, {
-          scale: 1,
-          duration: 0.1,
-          ease: "power2.out",
-          onComplete: () => {
-            router.visit(href);
-          },
-        });
-      },
-    });
-  };
+  // クリックイベントのハンドル
+  const handleClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      router.visit(href);
+    },
+    [href]
+  );
 
   return (
-    <button
-      ref={buttonRef}
-      className={`relative overflow-hidden ${className}`}
-      onMouseEnter={() => handleHover(true)}
-      onMouseLeave={() => handleHover(false)}
-      onClick={handleClick}
-    >
-      <div ref={bgRef} />
-      <span ref={textRef}>{children}</span>
-    </button>
+    <div className="text-center mt-12 mb-16 md:mt-16 md:mb-24">
+      <animated.button
+        className={`relative overflow-hidden transition-all duration-300 border-2 border-neutral-content px-6 md:px-8 py-2 md:py-3 text-base md:text-lg font-semibold text-neutral-content rounded-full ${
+          isHovered ? "bg-neutral-content" : "bg-neutral"
+        } ${className}`}
+        style={{
+          scale,
+        }}
+        onMouseEnter={() => handleHover(true)}
+        onMouseLeave={() => handleHover(false)}
+        onClick={handleClick}
+      >
+        <div className="relative">
+          {/* 非ホバー時のテキスト */}
+          <animated.span
+            className="block text-neutral"
+            style={{
+              transform: y.to((value) => `translateY(-${value}%)`),
+              opacity: y.to((value) => 1 - value / 100),
+            }}
+          >
+            {children}
+          </animated.span>
+          {/* ホバー時のテキスト */}
+          <animated.span
+            className="absolute top-0 left-0 w-full text-neutral-content"
+            style={{
+              transform: y.to((value) => `translateY(${100 - value}%)`),
+              opacity: y.to((value) => value / 100),
+            }}
+          >
+            {children}
+          </animated.span>
+        </div>
+      </animated.button>
+    </div>
   );
 };
 

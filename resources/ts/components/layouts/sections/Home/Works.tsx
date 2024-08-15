@@ -4,6 +4,7 @@ import { useSpring, animated } from "react-spring";
 import { useSilmoAPI } from "../../../../hooks/useSilmoAPI";
 import { Work } from "../../../../types/responses/Works";
 import SectionHeader from "../../header/SectionHeader";
+import SectionButton from "../../../ui/buttons/SectionButton";
 
 /**
  * 実績セクションを表示するコンポーネント
@@ -23,12 +24,13 @@ const Works: React.FC = () => {
     <section className="bg-neutral">
       <SectionHeader title="Works" subtitle="SilMoの実績紹介" image="/images/photo/workdesk.jpg" />
       <div className="relative z-10">
-        <div className="container mx-auto px-4 mt-5 md:-mt-[100px]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 mt-5 md:-mt-[100px] pb-1">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {works?.map((work) => (
               <WorkItem key={work.workId} work={work} />
             ))}
           </div>
+          <SectionButton href="/works">もっと見る</SectionButton>
         </div>
       </div>
     </section>
