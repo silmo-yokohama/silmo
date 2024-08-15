@@ -48,7 +48,7 @@ const About: React.FC = () => {
             クライアントサイド・サーバーサイドの設計と実装、ローンチ後の保守管理まで一気通貫でサービスを提供しております。
           </p>
         </animated.div>
-        <SectionButton href="/about">ABOUT</SectionButton>
+        <SectionButton href="/profile">ABOUT</SectionButton>
       </div>
       <div className="absolute bottom-1 right-1 md:bottom-10 md:right-10">
         <Cording />

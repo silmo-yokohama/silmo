@@ -4,10 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\WorksController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
   return Inertia::render('Home');
 });
+Route::get('/profile', [ProfileController::class, 'index'])->name('about');
 
 // API routes
 Route::prefix('api')->group(function () {
