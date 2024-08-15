@@ -18,7 +18,6 @@ const Home: React.FC = () => {
   const handleAnimationComplete = () => {
     setShowOpening(false);
   };
-
   return (
     <MainLayout>
       {showOpening && <OpeningAnimation onAnimationComplete={handleAnimationComplete} />}

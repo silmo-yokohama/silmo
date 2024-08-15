@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ParallaxBanner } from "react-scroll-parallax";
-import { Link } from "@inertiajs/inertia-react";
+import { Link } from "@inertiajs/react";
 import { useSpring, animated } from "react-spring";
 
 /**
