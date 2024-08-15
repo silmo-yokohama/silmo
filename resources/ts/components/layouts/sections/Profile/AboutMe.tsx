@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
 import gsap from "gsap";
 

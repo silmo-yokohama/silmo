@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated } from "@react-spring/web";
 import { router } from "@inertiajs/react";
 
 interface SectionButtonProps {

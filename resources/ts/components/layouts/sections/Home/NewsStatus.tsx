@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSilmoAPI } from "../../../../hooks/useSilmoAPI";
 import { NewsPost } from "../../../../types/responses/NewsPost";
 import { format } from "date-fns";
-import { useSpring, animated, useTrail, config } from "react-spring";
+import { useSpring, animated, useTrail, config } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
 
 /**

@@ -1,6 +1,6 @@
 import React from "react";
 import SectionHeader from "../../header/SectionHeader";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated } from "@react-spring/web";
 import FrontendIcon from "../../../../assets/svg/FrontendIcon";
 import BackendIcon from "../../../../assets/svg/BackendIcon";
 import CMSIcon from "../../../../assets/svg/CMSIcon";

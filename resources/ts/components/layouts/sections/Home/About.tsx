@@ -1,5 +1,5 @@
 import React from "react";
-import { useSpring, animated, config } from "react-spring";
+import { useSpring, animated, config } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
 import SectionButton from "../../../ui/buttons/SectionButton";
 import Cording from "../../../../assets/lottie/Cording";

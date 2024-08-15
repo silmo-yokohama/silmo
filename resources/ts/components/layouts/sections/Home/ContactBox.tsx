@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ParallaxBanner } from "react-scroll-parallax";
 import { Link } from "@inertiajs/react";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated } from "@react-spring/web";
 
 /**
  * ContactSection コンポーネント

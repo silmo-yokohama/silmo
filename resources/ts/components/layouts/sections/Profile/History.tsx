@@ -1,53 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { useSpring, animated } from "react-spring";
+import React, { useEffect, useRef, useState } from "react";
+import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
 import gsap from "gsap";
-
-interface HistoryItem {
-  year: string;
-  title: string;
-  description: string;
-  image: string;
-}
-
-const historyData: HistoryItem[] = [
-  {
-    year: "2018",
-    title: "プログラミングを始める",
-    description: "独学でWebプログラミングの基礎を学び始めました。",
-    image: "/images/profile/sample.png",
-  },
-  {
-    year: "2019",
-    title: "最初のWebアプリケーションを開発",
-    description: "個人プロジェクトとして、シンプルなタスク管理アプリを作成しました。",
-    image: "/images/history/2019.jpg",
-  },
-  {
-    year: "2020",
-    title: "フリーランスとしてキャリアをスタート",
-    description: "小規模なWebサイトの制作や既存サイトの改修を請け負いました。",
-    image: "/images/history/2020.jpg",
-  },
-  {
-    year: "2021",
-    title: "大規模プロジェクトに参加",
-    description: "チームの一員として、企業向けの大規模Webアプリケーション開発に携わりました。",
-    image: "/images/history/2021.jpg",
-  },
-  {
-    year: "2022",
-    title: "技術ブログの執筆を開始",
-    description: "学んだ知識や経験を共有するため、技術ブログの運営を始めました。",
-    image: "/images/history/2022.jpg",
-  },
-  {
-    year: "2023",
-    title: "オープンソースプロジェクトにコントリビュート",
-    description: "複数のオープンソースプロジェクトに貢献し、コミュニティに参加しました。",
-    image: "/images/history/2023.jpg",
-  },
-];
+import { useSilmoAPI } from "../../../../hooks/useSilmoAPI";
+import { HistoryItems } from "../../../../types/responses/ProfileHistory";
 
 /**
  * Historyコンポーネント
@@ -58,6 +14,14 @@ const History: React.FC = () => {
     threshold: 0.1,
     triggerOnce: true,
   });
+  const { get } = useSilmoAPI();
+  const [histories, setHistories] = useState<HistoryItems>([]);
+
+  useEffect(() => {
+    get<HistoryItems>("/api/profile/histories").then((data) => {
+      setHistories(data);
+    });
+  }, []);
 
   const timelineRef = useRef<HTMLUListElement>(null);
 
@@ -91,7 +55,7 @@ const History: React.FC = () => {
           ref={timelineRef}
           className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical"
         >
-          {historyData.map((item, index) => (
+          {histories.map((item, index) => (
             <li key={index}>
               {index > 0 && <hr />}
               <div className="timeline-middle">
@@ -113,16 +77,16 @@ const History: React.FC = () => {
                   index % 2 === 0 ? "end" : "start"
                 }`}
               >
-                <time className="font-mono italic">{item.year}</time>
+                <time className="font-mono italic">{item.title}</time>
                 <div className="text-lg font-black">{item.title}</div>
-                <p className="mt-2">{item.description}</p>
+                <p className="mt-2">{item.content}</p>
                 <img
-                  src={item.image}
+                  src={item.featuredImage.node.sourceUrl}
                   alt={item.title}
                   className="mt-4 rounded-lg shadow-md w-full md:w-3/4 mx-auto"
                 />
               </div>
-              {index < historyData.length - 1 && <hr />}
+              {index < histories.length - 1 && <hr />}
             </li>
           ))}
         </ul>

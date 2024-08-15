@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated } from "@react-spring/web";
 import { useSilmoAPI } from "../../../../hooks/useSilmoAPI";
 import { Work } from "../../../../types/responses/Works";
 import SectionHeader from "../../header/SectionHeader";
