@@ -26,7 +26,6 @@ createInertiaApp({
     const pages = import.meta.glob("./pages/**/*.tsx", { eager: true });
     const page = pages[`./pages/${name}.tsx`];
     if (!page) {
-      console.error(`Page not found: ${name}`);
       return null;
     }
     return pages[`./pages/${name}.tsx`];

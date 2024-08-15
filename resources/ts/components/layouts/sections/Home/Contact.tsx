@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "@inertiajs/inertia-react";
+import { Link } from "@inertiajs/react";
 import { useSpring, animated } from "react-spring";
 import { throttle } from "lodash"; // lodashをインストールしてください
 
