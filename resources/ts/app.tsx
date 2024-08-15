@@ -2,8 +2,7 @@ import "./bootstrap";
 import "../css/app.scss";
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { createInertiaApp } from "@inertiajs/inertia-react";
-import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import { createInertiaApp } from "@inertiajs/react";
 import { InertiaProgress } from "@inertiajs/progress";
 import { Provider } from "react-redux";
 import { store } from "./store";
@@ -23,9 +22,15 @@ InertiaProgress.init({
  * Inertia.jsアプリケーションを作成し、Reduxストアをプロバイド
  */
 createInertiaApp({
-  resolve: (name) =>
-    // @ts-ignore
-    resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
+  resolve: (name) => {
+    const pages = import.meta.glob("./pages/**/*.tsx", { eager: true });
+    const page = pages[`./pages/${name}.tsx`];
+    if (!page) {
+      console.error(`Page not found: ${name}`);
+      return null;
+    }
+    return pages[`./pages/${name}.tsx`];
+  },
   setup({ el, App, props }) {
     const root = createRoot(el);
     root.render(
