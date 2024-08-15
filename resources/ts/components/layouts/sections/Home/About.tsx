@@ -34,18 +34,18 @@ const About: React.FC = () => {
           style={titleAnimation}
           className="en-title text-4xl md:text-6xl font-bold mb-8 md:mb-12 tracking-wider text-neutral-content"
         >
-          WELCOME TO <br className="inline md:hidden" />
-          SilMo
+          CRAFT YOUR WEB!!
         </animated.h1>
         <animated.div style={contentAnimation} className="text-neutral-content">
           <h2 className="text-xl md:text-2xl mb-8 md:mb-12">
-            横浜で活動する
+            SilMoは横浜で活動する
             <br className="inline md:hidden" />
-            フリーランスWebエンジニア
+            フリーランスWebクリエイター
           </h2>
           <p className="text-base md:text-lg mb-6 md:mb-8 max-w-3xl mx-auto">
-            横浜の事務所を拠点に、ホームページ制作やWebアプリ開発などを請け負っております。
-            フロントエンド・バックエンドの設計開発、リリース後の運用サポートなど一貫して承っております。
+            横浜のワークスペースを起点に、コーポレートサイトの制作からWebシステムの開発まで幅広く対応しています。
+            <br />
+            クライアントサイド・サーバーサイドの設計と実装、ローンチ後の保守管理まで一気通貫でサービスを提供しております。
           </p>
         </animated.div>
         <SectionButton href="/about">ABOUT</SectionButton>
