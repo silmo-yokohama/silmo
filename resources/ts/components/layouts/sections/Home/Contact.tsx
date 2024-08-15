@@ -77,7 +77,7 @@ const ContactLink: React.FC = () => {
       {/* スマホ用のリンク */}
       <animated.div
         style={fadeAnimation}
-        className="fixed bottom-0 left-0 right-0 bg-primary text-primary-content md:hidden z-40"
+        className="fixed bottom-0 left-0 right-0 bg-primary text-primary-content md:hidden z-10"
       >
         <Link href="/contact" className="flex items-center justify-center w-full px-4 py-3">
           <svg

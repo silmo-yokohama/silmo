@@ -14,6 +14,8 @@ const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onAnimationComplete
   const logoRef = useRef<HTMLImageElement>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
+  return 0;
+
   useEffect(() => {
     const img = new Image();
     img.src = "/images/logo/silmo.png";
