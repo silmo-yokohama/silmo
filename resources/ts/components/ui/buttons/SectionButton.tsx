@@ -41,8 +41,8 @@ const SectionButton: React.FC<SectionButtonProps> = ({ href, children, className
   return (
     <div className="text-center mt-12 mb-16 md:mt-16 md:mb-24">
       <animated.button
-        className={`relative overflow-hidden transition-all duration-300 border-2 border-neutral-content px-6 md:px-8 py-2 md:py-3 text-base md:text-lg font-semibold text-neutral-content rounded-full ${
-          isHovered ? "bg-neutral-content" : "bg-neutral"
+        className={`relative overflow-hidden transition-all duration-300 border-2 border-base-content px-6 md:px-8 py-2 md:py-3 text-base md:text-lg font-semibold text-neutral rounded-full ${
+          isHovered ? "bg-primary" : "bg-base-100"
         } ${className}`}
         style={{
           scale,
@@ -54,7 +54,7 @@ const SectionButton: React.FC<SectionButtonProps> = ({ href, children, className
         <div className="relative">
           {/* 非ホバー時のテキスト */}
           <animated.span
-            className="block text-neutral"
+            className="block text-secondary"
             style={{
               transform: y.to((value) => `translateY(-${value}%)`),
               opacity: y.to((value) => 1 - value / 100),
@@ -64,7 +64,7 @@ const SectionButton: React.FC<SectionButtonProps> = ({ href, children, className
           </animated.span>
           {/* ホバー時のテキスト */}
           <animated.span
-            className="absolute top-0 left-0 w-full text-neutral-content"
+            className="absolute top-0 left-0 w-full text-primary"
             style={{
               transform: y.to((value) => `translateY(${100 - value}%)`),
               opacity: y.to((value) => value / 100),

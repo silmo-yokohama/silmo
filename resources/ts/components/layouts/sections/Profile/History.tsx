@@ -6,6 +6,7 @@ import { useSilmoAPI } from "../../../../hooks/useSilmoAPI";
 import { HistoryItem, HistoryItems } from "../../../../types/responses/ProfileHistory";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
+import ProfileSectionTitle from "./ProfileSectionTitle";
 
 /**
  * Historyコンポーネント
@@ -61,11 +62,11 @@ const History: React.FC = () => {
   }, [inView]);
 
   return (
-    <div ref={ref} className="bg-neutral-content text-neutral py-16 md:py-24">
+    <div ref={ref} className="t bg-base-100 text-base-content py-16 md:py-24">
       <div className="max-w-[1536px] mx-auto px-4">
-        <animated.h2 style={titleSpring} className="text-3xl font-bold mb-8 text-center">
-          My Journey
-        </animated.h2>
+        <animated.div style={titleSpring} className="text-3xl font-bold mb-8 text-center">
+          <ProfileSectionTitle>Journey</ProfileSectionTitle>
+        </animated.div>
         <ul
           ref={timelineRef}
           className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical"
@@ -115,7 +116,7 @@ const History: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                {index < histories.length - 1 && <hr />}
+                {index < histories.length - 1 && <hr className="bg-base-content" />}
               </li>
             );
           })}

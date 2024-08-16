@@ -27,16 +27,16 @@ const About: React.FC = () => {
   return (
     <section
       ref={ref}
-      className="relative md:h-screen flex items-center justify-center bg-neutral overflow-hidden py-40 md:py-0 "
+      className="relative md:h-screen flex items-center justify-center bg-base-200 overflow-hidden py-40 md:py-0 "
     >
       <div className="container mx-auto px-4 text-center z-10">
         <animated.h1
           style={titleAnimation}
-          className="en-title text-4xl md:text-6xl font-bold mb-8 md:mb-12 tracking-wider text-neutral-content"
+          className="en-title text-4xl md:text-6xl font-bold mb-8 md:mb-12 tracking-wider text-accent"
         >
           CRAFT YOUR WEB!!
         </animated.h1>
-        <animated.div style={contentAnimation} className="text-neutral-content">
+        <animated.div style={contentAnimation} className="text-base-content">
           <h2 className="text-xl md:text-2xl mb-8 md:mb-12">
             SilMoは横浜で活動する
             <br className="inline md:hidden" />

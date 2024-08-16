@@ -73,9 +73,9 @@ const ServiceItem: React.FC<ServiceItemProps> = ({ icon, titleEn, titleJa, descr
         </div>
       </animated.div>
       <div className="text-center">
-        <h3 className="t en-title text-2xl font-bold mb-1 text-neutral-content">{titleEn}</h3>
+        <h3 className="t en-title text-2xl font-bold mb-1 text-base-content">{titleEn}</h3>
         <p className="text-sm text-primary mb-4">{titleJa}</p>
-        <p className="t text-sm text-neutral-content text-left">{description}</p>
+        <p className="t text-sm text-base-content text-left">{description}</p>
       </div>
     </div>
   );
@@ -128,7 +128,7 @@ const Service: React.FC = () => {
   ];
 
   return (
-    <section className="bg-neutral pb-1">
+    <section className="bg-base-100 pb-1">
       <SectionHeader
         title="Service"
         subtitle="SilMoにできること。"

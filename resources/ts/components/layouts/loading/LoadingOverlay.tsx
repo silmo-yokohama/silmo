@@ -13,7 +13,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
     if (isLoading) {
       setShow(true);
     } else {
-      const timer = setTimeout(() => setShow(false), 500); // フェードアウト時間と同じ
+      const timer = setTimeout(() => setShow(false), 1000); // フェードアウト時間と同じ
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
@@ -22,7 +22,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    config: { duration: 500 },
+    config: { duration: 250 },
   });
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
     item ? (
       <animated.div
         style={style}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-content bg-opacity-50"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80"
       >
         <div className="text-white text-4xl">
           <Loading />

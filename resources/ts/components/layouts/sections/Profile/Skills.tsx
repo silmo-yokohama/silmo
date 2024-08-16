@@ -4,6 +4,7 @@ import { useSpring, animated } from "@react-spring/web";
 import gsap from "gsap";
 import { useSilmoAPI } from "../../../../hooks/useSilmoAPI";
 import { Skill, SkillCategory, SkillNode } from "../../../../types/responses/Skills";
+import ProfileSectionTitle from "./ProfileSectionTitle";
 
 export const organizeSkillData = (data: SkillNode[]): SkillCategory[] => {
   const categories: SkillCategory[] = [];
@@ -109,15 +110,18 @@ const Skills: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-base-100 py-16 overflow-x-hidden">
+    <div className="t bg-base-200 py-16 overflow-x-hidden">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-center">My Skills</h2>
+        <ProfileSectionTitle>Skills</ProfileSectionTitle>
         {loading ? (
           <div>Loading...</div>
         ) : (
           skillCategories.map((category, categoryIndex) => (
             <div key={categoryIndex} className="mb-12">
-              <h3 className="text-2xl font-semibold mb-4">#{category.name}</h3>
+              <h3 className="text-3xl md:text-4xl font-semibold mb-4">
+                <span className="text-accent"># </span>
+                {category.name}
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {category.skills.map((skill, skillIndex) => (
                   <SkillCard key={skillIndex} skill={skill} index={skillIndex} />

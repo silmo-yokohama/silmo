@@ -13,7 +13,7 @@ const FirstView: React.FC = () => {
   return (
     <ParallaxBanner layers={[{ image: imgPath, speed: -55 }]} className="hero h-screen">
       <div className="t hero-overlay bg-opacity-60 z-[1]"></div>
-      <div className="hero-content text-neutral-content text-center z-[2]">
+      <div className="hero-content text-base-100 text-center z-[2]">
         <div className="max-w-lg">
           <h1 className="t digital text-5xl md:text-7xl mb-5 font-bold">Hello World!</h1>
         </div>

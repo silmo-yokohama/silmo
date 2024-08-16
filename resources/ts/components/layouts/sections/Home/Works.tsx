@@ -5,6 +5,7 @@ import { useSilmoAPI } from "../../../../hooks/useSilmoAPI";
 import { Work } from "../../../../types/responses/Works";
 import SectionHeader from "../../header/SectionHeader";
 import SectionButton from "../../../ui/buttons/SectionButton";
+import { format } from "date-fns";
 
 /**
  * 実績セクションを表示するコンポーネント
@@ -21,7 +22,7 @@ const Works: React.FC = () => {
   }, []);
 
   return (
-    <section className="bg-neutral">
+    <section className="bg-base-100">
       <SectionHeader title="Works" subtitle="SilMoの実績紹介" image="/images/photo/workdesk.jpg" />
       <div className="relative z-10">
         <div className="container mx-auto px-4 mt-5 md:-mt-[100px] pb-1">
@@ -64,18 +65,18 @@ const WorkItem: React.FC<{ work: Work }> = ({ work }) => {
           alt={work.title}
           className="w-full h-64 object-cover transition-all duration-300 ease-in-out md:grayscale md:hover:grayscale-0"
         />
-        <div className="p-4 bg-neutral-content">
-          <h3 className="text-lg font-semibold text-neutral mb-2">{work.title}</h3>
+        <div className="p-4 bg-base-200">
+          <h3 className="text-lg font-semibold text-base-content mb-2">{work.title}</h3>
           <div className="flex flex-wrap gap-2 mb-4">
             {work.skill.nodes.map((skill) => (
-              <span key={skill.skillId} className="badge badge-primary badge-sm text-gray-100">
+              <span key={skill.skillId} className="badge badge-secondary badge-sm text-gray-900">
                 {skill.name}
               </span>
             ))}
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-500">
-              {new Date(work.date).toLocaleDateString()}
+            <span className="text-sm text-base-content">
+              {format(new Date(work.date), "yyyy.MM.dd")}
             </span>
             <button className="btn btn-primary text-gray-100 btn-sm">LEARN MORE</button>
           </div>

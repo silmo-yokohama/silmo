@@ -7,7 +7,7 @@ import SlideMenu from "../../ui/menus/SlideMenu";
 const Header: React.FC = () => {
   return (
     <>
-      <header className="t w-full fixed bg-base-content z-30 h-[60px] md:h-[90px] px-5">
+      <header className="t w-full fixed bg-base-100 z-30 h-[60px] md:h-[90px] px-5">
         <div className="w-full flex relative justify-start md:justify-center items-center h-full">
           <HeaderLogo className="h-[50px] md:h-[70px]" />
 

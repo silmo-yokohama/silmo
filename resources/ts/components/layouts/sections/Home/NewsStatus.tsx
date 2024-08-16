@@ -49,9 +49,9 @@ const NewsStatus: React.FC = () => {
     <animated.section
       ref={ref}
       style={sectionAnimation}
-      className="relative py-16 md:py-36 px-2 md:px-4 text-neutral-content"
+      className="relative py-16 md:py-36 px-2 md:px-4 bg-base-100"
     >
-      <div className="md:max-w-6xl md:m-auto flex flex-col md:flex-row text-neutral-content gap-5 md:gap-20 items-center">
+      <div className="md:max-w-6xl md:m-auto flex flex-col md:flex-row gap-5 md:gap-20 items-center">
         <animated.h2
           style={headingAnimation}
           className="

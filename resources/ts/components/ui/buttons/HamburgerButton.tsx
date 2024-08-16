@@ -40,7 +40,7 @@ const HamburgerButton: React.FC = () => {
   return (
     <label
       ref={buttonRef}
-      className="btn btn-square bg-neutral-content border-none shadow-md outline-none hover:bg-neutral-content cursor-pointer"
+      className="btn btn-square bg-neutral hover:bg-neutral text-neutral-content border-none shadow-md outline-none cursor-pointer"
     >
       <input type="checkbox" className="hidden" onChange={toggle} checked={isOpen} />
       <svg
