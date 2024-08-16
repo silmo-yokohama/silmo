@@ -1,70 +1,112 @@
 import React, { useEffect, useRef } from "react";
-import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
+import { useSpring, animated } from "@react-spring/web";
 import gsap from "gsap";
 
 interface Skill {
   name: string;
+  icon: string;
+  description: string;
   level: number;
 }
 
-const skillsData: Skill[] = [
-  { name: "React", level: 90 },
-  { name: "Laravel", level: 85 },
-  { name: "TypeScript", level: 80 },
-  { name: "Node.js", level: 75 },
-  { name: "GraphQL", level: 70 },
-  { name: "Docker", level: 65 },
+interface SkillCategory {
+  name: string;
+  skills: Skill[];
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    name: "フロントエンド",
+    skills: [
+      { name: "React", icon: "/icons/react.svg", description: "モダンなUI開発", level: 9 },
+      { name: "React", icon: "/icons/react.svg", description: "モダンなUI開発", level: 9 },
+      { name: "React", icon: "/icons/react.svg", description: "モダンなUI開発", level: 9 },
+      { name: "React", icon: "/icons/react.svg", description: "モダンなUI開発", level: 9 },
+      { name: "TypeScript", icon: "/icons/typescript.svg", description: "型安全な開発", level: 8 },
+      // 他のフロントエンドスキルを追加
+    ],
+  },
+  {
+    name: "バックエンド",
+    skills: [
+      {
+        name: "Node.js",
+        icon: "/icons/nodejs.svg",
+        description: "サーバーサイドJavaScript",
+        level: 7,
+      },
+      { name: "PHP", icon: "/icons/php.svg", description: "Webアプリケーション開発", level: 8 },
+      { name: "PHP", icon: "/icons/php.svg", description: "Webアプリケーション開発", level: 8 },
+      { name: "PHP", icon: "/icons/php.svg", description: "Webアプリケーション開発", level: 8 },
+      { name: "PHP", icon: "/icons/php.svg", description: "Webアプリケーション開発", level: 8 },
+      { name: "PHP", icon: "/icons/php.svg", description: "Webアプリケーション開発", level: 8 },
+      { name: "PHP", icon: "/icons/php.svg", description: "Webアプリケーション開発", level: 8 },
+      { name: "PHP", icon: "/icons/php.svg", description: "Webアプリケーション開発", level: 8 },
+      // 他のバックエンドスキルを追加
+    ],
+  },
+  // 他のカテゴリーを追加
 ];
 
-/**
- * Skillsコンポーネント
- * @returns {JSX.Element} Skills セクションの要素
- */
-const Skills: React.FC = () => {
+const SkillCard: React.FC<{ skill: Skill; index: number }> = ({ skill, index }) => {
   const [ref, inView] = useInView({
-    threshold: 0.1,
     triggerOnce: true,
+    threshold: 0.1,
   });
 
-  const skillBarsRef = useRef<HTMLDivElement>(null);
-
-  // タイトルのアニメーション
-  const titleSpring = useSpring({
+  const cardSpring = useSpring({
     opacity: inView ? 1 : 0,
-    transform: inView ? "translateY(0)" : "translateY(30px)",
-    config: { mass: 1, tension: 280, friction: 60 },
+    transform: inView ? "translateX(0)" : "translateX(50px)",
+    delay: index * 100,
   });
 
-  // スキルバーのアニメーション
+  const progressRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (inView && skillBarsRef.current) {
-      gsap.from(skillBarsRef.current.children, {
-        width: 0,
+    if (inView && progressRef.current) {
+      gsap.to(progressRef.current, {
+        width: `${skill.level * 10}%`,
         duration: 1,
-        ease: "power3.out",
-        stagger: 0.2,
+        ease: "power2.out",
       });
     }
-  }, [inView]);
+  }, [inView, skill.level]);
 
   return (
-    <div
+    <animated.div
       ref={ref}
-      className="container mx-auto px-4 py-16 md:py-24 bg-neutral text-neutral-content"
+      style={cardSpring}
+      className="bg-base-200 rounded-lg shadow-md p-4 mb-4"
     >
-      <animated.h2 style={titleSpring} className="text-3xl font-bold mb-8 text-center">
-        My Skills
-      </animated.h2>
-      <div ref={skillBarsRef} className="space-y-4">
-        {skillsData.map((skill, index) => (
-          <div key={index} className="flex flex-col md:flex-row items-center">
-            <div className="w-full md:w-1/4 font-bold mb-2 md:mb-0">{skill.name}</div>
-            <div className="w-full md:w-3/4 bg-neutral-content rounded-full h-6">
-              <div
-                className="bg-primary h-6 rounded-full"
-                style={{ width: `${skill.level}%` }}
-              ></div>
+      <div className="flex items-center mb-2">
+        <img src={skill.icon} alt={skill.name} className="w-8 h-8 mr-2" />
+        <h4 className="text-lg font-semibold">{skill.name}</h4>
+      </div>
+      <p className="text-sm mb-2">{skill.description}</p>
+      <div className="bg-base-300 rounded-full h-6 relative">
+        <div ref={progressRef} className="bg-primary h-full rounded-full" style={{ width: "0%" }}>
+          <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold">
+            Lv.{skill.level}
+          </span>
+        </div>
+      </div>
+    </animated.div>
+  );
+};
+
+const Skills: React.FC = () => {
+  return (
+    <div className="bg-base-100 py-16">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold mb-8 text-center">My Skills</h2>
+        {skillCategories.map((category, categoryIndex) => (
+          <div key={categoryIndex} className="mb-12">
+            <h3 className="text-2xl font-semibold mb-4">#{category.name}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {category.skills.map((skill, skillIndex) => (
+                <SkillCard key={skillIndex} skill={skill} index={skillIndex} />
+              ))}
             </div>
           </div>
         ))}
