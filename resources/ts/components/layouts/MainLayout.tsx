@@ -10,7 +10,7 @@ import LoadingOverlay from "./loading/LoadingOverlay";
 import { useSilmoAPI } from "../../hooks/useSilmoAPI";
 import Footer from "./footer/Footer";
 import ContactSection from "./sections/Home/ContactBox";
-import PageTransition from "./loading/PageTransition";
+import Contact from "./common/Contact";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -36,11 +36,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <main className="t bg-base-content">
       <LoadingOverlay isLoading={isLoading} />
       <Header />
-      <PageTransition>
-        {children}
+      {children}
 
-        <ContactSection />
-      </PageTransition>
+      <ContactSection />
+      <Contact />
       <Footer />
     </main>
   );

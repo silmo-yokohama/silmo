@@ -11,7 +11,6 @@ import OpeningAnimation from "../components/layouts/loading/OpeningAnimation";
 import NewsStatus from "../components/layouts/sections/Home/NewsStatus";
 import Service from "../components/layouts/sections/Home/Service";
 import Works from "../components/layouts/sections/Home/Works";
-import Contact from "../components/layouts/sections/Home/Contact";
 
 const Home: React.FC = () => {
   const [showOpening, setShowOpening] = useState(true);
@@ -27,8 +26,6 @@ const Home: React.FC = () => {
 
       <Service />
       <Works />
-
-      <Contact />
     </MainLayout>
   );
 };

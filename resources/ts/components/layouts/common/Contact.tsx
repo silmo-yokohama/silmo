@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { useSpring, animated } from "@react-spring/web";
-import { throttle } from "lodash"; // lodashをインストールしてください
+import { throttle } from "lodash";
 
 /**
  * お問い合わせリンクコンポーネント
@@ -12,6 +12,7 @@ import { throttle } from "lodash"; // lodashをインストールしてくださ
 const ContactLink: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const { component } = usePage();
 
   // ホバーアニメーションの設定
   const linkAnimation = useSpring({
@@ -27,6 +28,10 @@ const ContactLink: React.FC = () => {
 
   const handleScroll = useCallback(
     throttle(() => {
+      if (component !== "HOME") {
+        setIsVisible(true);
+        return;
+      }
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       setIsVisible(scrollY > windowHeight);
