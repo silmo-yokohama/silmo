@@ -2,11 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\WordPressService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class WorkController extends Controller
 {
+  private $wordpressService;
+
+  private const _GET_WORK_QUERY = '
+        query getWork($workId: ID!) {
+          work(id: $workId, idType: DATABASE_ID) {
+            date
+            content
+            title
+            workACF {
+              eyecatch {
+                node {
+                  sourceUrl
+                }
+              }
+              eyecatch_sp {
+                node {
+                  sourceUrl
+                }
+              }
+              github
+              targetUrl
+              companyname
+            }
+            workCategory {
+              nodes {
+                name
+              }
+            }
+            skill {
+              nodes {
+                skillId
+                name
+              }
+            }
+            workId
+            featuredImage {
+              node {
+                slug
+                sourceUrl
+              }
+            }
+          }
+          allWorks: works(first: 1000, where: {orderby: {field: DATE, order: DESC}}) {
+            nodes {
+              workId
+              title
+              featuredImage {
+                node {
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }';
+
+
+  public function __construct(WordPressService $wordPressService)
+  {
+    $this->wordpressService = $wordPressService;
+  }
   /**
    * 実績一覧ページを表示
    *
@@ -16,16 +77,8 @@ class WorkController extends Controller
    */
   public function index(Request $request, $page = 1)
   {
-    $perPage = 10; // 1ページあたりの表示件数
-
-    // ここで実績データを取得する処理を追加
-    // 例: $works = Work::paginate($perPage);
-    $works = []; // 仮のデータ
-
     return Inertia::render('Works/Index', [
-      'works' => $works,
       'currentPage' => (int)$page,
-      'perPage' => $perPage,
       // 'total' => $works->total(), // 実際のpaginateを使用する場合
     ]);
   }
@@ -38,12 +91,15 @@ class WorkController extends Controller
    */
   public function show($id)
   {
-    // ここで特定の実績データを取得する処理を追加
-    // 例: $work = Work::findOrFail($id);
-    $work = []; // 仮のデータ
+    $variable = [
+      'workId' => $id
+    ];
+
+    $response = $this->wordpressService->executeQuery(self::_GET_WORK_QUERY, $variable);
 
     return Inertia::render('Works/Show', [
-      'work' => $work
+      'work' => $response['data']['work'],
+      'allWorks' => $response['data']['allWorks']['nodes'],
     ]);
   }
 }

@@ -18,7 +18,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
     <nav className="bg-base-100 py-2">
       <ol className="container mx-auto px-4 flex flex-wrap items-center">
         {items.map((item, index) => (
-          <li key={index} className="flex items-center">
+          <li key={index} className="flex items-center text-xs md:text-sm py-4">
             {index > 0 && <span className="mx-2 text-gray-500">/</span>}
             {index === items.length - 1 ? (
               <span className="">{item.label}</span>
