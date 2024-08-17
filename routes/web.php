@@ -14,9 +14,17 @@ Route::get('/', function () {
 });
 Route::get('/profile', [ProfileController::class, 'index'])->name('about');
 
-//  実績ページ
+// 実績一覧ページ（1ページ目）
 Route::get('/works', [WorkController::class, 'index'])->name('works.index');
-Route::get('/works/{id}', [WorkController::class, 'show'])->name('works.show');
+
+// 実績一覧ページ（2ページ以降）
+Route::get('/works/{page}', [WorkController::class, 'index'])
+  ->where('page', '[2-9]|[1-9][0-9]+')
+  ->name('works.page');
+
+// 実績詳細ページ
+Route::get('/work/{id}', [WorkController::class, 'show'])->name('works.show');
+
 
 // API routes
 Route::prefix('api')->group(function () {
