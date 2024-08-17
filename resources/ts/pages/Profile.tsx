@@ -1,9 +1,8 @@
 import React from "react";
-import SubPageHeader from "../components/layouts/header/SubPageHeader";
 import AboutMe from "../components/layouts/sections/Profile/AboutMe";
 import History from "../components/layouts/sections/Profile/History";
 import Skills from "../components/layouts/sections/Profile/Skills";
-import MainLayout from "../components/layouts/page/MainLayout";
+import SubPageLayout from "../components/layouts/page/SubPageLayout";
 
 /**
  * Aboutページコンポーネント
@@ -12,14 +11,12 @@ import MainLayout from "../components/layouts/page/MainLayout";
  */
 const Profile: React.FC = () => {
   return (
-    <MainLayout>
-      {/* 子ページ共通ヘッダー */}
-      <SubPageHeader
-        title="Profile"
-        subtitle="SilMoについて"
-        image="/images/photo/yokohama-night.jpg"
-      />
-
+    <SubPageLayout
+      title="SilMoについて"
+      headerTitle="Profile"
+      headerSubtitle="SilMoについて"
+      headerImage="/images/photo/yokohama-night.jpg"
+    >
       {/*
       写真付きで簡単な自己紹介文と
       概要をテーブルで
@@ -30,7 +27,7 @@ const Profile: React.FC = () => {
 
       {/* 遠隔を表示 */}
       <History />
-    </MainLayout>
+    </SubPageLayout>
   );
 };
 

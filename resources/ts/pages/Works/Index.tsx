@@ -1,54 +1,100 @@
-// resources/ts/pages/Works/Index.tsx
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { router, useRemember } from "@inertiajs/react";
 import { useSilmoAPI } from "../../hooks/useSilmoAPI";
-import { Work } from "../../types/Works";
-import Pagination from "../../components/ui/pagination/Pagination";
-import WorkCard from "./WorkCard";
 import SubPageLayout from "../../components/layouts/page/SubPageLayout";
 import GridLayout from "../../components/layouts/common/GridLayout";
+import { Work } from "../../types/responses/Works";
+import GridItemLink from "../../components/ui/links/GridItemLink";
+
+interface PageInfo {
+  hasNextPage: boolean;
+  endCursor: string | null;
+}
 
 interface WorksResponse {
   works: Work[];
-  current_page: number;
-  per_page: number;
-  total: number;
+  pageInfo: PageInfo;
 }
 
 const WorksIndex: React.FC = () => {
-  const [works, setWorks] = useState<Work[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [works, setWorks] = useRemember<Work[]>([], "works");
+  const [pageInfo, setPageInfo] = useRemember<PageInfo>(
+    { hasNextPage: false, endCursor: null },
+    "pageInfo"
+  );
+  const [currentPage, setCurrentPage] = useRemember(1, "currentPage");
   const { get } = useSilmoAPI();
 
   useEffect(() => {
-    fetchWorks(currentPage);
-  }, [currentPage]);
+    if (works.length === 0) {
+      fetchWorks(currentPage, pageInfo.endCursor);
+    }
+  }, []);
 
-  const fetchWorks = async (page: number) => {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("page", currentPage.toString());
+    if (pageInfo.endCursor) {
+      urlParams.set("cursor", pageInfo.endCursor);
+    }
+    router.visit(`${window.location.pathname}?${urlParams.toString()}`, {
+      preserveState: true,
+      preserveScroll: true,
+      replace: true,
+    });
+  }, [currentPage, pageInfo.endCursor]);
+
+  const fetchWorks = async (page: number, cursor: string | null) => {
     try {
-      const response = await get<WorksResponse>("/api/works", { params: { page } });
-      setWorks(response.works);
-      setCurrentPage(response.current_page);
-      setTotalPages(Math.ceil(response.total / response.per_page));
+      const response = await get<WorksResponse>("/api/works", {
+        params: { per_page: 9, after: cursor },
+      });
+      if (page === 1) {
+        setWorks(response.works);
+      } else {
+        setWorks((prev) => [...prev, ...response.works]);
+      }
+      setPageInfo(response.pageInfo);
     } catch (error) {
       console.error("Failed to fetch works", error);
+    }
+  };
+
+  const loadMore = () => {
+    if (pageInfo.hasNextPage) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      fetchWorks(nextPage, pageInfo.endCursor);
     }
   };
 
   return (
     <SubPageLayout
       title="実績一覧"
-      headerTitle="Our Works"
-      headerSubtitle="これまでの実績"
-      headerImage="/images/works-header.jpg"
+      headerTitle="Works"
+      headerSubtitle="実績"
+      headerImage="/images/photo/workdesk.jpg"
     >
-      <GridLayout columns={3}>
-        {works.map((work) => (
-          <WorkCard key={work.id} work={work} />
-        ))}
-      </GridLayout>
-      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+      <div className="container mx-auto px-4 py-16">
+        <GridLayout columns={3}>
+          {works.map((work) => (
+            <GridItemLink
+              key={work.workId}
+              href={`/work/${work.workId}`}
+              image={work.workACF.eyecatch.node.sourceUrl}
+              title={work.title}
+              badges={work.skill.nodes.map((category) => category.name)}
+            />
+          ))}
+        </GridLayout>
+        {pageInfo.hasNextPage && (
+          <div className="text-center mt-8">
+            <button onClick={loadMore} className="btn btn-primary">
+              さらに読み込む
+            </button>
+          </div>
+        )}
+      </div>
     </SubPageLayout>
   );
 };

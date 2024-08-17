@@ -1,4 +1,7 @@
+// resources/ts/types/responses/Works.ts
+
 export interface SourceUrl {
+  slug?: string;
   sourceUrl: string;
 }
 
@@ -11,6 +14,7 @@ export interface WorkACF {
   eyecatch_sp: ImageNode;
   github: string | null;
   targetUrl: string | null;
+  companyname: string;
 }
 
 export interface CategoryNode {
@@ -38,6 +42,7 @@ export interface Work {
   workCategory: WorkCategory;
   skill: Skill;
   workId: number;
+  featuredImage: ImageNode;
 }
 
 export type WorksResponse = Work[];

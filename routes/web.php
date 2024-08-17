@@ -36,7 +36,7 @@ Route::get('/work/{id}', [WorkController::class, 'show'])->name('works.show');
 // API routes
 Route::prefix('api')->group(function () {
   Route::get('/news/latest', [ApiPosts::class, 'getLatestPosts'])->name('api.latestNews');
-  Route::get('/works', [ApiWorks::class, 'index'])->name('api.workIndex');
+  Route::get('/works', [ApiWorks::class, 'getWorkList'])->name('api.workIndex');
   Route::get('/works/latest', [ApiWorks::class, 'getLatestWorks'])->name('api.latestWorks');
   Route::get('/profile/histories', [ApiHistories::class, 'getHistories'])->name('api.histories');
   Route::get('/profile/skills', [ApiSkills::class, 'getAllSkills'])->name('api.skills');

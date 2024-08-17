@@ -45,6 +45,59 @@ class WorksController extends Controller
                 }
               }
               workId
+              featuredImage {
+                node {
+                  slug
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }';
+
+  private const _GET_WORK_LIST_QUERY = '
+        query getWorks($first: Int!, $after: String) {
+          works(first: $first, after: $after) {
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            nodes {
+              date
+              content
+              title
+              workACF {
+                eyecatch {
+                  node {
+                    sourceUrl
+                  }
+                }
+                eyecatch_sp {
+                  node {
+                    sourceUrl
+                  }
+                }
+                github
+                targetUrl
+              }
+              workCategory {
+                nodes {
+                  name
+                }
+              }
+              skill {
+                nodes {
+                  skillId
+                  name
+                }
+              }
+              workId
+              featuredImage {
+                node {
+                  slug
+                  sourceUrl
+                }
+              }
             }
           }
         }';
@@ -55,80 +108,6 @@ class WorksController extends Controller
   public function __construct(WordPressService $wordpressService)
   {
     $this->wordpressService = $wordpressService;
-  }
-
-  public function index(Request $request)
-  {
-    $page = $request->input('page', 1);
-    $perPage = 6; // 1ページあたりの表示件数
-
-    $works = [
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      [
-        'id' => 1,
-        'title' => 'プロジェクトA',
-        'description' => 'Webアプリケーション開発',
-        'image' => '/images/works/project-a.jpg',
-      ],
-      // ... 他の仮データ（合計18個程度）
-    ];
-
-    $total = count($works);
-    $works = array_slice($works, ($page - 1) * $perPage, $perPage);
-
-    return response()->json([
-      'works' => $works,
-      'current_page' => (int)$page,
-      'per_page' => $perPage,
-      'total' => $total,
-    ]);
   }
 
   /**
@@ -146,5 +125,26 @@ class WorksController extends Controller
 
     return
       response()->json($works['works']['nodes'], Response::HTTP_OK);
+  }
+
+  /**
+   * 指定件数の投稿を取得
+   *
+   * @return JsonResponse
+   */
+
+  public function getWorkList(Request $request): JsonResponse
+  {
+    $variable = [
+      'first' => (int)$request->input('per_page', 6),
+      'after' => $request->input('after', null)
+    ];
+
+    $response = $this->wordpressService->executeQuery(self::_GET_WORK_LIST_QUERY, $variable);
+
+    return response()->json([
+      'works' => $response['data']['works']['nodes'],
+      'pageInfo' => $response['data']['works']['pageInfo'],
+    ]);
   }
 }

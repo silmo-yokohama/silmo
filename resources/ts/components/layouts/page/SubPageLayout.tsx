@@ -22,9 +22,7 @@ const SubPageLayout: React.FC<SubPageLayoutProps> = ({
     <MainLayout>
       <Head title={title} />
       <SubPageHeader title={headerTitle} subtitle={headerSubtitle} image={headerImage} />
-      <div className="bg-base-200 min-h-screen">
-        <div className="container mx-auto px-4 py-16">{children}</div>
-      </div>
+      <div className="bg-base-200 min-h-screen">{children}</div>
     </MainLayout>
   );
 };

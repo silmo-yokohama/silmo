@@ -59,9 +59,9 @@ const WorkItem: React.FC<{ work: Work }> = ({ work }) => {
       onMouseLeave={() => setIsHovered(false)}
       className="bg-base-100 rounded-lg overflow-hidden"
     >
-      <Link href={`/works/${work.workId}`} className="block">
+      <Link href={`/work/${work.workId}`} className="block">
         <animated.img
-          src={work.workACF.eyecatch.node.sourceUrl}
+          src={work.featuredImage?.node.sourceUrl || "/images/photo/noimage.png"}
           alt={work.title}
           className="w-full h-64 object-cover transition-all duration-300 ease-in-out md:grayscale md:hover:grayscale-0"
         />
