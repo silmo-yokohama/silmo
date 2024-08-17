@@ -1,9 +1,9 @@
 import React from "react";
-import MainLayout from "../components/layouts/MainLayout";
 import SubPageHeader from "../components/layouts/header/SubPageHeader";
 import AboutMe from "../components/layouts/sections/Profile/AboutMe";
 import History from "../components/layouts/sections/Profile/History";
 import Skills from "../components/layouts/sections/Profile/Skills";
+import MainLayout from "../components/layouts/page/MainLayout";
 
 /**
  * Aboutページコンポーネント

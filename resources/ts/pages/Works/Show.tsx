@@ -1,5 +1,5 @@
 import React from "react";
-import MainLayout from "../../components/layouts/MainLayout";
+import MainLayout from "../../components/layouts/page/MainLayout";
 
 const Show = () => {
   return <MainLayout>Show</MainLayout>;

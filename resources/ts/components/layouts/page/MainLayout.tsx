@@ -4,12 +4,12 @@
  */
 
 import React, { ReactNode, useEffect } from "react";
-import { useTheme } from "../../hooks/useTheme";
-import Header from "./header/Header";
-import LoadingOverlay from "./loading/LoadingOverlay";
-import Footer from "./footer/Footer";
-import ContactSection from "./sections/Home/ContactBox";
-import Contact from "./common/Contact";
+import { useTheme } from "../../../hooks/useTheme";
+import LoadingOverlay from "../loading/LoadingOverlay";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
+import FooterContact from "../footer/ContactBox";
+import ContactLink from "../../ui/links/ContactLink";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -36,8 +36,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Header />
       {children}
 
-      <ContactSection />
-      <Contact />
+      <ContactLink />
+      <FooterContact />
       <Footer />
     </main>
   );

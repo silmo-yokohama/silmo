@@ -57,6 +57,80 @@ class WorksController extends Controller
     $this->wordpressService = $wordpressService;
   }
 
+  public function index(Request $request)
+  {
+    $page = $request->input('page', 1);
+    $perPage = 6; // 1ページあたりの表示件数
+
+    $works = [
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      [
+        'id' => 1,
+        'title' => 'プロジェクトA',
+        'description' => 'Webアプリケーション開発',
+        'image' => '/images/works/project-a.jpg',
+      ],
+      // ... 他の仮データ（合計18個程度）
+    ];
+
+    $total = count($works);
+    $works = array_slice($works, ($page - 1) * $perPage, $perPage);
+
+    return response()->json([
+      'works' => $works,
+      'current_page' => (int)$page,
+      'per_page' => $perPage,
+      'total' => $total,
+    ]);
+  }
+
   /**
    * 最新の投稿を取得
    *

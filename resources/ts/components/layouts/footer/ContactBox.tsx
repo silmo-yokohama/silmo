@@ -7,7 +7,7 @@ import { useSpring, animated } from "@react-spring/web";
  * ContactSection コンポーネント
  * お問い合わせページへのリンクを含むセクションを表示します。
  */
-const ContactSection: React.FC = () => {
+const FooterContact: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   // ボタンのアニメーション
@@ -77,4 +77,4 @@ const ContactSection: React.FC = () => {
   );
 };
 
-export default ContactSection;
+export default FooterContact;
