@@ -41,3 +41,11 @@ createInertiaApp({
     );
   },
 });
+
+// スクロール位置をリセットする関数を定義
+const resetScrollPosition = () => {
+  window.scrollTo(0, 0);
+};
+
+// Inertia.js のページ遷移イベントをリッスン
+document.addEventListener("inertia:navigate", resetScrollPosition);

@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Loading from "../../../assets/lottie/Loading";
+import { useSilmoAPI } from "../../../hooks/useSilmoAPI";
 
-interface LoadingOverlayProps {
-  isLoading: boolean;
-}
-
-const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
+const LoadingOverlay: React.FC = () => {
+  const { isLoading } = useSilmoAPI();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (isLoading) {
       setShow(true);
     } else {
-      const timer = setTimeout(() => setShow(false), 1000); // フェードアウト時間と同じ
+      const timer = setTimeout(() => setShow(false), 100); // フェードアウト時間と同じ
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
