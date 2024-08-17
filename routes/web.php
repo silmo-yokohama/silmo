@@ -7,11 +7,16 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SkillsController;
 use App\Http\Controllers\Api\WorksController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WorkController;
 
 Route::get('/', function () {
   return Inertia::render('Home');
 });
 Route::get('/profile', [ProfileController::class, 'index'])->name('about');
+
+//  実績ページ
+Route::get('/works', [WorkController::class, 'index'])->name('works.index');
+Route::get('/works/{id}', [WorkController::class, 'show'])->name('works.show');
 
 // API routes
 Route::prefix('api')->group(function () {
