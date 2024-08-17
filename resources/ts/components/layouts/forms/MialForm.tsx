@@ -29,7 +29,7 @@ const MailForm: React.FC<MailFormProps> = ({ onSubmit, data, errors, onChange, i
   const inputWrapperClass = "mb-6";
   const labelClass = "t block mb-2 text-lg font-medium  text-base-content ";
   const inputClass =
-    "w-full px-4 py-2 border bg-base-100 border-base-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500";
+    "t w-full px-4 py-2 border bg-base-100 border-base-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500";
   const errorClass = "mt-1 text-sm text-red-600";
 
   return (
