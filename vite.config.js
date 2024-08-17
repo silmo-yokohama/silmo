@@ -1,8 +1,11 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
+import { defineConfig } from "vite";
+import laravel from "laravel-vite-plugin";
 
 export default defineConfig({
-    plugins: [
-        laravel(["resources/ts/app.tsx"])
-    ],
+  plugins: [
+    laravel({
+      input: ["resources/css/app.scss", "resources/ts/app.tsx"],
+      refresh: true,
+    }),
+  ],
 });

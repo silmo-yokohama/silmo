@@ -1,0 +1,46 @@
+// Google Fonts
+@import url("https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Noto+Serif+JP:wght@200;300;400;700&family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=VT323&display=swap");
+
+// Tailwind
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+// Base styles
+@layer base {
+  *,
+  *::after,
+  *::before {
+    @apply box-border;
+  }
+
+  body {
+    font-family: "Zen Maru Gothic", serif;
+
+    &.loading-active {
+      overflow: hidden;
+    }
+  }
+
+  .digital {
+    font-family: "VT323", monospace;
+  }
+
+  .en-title {
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
+}
+
+// Component styles
+@layer components {
+  .t {
+    @apply transition-all duration-300;
+  }
+}
+
+// Import other component styles
+@import "components/curtain-button";
