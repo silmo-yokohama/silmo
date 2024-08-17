@@ -11,10 +11,9 @@ interface MailFormProps {
     phone: string;
     category: string;
     content: string;
-    "g-recaptcha-response": string;
   };
   errors: any; // eslint-disable-line
-  onChange: (name: string, value: string) => void;
+  onChange: (name: "name" | "email" | "phone" | "category" | "content", value: string) => void;
   isSubmitting: boolean;
 }
 

@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
           </div>
           <div className="flex space-x-4">
             <a
-              href="https://github.com/your-github-profile"
+              href="https://github.com/silmo-yokohama"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors duration-300"
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
               <GitHubIcon />
             </a>
             <a
-              href="https://twitter.com/your-twitter-profile"
+              href="https://twitter.com/silmo_yokohama"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors duration-300"
