@@ -6,6 +6,7 @@ interface RadioOption {
 }
 
 interface RadioInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  id: string;
   options: RadioOption[];
   value: string;
   onChange: (name: string, value: string) => void;
@@ -35,7 +36,7 @@ const RadioInput: React.FC<RadioInputProps> = ({
           />
           <label
             htmlFor={`${id}-${option.value}`}
-            className="ml-3 block text-sm font-medium text-gray-700"
+            className="ml-3 block text-sm font-medium text-base-content"
           >
             {option.label}
           </label>

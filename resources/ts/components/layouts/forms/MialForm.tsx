@@ -27,13 +27,13 @@ const MailForm: React.FC<MailFormProps> = ({ onSubmit, data, errors, onChange, i
   ];
 
   const inputWrapperClass = "mb-6";
-  const labelClass = "block mb-2 text-sm font-medium text-gray-700";
+  const labelClass = "t block mb-2 text-lg font-medium  text-base-content ";
   const inputClass =
-    "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500";
+    "w-full px-4 py-2 border bg-base-100 border-base-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500";
   const errorClass = "mt-1 text-sm text-red-600";
 
   return (
-    <form onSubmit={onSubmit} className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+    <form onSubmit={onSubmit} className="bg-base-300 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
       <div className={inputWrapperClass}>
         <label htmlFor="name" className={labelClass}>
           お名前 (必須)
@@ -109,11 +109,11 @@ const MailForm: React.FC<MailFormProps> = ({ onSubmit, data, errors, onChange, i
         {errors.content && <div className={errorClass}>{errors.content}</div>}
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-center p-6">
         <button
           type="submit"
-          className={`bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-            isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+          className={`t bg-primary hover:bg-primary-content text-white font-bold py-5 px-16 rounded focus:outline-none focus:shadow-outline ${
+            isSubmitting ? "opacity-50 cursor-not-allowed disabled:bg-base-300" : ""
           }`}
           disabled={isSubmitting}
         >

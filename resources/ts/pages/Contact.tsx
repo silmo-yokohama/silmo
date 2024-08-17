@@ -12,7 +12,6 @@ const Contact: React.FC = () => {
     phone: "",
     category: "",
     content: "",
-    "g-recaptcha-response": "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -52,12 +51,15 @@ const Contact: React.FC = () => {
     });
   };
 
-  const handleInputChange = (name: string, value: string) => {
+  const handleInputChange = (
+    name: "name" | "email" | "phone" | "category" | "content",
+    value: string
+  ) => {
     setData(name, value);
   };
 
   const listClassName =
-    "flex items-center mb-1 justify-start gap-3 before:flex before:w-3 before:h-[2px] before:bg-primary";
+    "flex items-center mb-3 md:mb-2 justify-start gap-3 before:flex before:w-3 before:h-[2px] before:min-w-2 before:bg-primary";
 
   return (
     <SubPageLayout
@@ -68,7 +70,7 @@ const Contact: React.FC = () => {
     >
       {showSuccessAnimation && <LoadingOverlay />}
       <div className="container max-w-5xl mx-auto px-4 py-8">
-        <div className="t bg-secondary-content border-secondary border-2 rounded-xl my-7 p-4 md:px-10 text-black">
+        <div className="t bg-secondary-content border-secondary border-2 rounded-xl mt-4 mb-10 p-4 md:px-10 text-black">
           <h2 className="text-xl md:text-3xl text-center mb-3 md:mb-6">
             送信前にご一読お願いします！
           </h2>
