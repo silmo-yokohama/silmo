@@ -11,8 +11,7 @@ use App\Http\Controllers\Api\PostController as ApiPosts;
 use App\Http\Controllers\Api\SkillsController as ApiSkills;
 use App\Http\Controllers\Api\WorksController as ApiWorks;
 use App\Http\Controllers\Api\HistoryController as ApiHistories;
-
-
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkController;
 
@@ -32,6 +31,9 @@ Route::get('/works/{page}', [WorkController::class, 'index'])
 // 実績詳細ページ
 Route::get('/work/{id}', [WorkController::class, 'show'])->name('works.show');
 
+//  お問い合わせ
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 // API routes
 Route::prefix('api')->group(function () {
