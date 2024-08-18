@@ -1,0 +1,59 @@
+name: Deploy SilMo Portfolio to XServer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.PROJECT_PATH }}
+
+            # mainブランチに切り替えて最新の変更をpull
+            git checkout main
+            git pull origin main
+
+            # composer.jsonが変更されたかチェック
+            if git diff --name-only HEAD@{1} HEAD | grep -q "composer.json"; then
+              echo "Updating Composer dependencies..."
+              php composer install --no-dev --optimize-autoloader
+            fi
+
+            # package.jsonが変更されたかチェック
+            if git diff --name-only HEAD@{1} HEAD | grep -q "package.json"; then
+              echo "Updating npm dependencies..."
+              npm ci
+            fi
+
+            # フロントエンドアセットのビルド
+            echo "Building frontend assets..."
+            npm run build
+
+            # Laravelのキャッシュをクリア
+            echo "Clearing Laravel cache..."
+            php artisan cache:clear
+            php artisan config:clear
+            php artisan route:clear
+            php artisan view:clear
+
+            # 本番環境用の.envファイルが存在する場合、それを使用
+            if [ -f .env.production ]; then
+              echo "Copying production .env file..."
+              cp .env.production .env
+            fi
+
+            # ストレージディレクトリのパーミッションを設定
+            echo "Setting storage directory permissions..."
+            chmod -R 775 storage bootstrap/cache
