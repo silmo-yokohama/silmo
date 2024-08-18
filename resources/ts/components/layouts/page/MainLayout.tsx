@@ -10,6 +10,7 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import FooterContact from "../footer/ContactBox";
 import ContactLink from "../../ui/links/ContactLink";
+import { ToastContainer } from "../../ui/toasts/ToastContainer";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -39,6 +40,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <ContactLink />
       <FooterContact />
       <Footer />
+      <ToastContainer />
     </main>
   );
 };

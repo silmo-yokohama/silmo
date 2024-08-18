@@ -7,6 +7,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "./slices/themeSlice";
 import apiLoadingReducer from "./slices/apiLoadingSlices";
 import menuReducer from "./slices/menuSlice";
+import toastReducer from "../store/slices/toastSlice";
+
 /**
  * Reduxストアを構成
  */
@@ -15,6 +17,7 @@ export const store = configureStore({
     menu: menuReducer,
     theme: themeReducer,
     apiLoading: apiLoadingReducer,
+    toast: toastReducer,
   },
 });
 
