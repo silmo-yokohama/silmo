@@ -7,6 +7,7 @@ import { HistoryItem, HistoryItems } from "../../../../types/responses/ProfileHi
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import ProfileSectionTitle from "./ProfileSectionTitle";
+import { useToast } from "../../../../hooks/useToast";
 
 /**
  * Historyコンポーネント
@@ -19,24 +20,29 @@ const History: React.FC = () => {
   });
   const { get } = useSilmoAPI();
   const [histories, setHistories] = useState<HistoryItems>([]);
+  const { showToast } = useToast();
 
   useEffect(() => {
-    get<HistoryItems>("/api/profile/histories").then((data) => {
-      const lastData: HistoryItem = {
-        title: "そして伝説へ…",
-        content: `<p>俺たちの冒険はこれからだ！（完）</p>
-        <p>ということで、これからも日々研鑽し続け、<br>どこかの業界で勇者になれるように精進していきます。</p>
-        <p>ここまで見てくれてありがとうございました🙌</p>
-        `,
-        featuredImage: {
-          node: {
-            sourceUrl: "/images/profile/yuusya_game.png",
+    try {
+      get<HistoryItems>("/api/profile/histories").then((data) => {
+        const lastData: HistoryItem = {
+          title: "そして伝説へ…",
+          content: `<p>俺たちの冒険はこれからだ！（完）</p>
+          <p>ということで、これからも日々研鑽し続け、<br>どこかの業界で勇者になれるように精進していきます。</p>
+          <p>ここまで見てくれてありがとうございました🙌</p>
+          `,
+          featuredImage: {
+            node: {
+              sourceUrl: "/images/profile/yuusya_game.png",
+            },
           },
-        },
-      };
+        };
 
-      setHistories([...data, lastData]);
-    });
+        setHistories([...data, lastData]);
+      });
+    } catch {
+      showToast("通信中にエラーが発生しました。");
+    }
   }, []);
 
   const timelineRef = useRef<HTMLUListElement>(null);

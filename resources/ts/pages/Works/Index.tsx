@@ -5,6 +5,7 @@ import SubPageLayout from "../../components/layouts/page/SubPageLayout";
 import GridLayout from "../../components/layouts/common/GridLayout";
 import { Work } from "../../types/responses/Works";
 import GridItemLink from "../../components/ui/links/GridItemLink";
+import { useToast } from "../../hooks/useToast";
 
 interface PageInfo {
   hasNextPage: boolean;
@@ -24,6 +25,7 @@ const WorksIndex: React.FC = () => {
   );
   const [currentPage, setCurrentPage] = useRemember(1, "currentPage");
   const { get } = useSilmoAPI();
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (works.length === 0) {
@@ -55,8 +57,8 @@ const WorksIndex: React.FC = () => {
         setWorks((prev) => [...prev, ...response.works]);
       }
       setPageInfo(response.pageInfo);
-    } catch (error) {
-      console.error("Failed to fetch works", error);
+    } catch {
+      showToast("通信中にエラーが発生しました。");
     }
   };
 

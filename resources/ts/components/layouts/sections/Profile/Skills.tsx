@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useSilmoAPI } from "../../../../hooks/useSilmoAPI";
 import { Skill, SkillCategory, SkillNode } from "../../../../types/responses/Skills";
 import ProfileSectionTitle from "./ProfileSectionTitle";
+import { useToast } from "../../../../hooks/useToast";
 
 export const organizeSkillData = (data: SkillNode[]): SkillCategory[] => {
   const categories: SkillCategory[] = [];
@@ -100,13 +101,18 @@ const Skills: React.FC = () => {
   const { get } = useSilmoAPI();
   const [skillCategories, setSkillCategories] = useState<SkillCategory[]>([]);
   const [loading, setLoading] = useState(true);
+  const { showToast } = useToast();
 
   useEffect(() => {
-    get<SkillNode[]>("/api/profile/skills").then((response) => {
-      const organizedData = organizeSkillData(response);
-      setSkillCategories(organizedData);
-      setLoading(false);
-    });
+    try {
+      get<SkillNode[]>("/api/profile/skills").then((response) => {
+        const organizedData = organizeSkillData(response);
+        setSkillCategories(organizedData);
+        setLoading(false);
+      });
+    } catch {
+      showToast("通信中にエラーが発生しました。");
+    }
   }, []);
 
   return (

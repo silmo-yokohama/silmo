@@ -6,6 +6,7 @@ import { Work } from "../../../../types/responses/Works";
 import SectionHeader from "../../header/SectionHeader";
 import SectionButton from "../../../ui/buttons/SectionButton";
 import { format } from "date-fns";
+import { useToast } from "../../../../hooks/useToast";
 
 /**
  * 実績セクションを表示するコンポーネント
@@ -13,12 +14,17 @@ import { format } from "date-fns";
 const Works: React.FC = () => {
   const { get } = useSilmoAPI();
   const [works, setWorks] = useState<Work[] | null>(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
-    // APIから最新の実績データを取得
-    get<Work[]>("/api/works/latest").then((data) => {
-      setWorks(data);
-    });
+    try {
+      // APIから最新の実績データを取得
+      get<Work[]>("/api/works/latest").then((data) => {
+        setWorks(data);
+      });
+    } catch {
+      showToast("通信中にエラーが発生しました。");
+    }
   }, []);
 
   return (
