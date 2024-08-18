@@ -17,7 +17,7 @@ class WordPressService
   public function __construct()
   {
     $this->client = new Client();
-    $this->endpoint = env('WORDPRESS_ENDPOINT');
+    $this->endpoint = config('services.wordpress.endpoint');
   }
 
   /**
