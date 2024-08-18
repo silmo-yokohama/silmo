@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'wordpress' => [
+        'endpoint' => env('WORDPRESS_ENDPOINT'),
+    ],
+
 ];
