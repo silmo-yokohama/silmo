@@ -97,6 +97,12 @@ class WorkController extends Controller
 
     $response = $this->wordpressService->executeQuery(self::_GET_WORK_QUERY, $variable);
 
+    if (is_null($response['data']['work'])) {
+      return Inertia::render('NotFound')
+        ->toResponse(request())
+        ->setStatusCode(404);
+    }
+
     return Inertia::render('Works/Show', [
       'work' => $response['data']['work'],
       'allWorks' => $response['data']['allWorks']['nodes'],
