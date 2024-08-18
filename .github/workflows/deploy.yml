@@ -1,5 +1,4 @@
-name: Deploy SilMo Portfolio to XServer
-
+name: Deploy SilMo Portfolio
 on:
   push:
     branches:
@@ -9,16 +8,15 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy to Server
+      - name: ssh and deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.PROJECT_PATH }}
 
