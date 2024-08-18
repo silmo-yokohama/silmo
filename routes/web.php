@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\WorksController as ApiWorks;
 use App\Http\Controllers\Api\HistoryController as ApiHistories;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\WorkController;
 
 Route::get('/', function () {
@@ -35,6 +36,9 @@ Route::get('/work/{id}', [WorkController::class, 'show'])->name('works.show');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+//  サイトマップ
+Route::get('sitemap.xml', [SitemapController::class, 'index']);
+
 // API routes
 Route::prefix('api')->group(function () {
   Route::get('/news/latest', [ApiPosts::class, 'getLatestPosts'])->name('api.latestNews');
@@ -43,4 +47,8 @@ Route::prefix('api')->group(function () {
   Route::get('/work/{workId}', [ApiWorks::class, 'getWork'])->name('api.work');
   Route::get('/profile/histories', [ApiHistories::class, 'getHistories'])->name('api.histories');
   Route::get('/profile/skills', [ApiSkills::class, 'getAllSkills'])->name('api.skills');
+});
+
+Route::fallback(function () {
+  return Inertia::render('NotFound');
 });
