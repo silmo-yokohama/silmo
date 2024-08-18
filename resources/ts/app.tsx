@@ -7,7 +7,17 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { ParallaxProvider } from "react-scroll-parallax";
+import { router } from "@inertiajs/react";
 
+// Googleアナリティクスのページビュー追跡
+router.on("navigate", (event) => {
+  const options = {
+    page_path: event.detail.page.url,
+  };
+  if (typeof window.gtag === "function") {
+    window.gtag("config", "G-1KR91204N3", options);
+  }
+});
 /**
  * Inertia.jsのプログレスバーを初期化
  */
