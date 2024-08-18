@@ -4,6 +4,7 @@ import { NewsPost } from "../../../../types/responses/NewsPost";
 import { format } from "date-fns";
 import { useSpring, animated, useTrail, config } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
+import { useToast } from "../../../../hooks/useToast";
 
 /**
  * ニュースとステータスを表示するコンポーネント
@@ -15,12 +16,17 @@ const NewsStatus: React.FC = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
+  const { showToast } = useToast();
 
   useEffect(() => {
-    // APIからニュースデータを取得
-    get<NewsPost[]>("/api/news/latest").then((data) => {
-      setNews(data);
-    });
+    try {
+      // APIからニュースデータを取得
+      get<NewsPost[]>("/api/news/latest").then((data) => {
+        setNews(data);
+      });
+    } catch {
+      showToast("通信中にエラーが発生しました。");
+    }
   }, []);
 
   // セクション全体のアニメーション
