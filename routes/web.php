@@ -48,3 +48,7 @@ Route::prefix('api')->group(function () {
   Route::get('/profile/histories', [ApiHistories::class, 'getHistories'])->name('api.histories');
   Route::get('/profile/skills', [ApiSkills::class, 'getAllSkills'])->name('api.skills');
 });
+
+Route::fallback(function () {
+  return Inertia::render('NotFound');
+});
