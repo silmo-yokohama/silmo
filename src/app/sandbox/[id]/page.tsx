@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
-import { MOCK_SANDBOXES } from '@/lib/mock';
 import { getAllSandboxIds, getSandboxById } from '@/lib/microcms/sandboxes';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 import { SITE } from '@/lib/constants';
@@ -48,15 +47,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ogImage: sandbox.thumbnail?.url,
     });
   } catch {
-    // モックデータからフォールバック
-    const mock = MOCK_SANDBOXES.find((s) => s.id === id);
-    if (mock) {
-      return genMeta({
-        title: mock.title,
-        description: mock.purpose || `${mock.title} - ${SITE.name}の個人開発プロジェクト`,
-        path: `/sandbox/${id}`,
-      });
-    }
     return genMeta({ title: 'プロジェクトが見つかりません', noIndex: true });
   }
 }
@@ -67,12 +57,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export async function generateStaticParams() {
   try {
     const ids = await getAllSandboxIds();
-    // microCMS + モックの両方のIDを生成
-    const mockIds = MOCK_SANDBOXES.map((s) => s.id);
-    const allIds = [...new Set([...ids, ...mockIds])];
-    return allIds.map((id) => ({ id }));
+    return ids.map((id) => ({ id }));
   } catch {
-    return MOCK_SANDBOXES.map((s) => ({ id: s.id }));
+    return [];
   }
 }
 
@@ -87,9 +74,7 @@ export default async function SandboxDetailPage({ params }: Props) {
   try {
     sandbox = await getSandboxById(id);
   } catch {
-    // モックデータからフォールバック
-    sandbox = MOCK_SANDBOXES.find((s) => s.id === id);
-    if (!sandbox) notFound();
+    notFound();
   }
 
   return (

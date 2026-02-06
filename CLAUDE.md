@@ -39,7 +39,7 @@
 | UI | React | 19 |
 | 言語 | TypeScript | 5 |
 | スタイリング | Tailwind CSS | v4 |
-| CMS | microCMS (Hobby プラン) | - |
+| CMS | microCMS (Hobby プラン・無料) | - |
 | ホスティング | Vercel (Free プラン) | - |
 | バリデーション | Zod | 4 |
 | フォーム | React Hook Form | 7 |

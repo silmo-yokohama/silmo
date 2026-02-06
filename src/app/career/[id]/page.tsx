@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
 import { SITE } from '@/lib/constants';
-import { MOCK_CAREERS } from '@/lib/mock';
 import { getAllCareerIds, getCareerById } from '@/lib/microcms/careers';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 import { formatPeriod } from '@/lib/utils';
@@ -32,14 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/career/${id}`,
     });
   } catch {
-    const mock = MOCK_CAREERS.find((c) => c.id === id);
-    if (mock) {
-      return genMeta({
-        title: mock.title,
-        description: `${mock.title} - ${mock.role || ''}`,
-        path: `/career/${id}`,
-      });
-    }
     return genMeta({ title: '経歴が見つかりません', noIndex: true });
   }
 }
@@ -50,11 +41,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export async function generateStaticParams() {
   try {
     const ids = await getAllCareerIds();
-    const mockIds = MOCK_CAREERS.map((c) => c.id);
-    const allIds = [...new Set([...ids, ...mockIds])];
-    return allIds.map((id) => ({ id }));
+    return ids.map((id) => ({ id }));
   } catch {
-    return MOCK_CAREERS.map((c) => ({ id: c.id }));
+    return [];
   }
 }
 
@@ -69,8 +58,7 @@ export default async function CareerDetailPage({ params }: Props) {
   try {
     career = await getCareerById(id);
   } catch {
-    career = MOCK_CAREERS.find((c) => c.id === id);
-    if (!career) notFound();
+    notFound();
   }
 
   return (

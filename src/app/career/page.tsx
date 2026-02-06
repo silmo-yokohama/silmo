@@ -6,7 +6,6 @@ import { Section } from '@/components/layout/section';
 import { SectionTitle } from '@/components/ui/section-title';
 
 import { getCareers } from '@/lib/microcms/careers';
-import { MOCK_CAREERS } from '@/lib/mock';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 
 export const revalidate = 86400; // 24時間
@@ -24,7 +23,7 @@ export const metadata: Metadata = genMeta({
  */
 export default async function CareerPage() {
   const careersData = await getCareers().catch(() => null);
-  const careers = careersData?.contents.length ? careersData.contents : MOCK_CAREERS;
+  const careers = careersData?.contents ?? [];
 
   return (
     <Section>

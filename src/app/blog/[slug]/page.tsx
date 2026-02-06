@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
 import { SITE } from '@/lib/constants';
-import { MOCK_BLOGS } from '@/lib/mock';
 import { getAllBlogSlugs, getBlogBySlug } from '@/lib/microcms/blogs';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 import { getBlogPostingJsonLd, getPersonJsonLd } from '@/lib/seo/json-ld';
@@ -35,15 +34,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ogImage: blog.thumbnail?.url,
     });
   } catch {
-    // モックデータからフォールバック
-    const mock = MOCK_BLOGS.find((b) => b.id === slug);
-    if (mock) {
-      return genMeta({
-        title: mock.title,
-        description: mock.description || `${mock.title} - ${SITE.name}のブログ記事`,
-        path: `/blog/${slug}`,
-      });
-    }
     return genMeta({ title: '記事が見つかりません', noIndex: true });
   }
 }
@@ -54,12 +44,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export async function generateStaticParams() {
   try {
     const slugs = await getAllBlogSlugs();
-    // microCMS + モックの両方のスラッグを生成
-    const mockSlugs = MOCK_BLOGS.map((b) => b.id);
-    const allSlugs = [...new Set([...slugs, ...mockSlugs])];
-    return allSlugs.map((slug) => ({ slug }));
+    return slugs.map((slug) => ({ slug }));
   } catch {
-    return MOCK_BLOGS.map((b) => ({ slug: b.id }));
+    return [];
   }
 }
 
@@ -74,9 +61,7 @@ export default async function BlogDetailPage({ params }: Props) {
   try {
     blog = await getBlogBySlug(slug);
   } catch {
-    // モックデータからフォールバック
-    blog = MOCK_BLOGS.find((b) => b.id === slug);
-    if (!blog) notFound();
+    notFound();
   }
 
   // タグをカンマ区切りから配列に変換
