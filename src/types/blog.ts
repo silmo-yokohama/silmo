@@ -8,8 +8,8 @@ export type Blog = {
   body: string;
   /** サムネイル画像（OGP兼用） */
   thumbnail?: MicroCMSImage;
-  /** カテゴリ（技術/日記/レビュー） */
-  category: string;
+  /** カテゴリ（セレクトフィールド。microCMSから配列で返る） */
+  category?: string[];
   /** タグ（カンマ区切り） */
   tags?: string;
   /** 概要（SEO meta description用） */

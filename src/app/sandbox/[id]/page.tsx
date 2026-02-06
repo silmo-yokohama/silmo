@@ -77,6 +77,9 @@ export default async function SandboxDetailPage({ params }: Props) {
     notFound();
   }
 
+  /** セレクトフィールドの配列から最初の値を取得 */
+  const status = sandbox.status?.[0] ?? '';
+
   return (
     <Section>
       <Container size="md">
@@ -97,8 +100,8 @@ export default async function SandboxDetailPage({ params }: Props) {
             {/* ヘッダー */}
             <div className="border-b border-text-dark/20 pb-4">
               <div className="mb-3 flex flex-wrap items-center gap-2">
-                <Badge variant={statusVariant[sandbox.status] || 'muted'}>
-                  {statusLabel[sandbox.status] || sandbox.status}
+                <Badge variant={statusVariant[status] || 'muted'}>
+                  {statusLabel[status] || status}
                 </Badge>
               </div>
               <h1 className="font-[family-name:var(--font-pixel)] text-2xl text-text-main pixel-text-shadow sm:text-3xl">

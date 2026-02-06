@@ -97,7 +97,9 @@ export default async function BlogDetailPage({ params }: Props) {
               <header className="mb-8 space-y-4 pt-2">
                 {/* カテゴリとタグ */}
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="primary">{blog.category}</Badge>
+                  {blog.category?.map((cat) => (
+                    <Badge key={cat} variant="primary">{cat}</Badge>
+                  ))}
                   {tags.map((tag) => (
                     <Badge key={tag} variant="outline">
                       {tag}

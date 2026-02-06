@@ -69,7 +69,9 @@ export function BlogCard({ blog }: BlogCardProps) {
         <div className="flex flex-1 flex-col gap-2 p-4">
           {/* カテゴリと日付 */}
           <div className="flex items-center gap-2">
-            <Badge variant="accent">{blog.category}</Badge>
+            {blog.category?.length ? (
+              <Badge variant="accent">{blog.category[0]}</Badge>
+            ) : null}
             <span className="font-[family-name:var(--font-press-start)] text-[7px] text-text-dark">
               {formatDateShort(blog.publishedAt!)}
             </span>

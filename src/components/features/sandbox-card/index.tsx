@@ -33,6 +33,9 @@ const statusLabel: Record<string, string> = {
  * ホバー時にピクセルグロー・スキャンラインエフェクトが発動する
  */
 export function SandboxCard({ sandbox }: SandboxCardProps) {
+  /** セレクトフィールドの配列から最初の値を取得 */
+  const status = sandbox.status?.[0] ?? '';
+
   return (
     <Link href={`/sandbox/${sandbox.id}`} className="block">
     <motion.div
@@ -74,8 +77,8 @@ export function SandboxCard({ sandbox }: SandboxCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-bg-card/90 to-transparent" />
           {/* ステータスバッジ（画像内） */}
           <div className="absolute bottom-2 left-3">
-            <Badge variant={statusVariant[sandbox.status] || 'muted'}>
-              {statusLabel[sandbox.status] || sandbox.status}
+            <Badge variant={statusVariant[status] || 'muted'}>
+              {statusLabel[status] || status}
             </Badge>
           </div>
         </div>
@@ -101,8 +104,8 @@ export function SandboxCard({ sandbox }: SandboxCardProps) {
           </div>
           {/* ステータスバッジ */}
           <div className="absolute bottom-2 left-3">
-            <Badge variant={statusVariant[sandbox.status] || 'muted'}>
-              {statusLabel[sandbox.status] || sandbox.status}
+            <Badge variant={statusVariant[status] || 'muted'}>
+              {statusLabel[status] || status}
             </Badge>
           </div>
         </div>
