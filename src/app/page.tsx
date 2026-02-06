@@ -1,65 +1,99 @@
-import Image from "next/image";
+import Link from 'next/link';
 
-export default function Home() {
+import { BlogCard } from '@/components/features/blog-card';
+import { Hero } from '@/components/features/hero';
+import { SandboxCard } from '@/components/features/sandbox-card';
+import { Container } from '@/components/layout/container';
+import { Section } from '@/components/layout/section';
+import { Button } from '@/components/ui/button';
+import { SectionTitle } from '@/components/ui/section-title';
+
+import { getBlogs } from '@/lib/microcms/blogs';
+import { getSandboxes } from '@/lib/microcms/sandboxes';
+import { getPersonJsonLd, getWebSiteJsonLd } from '@/lib/seo/json-ld';
+
+export const revalidate = 3600; // 1時間
+
+/**
+ * ホームページ
+ * ヒーローセクション、最新ブログ3件、サンドボックスハイライト、CTAを表示
+ */
+export default async function HomePage() {
+  // microCMSからデータ取得（並行実行）
+  const [blogsData, sandboxesData] = await Promise.all([
+    getBlogs({ limit: 3 }).catch(() => null),
+    getSandboxes({ limit: 3 }).catch(() => null),
+  ]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      {/* 構造化データ */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([getPersonJsonLd(), getWebSiteJsonLd()]),
+        }}
+      />
+
+      {/* ヒーローセクション */}
+      <Hero />
+
+      {/* 最新ブログ */}
+      {blogsData && blogsData.contents.length > 0 && (
+        <Section secondary>
+          <Container>
+            <SectionTitle sub="Blog">最新の記事</SectionTitle>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {blogsData.contents.map((blog) => (
+                <BlogCard key={blog.id} blog={blog} />
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link href="/blog">
+                <Button variant="outline">すべての記事を見る</Button>
+              </Link>
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* サンドボックスハイライト */}
+      {sandboxesData && sandboxesData.contents.length > 0 && (
+        <Section>
+          <Container>
+            <SectionTitle sub="Sandbox">個人開発</SectionTitle>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {sandboxesData.contents.map((sandbox) => (
+                <SandboxCard key={sandbox.id} sandbox={sandbox} />
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link href="/sandbox">
+                <Button variant="outline">すべてのプロジェクトを見る</Button>
+              </Link>
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* CTA */}
+      <Section secondary>
+        <Container size="sm">
+          <div className="text-center">
+            <h2 className="mb-4 font-[family-name:var(--font-pixel)] text-2xl text-text-main sm:text-3xl">
+              一緒に働きませんか？
+            </h2>
+            <p className="mb-8 text-text-sub">
+              フロントエンド開発のご相談、お見積もりなど、お気軽にお問い合わせください。
+            </p>
+            <Link href="/contact">
+              <Button variant="primary" size="lg" pixel>
+                お問い合わせ
+              </Button>
+            </Link>
+          </div>
+        </Container>
+      </Section>
+    </>
   );
 }

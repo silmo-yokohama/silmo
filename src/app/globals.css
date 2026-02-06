@@ -1,26 +1,252 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ===================================
+ * Tailwind v4 カスタムテーマ定義
+ * SilMo ポートフォリオ - ダークテーマ
+ * =================================== */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* --- メインカラー --- */
+  --color-primary: #00a197;
+  --color-primary-light: #33b5ad;
+  --color-primary-dark: #00786f;
+
+  /* --- サブカラー --- */
+  --color-accent: #f8b62b;
+  --color-accent-light: #fac755;
+  --color-accent-dark: #d69a1e;
+
+  /* --- 背景色 --- */
+  --color-bg-main: #0f0f23;
+  --color-bg-secondary: #1a1a2e;
+  --color-bg-card: #16213e;
+
+  /* --- テキスト色 --- */
+  --color-text-main: #f2f2f2;
+  --color-text-sub: #c9d6df;
+  --color-text-dark: #4a4e69;
+
+  /* --- フォント --- */
+  --font-pixel: 'PixelMplus12', monospace;
+  --font-pixel-en: var(--font-press-start);
+  --font-body: var(--font-noto-sans-jp);
+  --font-code: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ===================================
+ * ピクセルフォント（ローカル）
+ * =================================== */
+@font-face {
+  font-family: 'PixelMplus12';
+  src: url('/fonts/PixelMplus12-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===================================
+ * グローバルスタイル
+ * =================================== */
+body {
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
+  font-family: var(--font-body), sans-serif;
+}
+
+/* セレクションカラー */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-text-main);
+}
+
+/* スクロールバー */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* ===================================
+ * ピクセルアート風ユーティリティ
+ * =================================== */
+
+/* ピクセル風ボックスシャドウ（ボーダー代替） */
+.pixel-border {
+  box-shadow:
+    /* 上辺 */ 0 -4px 0 0 var(--color-primary),
+    /* 右辺 */ 4px 0 0 0 var(--color-primary),
+    /* 下辺 */ 0 4px 0 0 var(--color-primary),
+    /* 左辺 */ -4px 0 0 0 var(--color-primary),
+    /* 角（左上） */ -4px -4px 0 0 var(--color-primary),
+    /* 角（右上） */ 4px -4px 0 0 var(--color-primary),
+    /* 角（右下） */ 4px 4px 0 0 var(--color-primary),
+    /* 角（左下） */ -4px 4px 0 0 var(--color-primary);
+}
+
+/* ピクセル風グローエフェクト */
+.pixel-glow {
+  box-shadow:
+    0 0 0 2px var(--color-primary),
+    0 0 8px var(--color-primary),
+    0 0 16px rgba(0, 161, 151, 0.3);
+}
+
+/* ピクセル風テキストシャドウ */
+.pixel-text-shadow {
+  text-shadow:
+    2px 2px 0 var(--color-bg-main),
+    -1px -1px 0 var(--color-bg-main);
+}
+
+/* ===================================
+ * アニメーション
+ * =================================== */
+
+/* フェードインアニメーション（スクロール用） */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* タイプライター点滅カーソル */
+@keyframes blink-cursor {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.blink-cursor::after {
+  content: '▌';
+  animation: blink-cursor 1s step-end infinite;
+  color: var(--color-primary);
+}
+
+/* ピクセル風パルスアニメーション */
+@keyframes pixel-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 161, 151, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(0, 161, 151, 0);
+  }
+}
+
+/* ===================================
+ * microCMS リッチエディタ用スタイル
+ * =================================== */
+.prose-microcms h2 {
+  font-family: var(--font-pixel);
+  color: var(--color-primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.prose-microcms h3 {
+  color: var(--color-text-main);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.prose-microcms p {
+  color: var(--color-text-sub);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.prose-microcms a {
+  color: var(--color-primary-light);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.prose-microcms a:hover {
+  color: var(--color-accent);
+}
+
+.prose-microcms code {
+  font-family: var(--font-code);
+  background-color: var(--color-bg-secondary);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.prose-microcms pre {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-text-dark);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.prose-microcms pre code {
+  background: none;
+  padding: 0;
+}
+
+.prose-microcms ul,
+.prose-microcms ol {
+  color: var(--color-text-sub);
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-microcms li {
+  margin-bottom: 0.25rem;
+}
+
+.prose-microcms blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: 1rem;
+  color: var(--color-text-sub);
+  font-style: italic;
+}
+
+.prose-microcms img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+.prose-microcms table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.prose-microcms th,
+.prose-microcms td {
+  border: 1px solid var(--color-text-dark);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.prose-microcms th {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-primary);
 }
