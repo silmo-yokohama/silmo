@@ -2,10 +2,14 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
+import Link from 'next/link';
+
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
 import { SITE } from '@/lib/constants';
+import { MOCK_BLOGS } from '@/lib/mock';
 import { getAllBlogSlugs, getBlogBySlug } from '@/lib/microcms/blogs';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 import { getBlogPostingJsonLd, getPersonJsonLd } from '@/lib/seo/json-ld';
@@ -31,6 +35,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ogImage: blog.thumbnail?.url,
     });
   } catch {
+    // モックデータからフォールバック
+    const mock = MOCK_BLOGS.find((b) => b.id === slug);
+    if (mock) {
+      return genMeta({
+        title: mock.title,
+        description: mock.description || `${mock.title} - ${SITE.name}のブログ記事`,
+        path: `/blog/${slug}`,
+      });
+    }
     return genMeta({ title: '記事が見つかりません', noIndex: true });
   }
 }
@@ -41,9 +54,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export async function generateStaticParams() {
   try {
     const slugs = await getAllBlogSlugs();
-    return slugs.map((slug) => ({ slug }));
+    // microCMS + モックの両方のスラッグを生成
+    const mockSlugs = MOCK_BLOGS.map((b) => b.id);
+    const allSlugs = [...new Set([...slugs, ...mockSlugs])];
+    return allSlugs.map((slug) => ({ slug }));
   } catch {
-    return [];
+    return MOCK_BLOGS.map((b) => ({ slug: b.id }));
   }
 }
 
@@ -58,7 +74,9 @@ export default async function BlogDetailPage({ params }: Props) {
   try {
     blog = await getBlogBySlug(slug);
   } catch {
-    notFound();
+    // モックデータからフォールバック
+    blog = MOCK_BLOGS.find((b) => b.id === slug);
+    if (!blog) notFound();
   }
 
   // タグをカンマ区切りから配列に変換
@@ -76,53 +94,78 @@ export default async function BlogDetailPage({ params }: Props) {
 
       <Section>
         <Container size="sm">
-          <article>
-            {/* ヘッダー */}
-            <header className="mb-10">
-              {/* カテゴリとタグ */}
-              <div className="mb-4 flex flex-wrap items-center gap-2">
-                <Badge variant="primary">{blog.category}</Badge>
-                {tags.map((tag) => (
-                  <Badge key={tag} variant="outline">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+          {/* パンくずリスト風ナビ */}
+          <div className="mb-6 flex items-center gap-2 font-[family-name:var(--font-pixel)] text-xs text-text-dark">
+            <Link href="/blog" className="transition-colors hover:text-primary">
+              BLOG
+            </Link>
+            <span aria-hidden="true">&gt;</span>
+            <span className="text-text-sub">{blog.title}</span>
+          </div>
 
-              {/* タイトル */}
-              <h1 className="mb-4 font-[family-name:var(--font-pixel)] text-2xl text-text-main sm:text-3xl">
-                {blog.title}
-              </h1>
+          {/* メインコンテンツ */}
+          <div className="rpg-box p-6 sm:p-8">
+            <span className="rpg-label">ARTICLE</span>
 
-              {/* 公開日・更新日 */}
-              <div className="flex flex-wrap gap-4 text-sm text-text-dark">
-                {blog.publishedAt && <time dateTime={blog.publishedAt}>公開: {formatDate(blog.publishedAt)}</time>}
-                {blog.updatedAt && blog.updatedAt !== blog.publishedAt && (
-                  <time dateTime={blog.updatedAt}>更新: {formatDate(blog.updatedAt)}</time>
-                )}
-              </div>
-
-              {/* サムネイル */}
-              {blog.thumbnail && (
-                <div className="relative mt-6 aspect-video overflow-hidden rounded-lg">
-                  <Image
-                    src={blog.thumbnail.url}
-                    alt={blog.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 720px"
-                    priority
-                  />
+            <article>
+              {/* ヘッダー */}
+              <header className="mb-8 space-y-4 pt-2">
+                {/* カテゴリとタグ */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="primary">{blog.category}</Badge>
+                  {tags.map((tag) => (
+                    <Badge key={tag} variant="outline">
+                      {tag}
+                    </Badge>
+                  ))}
                 </div>
-              )}
-            </header>
 
-            {/* 本文 */}
-            <div
-              className="prose-microcms"
-              dangerouslySetInnerHTML={{ __html: blog.body }}
-            />
-          </article>
+                {/* タイトル */}
+                <h1 className="font-[family-name:var(--font-pixel)] text-2xl text-text-main pixel-text-shadow sm:text-3xl">
+                  {blog.title}
+                </h1>
+
+                {/* 公開日・更新日 */}
+                <div className="flex flex-wrap gap-4 border-b border-text-dark/20 pb-4 font-[family-name:var(--font-press-start)] text-[8px] text-text-dark">
+                  {blog.publishedAt && (
+                    <time dateTime={blog.publishedAt}>POST: {formatDate(blog.publishedAt)}</time>
+                  )}
+                  {blog.updatedAt && blog.updatedAt !== blog.publishedAt && (
+                    <time dateTime={blog.updatedAt}>UPDATE: {formatDate(blog.updatedAt)}</time>
+                  )}
+                </div>
+
+                {/* サムネイル */}
+                {blog.thumbnail && (
+                  <div className="relative aspect-video overflow-hidden border-2 border-text-dark/30">
+                    <Image
+                      src={blog.thumbnail.url}
+                      alt={blog.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 720px"
+                      priority
+                    />
+                  </div>
+                )}
+              </header>
+
+              {/* 本文 */}
+              <div
+                className="prose-microcms"
+                dangerouslySetInnerHTML={{ __html: blog.body }}
+              />
+            </article>
+          </div>
+
+          {/* 戻るボタン */}
+          <div className="mt-8">
+            <Link href="/blog">
+              <Button variant="ghost" pixel>
+                ← 一覧に戻る
+              </Button>
+            </Link>
+          </div>
         </Container>
       </Section>
     </>

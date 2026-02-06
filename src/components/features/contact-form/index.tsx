@@ -44,7 +44,7 @@ export function ContactForm() {
 
       {/* 件名 */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="subject" className="text-sm font-medium text-text-sub">
+        <label htmlFor="subject" className="font-[family-name:var(--font-pixel)] text-xs text-text-sub">
           件名 *
         </label>
         <select
@@ -52,8 +52,8 @@ export function ContactForm() {
           aria-invalid={!!errors.subject}
           aria-describedby={errors.subject ? 'subject-error' : undefined}
           className={cn(
-            'rounded-lg border bg-bg-secondary px-4 py-2.5 text-text-main outline-none transition-all',
-            'focus:border-primary focus:ring-1 focus:ring-primary',
+            'rounded-none border-2 bg-bg-secondary px-4 py-2.5 text-text-main outline-none transition-all',
+            'focus:border-primary focus:shadow-[0_0_8px_rgba(0,161,151,0.3)]',
             errors.subject ? 'border-red-500' : 'border-text-dark/30',
           )}
           {...register('subject')}
@@ -79,17 +79,20 @@ export function ContactForm() {
         {...register('message')}
       />
 
-      {/* 送信結果メッセージ */}
+      {/* 送信結果メッセージ（RPG風） */}
       {result && (
         <div
           className={cn(
-            'rounded-lg border p-4 text-sm',
+            'rounded-none border-2 p-4 text-sm',
             result.success
-              ? 'border-primary/30 bg-primary/10 text-primary-light'
-              : 'border-red-500/30 bg-red-500/10 text-red-400',
+              ? 'border-primary/50 bg-primary/10 text-primary-light'
+              : 'border-red-500/50 bg-red-500/10 text-red-400',
           )}
           role="alert"
         >
+          <span className="mr-2 font-[family-name:var(--font-pixel)] text-xs" aria-hidden="true">
+            {result.success ? '▶' : '✕'}
+          </span>
           {result.message}
         </div>
       )}

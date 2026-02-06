@@ -34,19 +34,29 @@ export function Header() {
             SilMo
           </Link>
 
-          {/* PC用ナビゲーション */}
-          <nav className="hidden items-center gap-1 md:flex" aria-label="メインナビゲーション">
+          {/* PC用ナビゲーション（RPGメニュー風） */}
+          <nav className="hidden items-center gap-0.5 md:flex" aria-label="メインナビゲーション">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'rounded-none px-3 py-2 font-[family-name:var(--font-pixel)] text-sm transition-colors',
+                  'relative rounded-none px-3 py-2 font-[family-name:var(--font-pixel)] text-sm transition-all duration-200',
                   pathname === item.href
-                    ? 'text-primary'
-                    : 'text-text-sub hover:bg-bg-secondary hover:text-text-main',
+                    ? 'text-accent'
+                    : 'text-text-sub hover:text-text-main',
                 )}
               >
+                {/* アクティブ時のRPG選択カーソル */}
+                {pathname === item.href && (
+                  <span
+                    className="absolute -left-1 top-1/2 -translate-y-1/2 text-[8px] text-accent"
+                    style={{ animation: 'rpg-cursor-bounce 1s step-end infinite' }}
+                    aria-hidden="true"
+                  >
+                    ▶
+                  </span>
+                )}
                 {item.label}
               </Link>
             ))}
@@ -105,12 +115,22 @@ export function Header() {
                 href={item.href}
                 onClick={close}
                 className={cn(
-                  'w-full rounded-none px-4 py-3 text-center font-[family-name:var(--font-pixel)] text-lg transition-colors',
+                  'relative w-full rounded-none px-8 py-3 font-[family-name:var(--font-pixel)] text-lg transition-all duration-200',
                   pathname === item.href
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-text-sub hover:bg-bg-secondary hover:text-text-main',
+                    ? 'text-accent'
+                    : 'text-text-sub hover:text-text-main',
                 )}
               >
+                {/* アクティブ時のRPG選択カーソル */}
+                {pathname === item.href && (
+                  <span
+                    className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-accent"
+                    style={{ animation: 'rpg-cursor-bounce 1s step-end infinite' }}
+                    aria-hidden="true"
+                  >
+                    ▶
+                  </span>
+                )}
                 {item.label}
               </Link>
             ))}

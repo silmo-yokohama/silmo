@@ -13,8 +13,8 @@ type SectionTitleProps = {
 };
 
 /**
- * セクションタイトル
- * PixelHeadingに装飾ラインを追加したバリエーション
+ * セクションタイトル（RPG風メニューヘッダー）
+ * PixelHeadingにゲーム風の装飾ラインとドットを追加
  */
 export function SectionTitle({
   children,
@@ -28,11 +28,13 @@ export function SectionTitle({
       <PixelHeading as={as} sub={sub}>
         {children}
       </PixelHeading>
-      {/* 装飾ライン */}
-      <div className={cn('mt-3 flex items-center gap-2', center && 'justify-center')}>
-        <div className="h-1 w-8 bg-primary" />
-        <div className="h-1 w-3 bg-accent" />
-        <div className="h-1 w-1.5 bg-primary-light" />
+      {/* RPG風装飾ライン */}
+      <div className={cn('mt-3 flex items-center gap-1.5', center && 'justify-center')}>
+        <div className="h-[3px] w-8 bg-primary" />
+        <div className="h-[3px] w-2 bg-accent" />
+        <div className="h-[3px] w-1 bg-primary-light" />
+        <div className="h-1 w-1 bg-primary" />
+        <div className="h-1 w-1 bg-accent" />
       </div>
     </div>
   );

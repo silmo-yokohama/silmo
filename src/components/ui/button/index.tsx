@@ -10,10 +10,10 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variantStyles = {
-  primary: 'bg-primary text-bg-main hover:bg-primary-light active:bg-primary-dark',
-  secondary: 'bg-accent text-bg-main hover:bg-accent-light active:bg-accent-dark',
-  outline: 'border-2 border-primary text-primary hover:bg-primary/10',
-  ghost: 'text-text-sub hover:bg-bg-secondary hover:text-text-main',
+  primary: 'border-transparent bg-primary text-bg-main hover:bg-primary-light active:bg-primary-dark',
+  secondary: 'border-transparent bg-accent text-bg-main hover:bg-accent-light active:bg-accent-dark',
+  outline: 'border-primary text-primary hover:bg-primary/10',
+  ghost: 'border-transparent text-text-sub hover:bg-bg-secondary hover:text-text-main',
 } as const;
 
 const sizeStyles = {
@@ -38,7 +38,7 @@ export function Button({
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center rounded-none font-bold transition-all duration-200',
+        'inline-flex items-center justify-center rounded-none border-2 font-bold transition-all duration-200',
         pixel && 'pixel-border font-[family-name:var(--font-pixel)]',
         variantStyles[variant],
         sizeStyles[size],

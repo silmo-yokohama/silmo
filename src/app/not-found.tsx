@@ -4,7 +4,7 @@ import { Container } from '@/components/layout/container';
 import { Button } from '@/components/ui/button';
 
 /**
- * 404ページ（ピクセルアート風）
+ * 404ページ（RPGゲームオーバー風）
  * 存在しないURLにアクセスした際に表示される
  */
 export default function NotFound() {
@@ -12,13 +12,16 @@ export default function NotFound() {
     <div className="flex min-h-[calc(100vh-8rem)] items-center">
       <Container size="sm">
         <div className="text-center">
-          {/* ピクセルアート風404表示 */}
+          {/* RPGゲームオーバー風404表示 */}
           <div className="mb-8">
-            <p className="font-[family-name:var(--font-press-start)] text-6xl text-primary sm:text-8xl">
+            <p
+              className="font-[family-name:var(--font-press-start)] text-6xl text-primary sm:text-8xl"
+              style={{ animation: 'retro-blink 2s step-end infinite' }}
+            >
               404
             </p>
+            {/* ピクセルアート風の装飾ライン */}
             <div className="mt-4 flex justify-center gap-1">
-              {/* ピクセルアート風の装飾ライン */}
               {Array.from({ length: 16 }, (_, i) => (
                 <div
                   key={i}
@@ -36,17 +39,27 @@ export default function NotFound() {
             </div>
           </div>
 
-          {/* メッセージ */}
-          <h1 className="mb-2 font-[family-name:var(--font-pixel)] text-2xl text-text-main">
-            ページが見つかりません
-          </h1>
-          <p className="mb-8 text-text-sub">
-            お探しのページは存在しないか、移動された可能性があります。
-          </p>
+          {/* RPG風メッセージ */}
+          <div className="rpg-box mx-auto mb-8 max-w-md p-6">
+            <span className="rpg-label">SYSTEM</span>
+            <h1 className="mb-3 pt-1 font-[family-name:var(--font-pixel)] text-xl text-text-main">
+              PAGE NOT FOUND
+            </h1>
+            <p className="font-[family-name:var(--font-pixel)] text-xs leading-relaxed text-text-sub">
+              お探しのページは存在しないか、
+              <br />
+              移動された可能性があります。
+            </p>
+            <p className="mt-4 font-[family-name:var(--font-press-start)] text-[8px] text-text-dark">
+              &gt; The page you are looking for
+              <br />
+              &gt; does not exist...
+            </p>
+          </div>
 
-          {/* ホームに戻る */}
+          {/* ホームに戻る（RPGコマンド風） */}
           <Link href="/">
-            <Button variant="primary" pixel>
+            <Button variant="primary" size="lg" pixel>
               ホームに戻る
             </Button>
           </Link>

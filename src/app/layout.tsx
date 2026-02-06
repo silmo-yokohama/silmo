@@ -41,6 +41,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${notoSansJp.variable} ${pressStart2P.variable} ${jetbrainsMono.variable}`}
     >
       <body className="flex min-h-screen flex-col antialiased">
+        {/* CRTスキャンラインオーバーレイ（レトロゲーム感を演出） */}
+        <div className="scanline-overlay" aria-hidden="true" />
+
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

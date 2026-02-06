@@ -35,11 +35,14 @@ export default function ContactPage() {
             お問い合わせ
           </SectionTitle>
 
-          <p className="mb-8 text-text-sub">
-            案件のご相談、お見積もりのご依頼など、お気軽にお問い合わせください。
-            <br />
-            通常2営業日以内にご返信いたします。
-          </p>
+          <div className="rpg-box mb-8 p-4">
+            <span className="rpg-label">INFO</span>
+            <p className="pt-1 text-sm text-text-sub">
+              案件のご相談、お見積もりのご依頼など、お気軽にお問い合わせください。
+              <br />
+              通常2営業日以内にご返信いたします。
+            </p>
+          </div>
 
           <ContactForm />
         </Container>

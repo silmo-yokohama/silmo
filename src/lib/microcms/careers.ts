@@ -21,3 +21,33 @@ export async function getCareers(queries?: MicroCMSQueries) {
   });
   return data;
 }
+
+/**
+ * 職務経歴を1件取得する
+ * @param id - コンテンツID
+ * @param queries - microCMSクエリパラメータ
+ * @returns 職務経歴
+ */
+export async function getCareerById(id: string, queries?: MicroCMSQueries) {
+  return client.get<Career>({
+    endpoint: 'careers',
+    contentId: id,
+    queries,
+  });
+}
+
+/**
+ * 全職務経歴のID一覧を取得する（静的パス生成用）
+ * @returns IDの配列
+ */
+export async function getAllCareerIds(): Promise<string[]> {
+  const data = await client.getList<Career>({
+    endpoint: 'careers',
+    queries: {
+      fields: 'id',
+      filters: 'disclosureLevel[not_equals]完全非公開',
+      limit: 100,
+    },
+  });
+  return data.contents.map((c) => c.id);
+}

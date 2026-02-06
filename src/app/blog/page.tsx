@@ -6,6 +6,7 @@ import { Section } from '@/components/layout/section';
 import { SectionTitle } from '@/components/ui/section-title';
 
 import { getBlogs } from '@/lib/microcms/blogs';
+import { MOCK_BLOGS } from '@/lib/mock';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 
 export const revalidate = 3600; // 1時間
@@ -23,6 +24,7 @@ export const metadata: Metadata = genMeta({
  */
 export default async function BlogPage() {
   const blogsData = await getBlogs().catch(() => null);
+  const blogs = blogsData?.contents.length ? blogsData.contents : MOCK_BLOGS;
 
   return (
     <Section>
@@ -31,15 +33,11 @@ export default async function BlogPage() {
           ブログ
         </SectionTitle>
 
-        {blogsData && blogsData.contents.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {blogsData.contents.map((blog) => (
-              <BlogCard key={blog.id} blog={blog} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-text-sub">記事がまだありません。</p>
-        )}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {blogs.map((blog) => (
+            <BlogCard key={blog.id} blog={blog} />
+          ))}
+        </div>
       </Container>
     </Section>
   );

@@ -95,6 +95,36 @@ body {
     /* 角（左下） */ -4px 4px 0 0 var(--color-primary);
 }
 
+/* RPG風ダイアログボックス（二重ボーダー） */
+.rpg-box {
+  border: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 3px;
+  background-color: var(--color-bg-card);
+  position: relative;
+}
+
+.rpg-box::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid rgba(0, 161, 151, 0.3);
+  pointer-events: none;
+}
+
+/* RPGウィンドウ風タイトルラベル */
+.rpg-label {
+  position: absolute;
+  top: -12px;
+  left: 16px;
+  background-color: var(--color-bg-card);
+  padding: 0 8px;
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  color: var(--color-accent);
+  z-index: 1;
+}
+
 /* ピクセル風グローエフェクト */
 .pixel-glow {
   box-shadow:
@@ -108,6 +138,57 @@ body {
   text-shadow:
     2px 2px 0 var(--color-bg-main),
     -1px -1px 0 var(--color-bg-main);
+}
+
+/* RPG風HPバー */
+.rpg-bar {
+  height: 12px;
+  background-color: var(--color-bg-secondary);
+  border: 2px solid var(--color-text-dark);
+  position: relative;
+  image-rendering: pixelated;
+}
+
+.rpg-bar-fill {
+  height: 100%;
+  transition: width 0.8s steps(10);
+}
+
+/* RPG風選択カーソル */
+.rpg-cursor::before {
+  content: '\25B6';
+  position: absolute;
+  left: -20px;
+  color: var(--color-accent);
+  animation: retro-blink 0.8s step-end infinite;
+  font-size: 10px;
+}
+
+/* ピクセル装飾ディバイダー */
+.pixel-divider {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.pixel-divider::before,
+.pixel-divider::after {
+  content: '';
+  height: 2px;
+  flex: 1;
+  max-width: 120px;
+  background: linear-gradient(
+    to var(--divider-dir, right),
+    transparent,
+    var(--color-primary),
+    transparent
+  );
+}
+
+.pixel-divider::after {
+  --divider-dir: left;
 }
 
 /* ===================================
@@ -143,6 +224,16 @@ body {
   content: '▌';
   animation: blink-cursor 1s step-end infinite;
   color: var(--color-primary);
+}
+
+/* RPG選択カーソルのバウンスアニメーション */
+@keyframes rpg-cursor-bounce {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
 }
 
 /* ピクセル風パルスアニメーション */

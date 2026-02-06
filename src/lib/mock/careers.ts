@@ -1,0 +1,95 @@
+import type { Career } from '@/types/career';
+
+/**
+ * 職務経歴のモックデータ
+ * microCMSにデータがない開発時にUIを確認するためのフィクスチャ
+ */
+export const MOCK_CAREERS: Career[] = [
+  {
+    id: 'mock-career-1',
+    title: '大手ECサイト フロントエンドリニューアル',
+    description:
+      '<p>既存のjQuery + PHP構成からNext.js + TypeScriptへの全面リニューアルを主導。商品一覧・詳細・カート・決済フローのフロントエンドを担当。</p><p>パフォーマンス最適化（LCP 40%改善）、アクセシビリティ対応（WCAG 2.1 AA準拠）を実現。</p>',
+    period: '2024年4月〜現在',
+    role: 'フロントエンドリード',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React Query', 'Storybook', 'Jest'],
+    companyName: '株式会社サンプルEC',
+    disclosureLevel: '公開',
+    achievements: 'LCP 40%改善、コンバージョン率 12%向上、Lighthouse Performance 95+達成',
+    teamSize: '8名（FE3名・BE3名・デザイナー1名・PM1名）',
+    order: 1,
+    createdAt: '2024-04-01T00:00:00.000Z',
+    updatedAt: '2025-02-01T00:00:00.000Z',
+    publishedAt: '2024-04-01T00:00:00.000Z',
+    revisedAt: '2025-02-01T00:00:00.000Z',
+  },
+  {
+    id: 'mock-career-2',
+    title: 'SaaS管理画面 フロントエンド開発',
+    description:
+      '<p>BtoB向けSaaSプロダクトの管理画面をNuxt 3で新規構築。複雑なフォーム、データテーブル、ダッシュボードのリアルタイム更新機能を実装。</p><p>Composables設計パターンを導入し、ビジネスロジックの再利用性を向上。</p>',
+    period: '2023年6月〜2024年3月',
+    role: 'フロントエンドエンジニア',
+    technologies: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Pinia', 'Vitest', 'VeeValidate'],
+    disclosureLevel: '社名非公開',
+    achievements: 'コンポーネント再利用率80%達成、テストカバレッジ85%、開発速度30%向上',
+    teamSize: '5名（FE2名・BE2名・PM1名）',
+    order: 2,
+    createdAt: '2023-06-01T00:00:00.000Z',
+    updatedAt: '2024-03-31T00:00:00.000Z',
+    publishedAt: '2023-06-01T00:00:00.000Z',
+    revisedAt: '2024-03-31T00:00:00.000Z',
+  },
+  {
+    id: 'mock-career-3',
+    title: 'コーポレートサイト リニューアル',
+    description:
+      '<p>上場企業のコーポレートサイトをWordPressからヘッドレスCMS（microCMS）+ Next.jsの構成にリニューアル。ISRによる高速表示と運用性の向上を実現。</p>',
+    period: '2023年1月〜2023年5月',
+    role: 'フロントエンド担当',
+    technologies: ['Next.js', 'TypeScript', 'microCMS', 'Vercel', 'SCSS'],
+    companyName: '株式会社サンプルコーポレーション',
+    disclosureLevel: '公開',
+    achievements: 'ページ表示速度60%改善、CMS移行による運用コスト月額5万円削減',
+    teamSize: '3名（FE1名・デザイナー1名・ディレクター1名）',
+    order: 3,
+    createdAt: '2023-01-01T00:00:00.000Z',
+    updatedAt: '2023-05-31T00:00:00.000Z',
+    publishedAt: '2023-01-01T00:00:00.000Z',
+    revisedAt: '2023-05-31T00:00:00.000Z',
+  },
+  {
+    id: 'mock-career-4',
+    title: '医療系予約管理システム フロントエンド',
+    description:
+      '<p>クリニック向け予約管理システムのフロントエンドをReact + TypeScriptで開発。カレンダーUI、予約フロー、患者管理画面を担当。</p><p>HIPAA準拠のセキュリティ要件に対応し、フォームバリデーションとエラーハンドリングを徹底。</p>',
+    period: '2022年3月〜2022年12月',
+    role: 'フロントエンドエンジニア',
+    technologies: ['React', 'TypeScript', 'Material UI', 'React Hook Form', 'Zod'],
+    disclosureLevel: '社名非公開',
+    achievements: '予約完了率25%向上、ユーザーからの操作に関する問い合わせ40%削減',
+    teamSize: '6名（FE2名・BE3名・PM1名）',
+    order: 4,
+    createdAt: '2022-03-01T00:00:00.000Z',
+    updatedAt: '2022-12-31T00:00:00.000Z',
+    publishedAt: '2022-03-01T00:00:00.000Z',
+    revisedAt: '2022-12-31T00:00:00.000Z',
+  },
+  {
+    id: 'mock-career-5',
+    title: '不動産ポータルサイト Vue.js移行',
+    description:
+      '<p>jQuery + Bladeテンプレートで構築された不動産ポータルサイトのフロントエンドをVue.js（Options API）へ段階的に移行。物件検索・一覧・詳細画面を担当。</p>',
+    period: '2021年6月〜2022年2月',
+    role: 'フロントエンドエンジニア',
+    technologies: ['Vue.js', 'JavaScript', 'Laravel', 'SCSS', 'Webpack'],
+    disclosureLevel: '社名非公開',
+    achievements: 'ページ表示速度45%改善、フロントエンドコードの保守性大幅向上',
+    teamSize: '4名（FE1名・BE2名・PM1名）',
+    order: 5,
+    createdAt: '2021-06-01T00:00:00.000Z',
+    updatedAt: '2022-02-28T00:00:00.000Z',
+    publishedAt: '2021-06-01T00:00:00.000Z',
+    revisedAt: '2022-02-28T00:00:00.000Z',
+  },
+];

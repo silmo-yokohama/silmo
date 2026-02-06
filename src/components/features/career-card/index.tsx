@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Badge } from '@/components/ui/badge';
 import type { Career } from '@/types/career';
@@ -8,18 +9,19 @@ type CareerCardProps = {
 };
 
 /**
- * 職務経歴カード
+ * 職務経歴カード（RPGクエスト報告書風）
  * 開示レベルに応じて表示内容を制御する
  */
 export function CareerCard({ career }: CareerCardProps) {
   const isCompanyVisible = career.disclosureLevel === '公開' && career.companyName;
 
   return (
-    <div className="rounded-lg border border-text-dark/20 bg-bg-card p-6 transition-all duration-300 hover:border-primary/30">
+    <Link href={`/career/${career.id}`} className="block">
+    <div className="rpg-box rounded-none p-5 transition-all duration-300 hover:border-accent">
       <div className="flex flex-col gap-4 sm:flex-row">
         {/* サムネイル（公開案件のみ） */}
         {career.thumbnail && career.disclosureLevel === '公開' && (
-          <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-md sm:w-48">
+          <div className="relative h-32 w-full shrink-0 overflow-hidden border-2 border-text-dark/30 sm:w-48">
             <Image
               src={career.thumbnail.url}
               alt={career.title}
@@ -32,28 +34,34 @@ export function CareerCard({ career }: CareerCardProps) {
 
         {/* コンテンツ */}
         <div className="flex flex-1 flex-col gap-3">
-          {/* 期間とロール */}
-          <div className="flex flex-wrap items-center gap-2 text-sm text-text-dark">
-            <span>{career.period}</span>
+          {/* 期間とロール（クエスト情報風） */}
+          <div className="flex flex-wrap items-center gap-3 border-b border-text-dark/20 pb-2">
+            <span className="font-[family-name:var(--font-press-start)] text-[8px] text-primary">
+              {career.period}
+            </span>
             {career.role && (
-              <>
-                <span>|</span>
-                <span className="text-accent">{career.role}</span>
-              </>
+              <span className="font-[family-name:var(--font-pixel)] text-xs text-accent">
+                [{career.role}]
+              </span>
             )}
             {career.teamSize && (
-              <>
-                <span>|</span>
-                <span>{career.teamSize}</span>
-              </>
+              <span className="font-[family-name:var(--font-pixel)] text-[10px] text-text-dark">
+                PT: {career.teamSize}
+              </span>
             )}
           </div>
 
           {/* 会社名（公開案件のみ） */}
-          {isCompanyVisible && <p className="text-xs text-text-dark">{career.companyName}</p>}
+          {isCompanyVisible && (
+            <p className="font-[family-name:var(--font-pixel)] text-[10px] text-text-dark">
+              &gt; {career.companyName}
+            </p>
+          )}
 
           {/* タイトル */}
-          <h3 className="text-lg font-bold text-text-main">{career.title}</h3>
+          <h3 className="font-[family-name:var(--font-pixel)] text-base text-text-main">
+            {career.title}
+          </h3>
 
           {/* 詳細説明 */}
           <div
@@ -61,23 +69,42 @@ export function CareerCard({ career }: CareerCardProps) {
             dangerouslySetInnerHTML={{ __html: career.description }}
           />
 
-          {/* 成果・工夫点 */}
+          {/* 成果・工夫点（RPG風「獲得報酬」） */}
           {career.achievements && (
-            <p className="text-sm italic text-text-sub">{career.achievements}</p>
-          )}
-
-          {/* 使用技術 */}
-          {career.technologies && career.technologies.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {career.technologies.map((tech) => (
-                <Badge key={tech} variant="outline">
-                  {tech}
-                </Badge>
-              ))}
+            <div className="border-l-2 border-accent pl-3">
+              <p className="mb-1 font-[family-name:var(--font-press-start)] text-[7px] text-accent">
+                ACHIEVEMENTS
+              </p>
+              <p className="text-sm text-text-sub">{career.achievements}</p>
             </div>
           )}
+
+          {/* 使用技術（装備アイテム風） */}
+          {career.technologies && career.technologies.length > 0 && (
+            <div className="pt-1">
+              <p className="mb-2 font-[family-name:var(--font-press-start)] text-[7px] text-text-dark">
+                EQUIPMENT
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {career.technologies.map((tech) => (
+                  <Badge key={tech} variant="outline">
+                    {tech}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 詳細リンク（RPGコマンド風） */}
+          <div className="mt-auto border-t border-text-dark/20 pt-3">
+            <span className="flex items-center gap-1.5 font-[family-name:var(--font-pixel)] text-[10px] text-primary transition-colors group-hover:text-accent">
+              <span className="text-accent" aria-hidden="true">▶</span>
+              DETAIL
+            </span>
+          </div>
         </div>
       </div>
     </div>
+    </Link>
   );
 }

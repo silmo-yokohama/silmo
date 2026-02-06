@@ -14,9 +14,9 @@ type SandboxShowcaseProps = {
 };
 
 /**
- * サンドボックスショーケース
+ * サンドボックスショーケース（RPGアイテムショップ風）
  * TOPページの目玉セクション。個人開発プロジェクトを
- * スタガーアニメーション付きのグリッドで目立つ形に表示する。
+ * ゲームのアイテムショップのようなグリッドで表示する。
  */
 export function SandboxShowcase({ sandboxes }: SandboxShowcaseProps) {
   const ref = useRef(null);
@@ -26,7 +26,7 @@ export function SandboxShowcase({ sandboxes }: SandboxShowcaseProps) {
     <section className="relative overflow-hidden py-20 sm:py-28">
       {/* 背景装飾: ドットパターン */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.02]"
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: 'radial-gradient(var(--color-primary) 1px, transparent 1px)',
           backgroundSize: '16px 16px',
@@ -39,7 +39,7 @@ export function SandboxShowcase({ sandboxes }: SandboxShowcaseProps) {
         className="pointer-events-none absolute left-0 top-1/2 h-px w-1/4 -translate-y-1/2"
         style={{
           background: 'linear-gradient(to right, transparent, var(--color-primary), transparent)',
-          opacity: 0.2,
+          opacity: 0.15,
         }}
         aria-hidden="true"
       />
@@ -47,7 +47,7 @@ export function SandboxShowcase({ sandboxes }: SandboxShowcaseProps) {
         className="pointer-events-none absolute right-0 top-1/2 h-px w-1/4 -translate-y-1/2"
         style={{
           background: 'linear-gradient(to left, transparent, var(--color-primary), transparent)',
-          opacity: 0.2,
+          opacity: 0.15,
         }}
         aria-hidden="true"
       />
@@ -76,19 +76,20 @@ export function SandboxShowcase({ sandboxes }: SandboxShowcaseProps) {
           <p className="mb-2 font-[family-name:var(--font-press-start)] text-[10px] tracking-widest text-accent sm:text-xs">
             SANDBOX
           </p>
-          <h2 className="font-[family-name:var(--font-pixel)] text-3xl text-text-main sm:text-4xl">
+          <h2 className="font-[family-name:var(--font-pixel)] text-3xl text-text-main pixel-text-shadow sm:text-4xl">
             個人開発
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-text-sub">
+          <p className="mx-auto mt-4 max-w-xl text-sm text-text-sub">
             技術検証・スキル研鑽のために開発した個人プロジェクトです。
-            新しい技術への挑戦やアイデアの具現化に取り組んでいます。
           </p>
 
-          {/* 装飾ライン */}
-          <div className="mx-auto mt-4 flex items-center justify-center gap-2">
-            <div className="h-1 w-12 bg-primary" />
-            <div className="h-1 w-4 bg-accent" />
-            <div className="h-1 w-2 bg-primary-light" />
+          {/* RPG装飾ライン */}
+          <div className="pixel-divider mx-auto mt-4 max-w-xs">
+            <span className="flex gap-1" aria-hidden="true">
+              <span className="h-2 w-2 bg-primary" />
+              <span className="h-2 w-2 bg-accent" />
+              <span className="h-2 w-2 bg-primary-light" />
+            </span>
           </div>
         </motion.div>
 
@@ -118,7 +119,7 @@ export function SandboxShowcase({ sandboxes }: SandboxShowcaseProps) {
           transition={{ duration: 0.4, delay: 0.6 }}
         >
           <Link href="/sandbox">
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" pixel>
               すべてのプロジェクトを見る
             </Button>
           </Link>

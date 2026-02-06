@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { TechStackGrid } from '@/components/features/tech-stack-grid';
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
-import { PixelBorder } from '@/components/ui/pixel-border';
 import { SectionTitle } from '@/components/ui/section-title';
 import { PROFILE } from '@/lib/constants';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
@@ -15,7 +14,7 @@ export const metadata: Metadata = genMeta({
 });
 
 /**
- * 自己紹介ページ
+ * 自己紹介ページ（RPGキャラクターステータス画面風）
  * プロフィール情報と技術スキル一覧を表示する
  */
 export default function AboutPage() {
@@ -32,45 +31,65 @@ export default function AboutPage() {
             自己紹介
           </SectionTitle>
 
-          <PixelBorder className="mb-12 bg-bg-card">
-            <div className="space-y-6">
+          {/* RPG風ステータスウィンドウ */}
+          <div className="rpg-box mb-12 p-6">
+            <span className="rpg-label">STATUS</span>
+
+            <div className="space-y-6 pt-2">
               {/* 名前・ロール */}
-              <div>
-                <p className="font-[family-name:var(--font-press-start)] text-xs text-primary">
+              <div className="border-b border-text-dark/20 pb-4">
+                <p className="font-[family-name:var(--font-press-start)] text-[10px] text-primary">
                   {PROFILE.nameEn}
                 </p>
-                <h2 className="mt-1 font-[family-name:var(--font-pixel)] text-2xl text-text-main">
+                <h2 className="mt-2 font-[family-name:var(--font-pixel)] text-2xl text-text-main pixel-text-shadow">
                   {PROFILE.name}
                 </h2>
-                <p className="mt-1 text-sm text-accent">{PROFILE.role}</p>
+                <p className="mt-1 font-[family-name:var(--font-pixel)] text-sm text-accent">
+                  {PROFILE.role}
+                </p>
               </div>
 
               {/* 自己紹介文 */}
               <p className="leading-relaxed text-text-sub">{PROFILE.bio}</p>
 
-              {/* 経歴サマリー */}
+              {/* ステータスパラメータ（RPGステータス画面風） */}
               <div className="grid gap-4 sm:grid-cols-3">
-                <div className="rounded-md bg-bg-secondary p-4 text-center">
+                <div className="border-2 border-primary/40 bg-bg-secondary p-4 text-center">
+                  <p className="mb-1 font-[family-name:var(--font-press-start)] text-[8px] text-primary">
+                    EXP
+                  </p>
                   <p className="font-[family-name:var(--font-pixel)] text-2xl text-primary">
-                    {totalExp}+
+                    {totalExp}<span className="text-sm text-text-dark">年+</span>
                   </p>
-                  <p className="mt-1 text-xs text-text-dark">年の開発経験</p>
+                  <p className="mt-1 font-[family-name:var(--font-pixel)] text-[10px] text-text-dark">
+                    開発経験
+                  </p>
                 </div>
-                <div className="rounded-md bg-bg-secondary p-4 text-center">
+                <div className="border-2 border-accent/40 bg-bg-secondary p-4 text-center">
+                  <p className="mb-1 font-[family-name:var(--font-press-start)] text-[8px] text-accent">
+                    FREE
+                  </p>
                   <p className="font-[family-name:var(--font-pixel)] text-2xl text-accent">
-                    {freelanceExp}+
+                    {freelanceExp}<span className="text-sm text-text-dark">年+</span>
                   </p>
-                  <p className="mt-1 text-xs text-text-dark">年のフリーランス</p>
+                  <p className="mt-1 font-[family-name:var(--font-pixel)] text-[10px] text-text-dark">
+                    フリーランス
+                  </p>
                 </div>
-                <div className="rounded-md bg-bg-secondary p-4 text-center">
+                <div className="border-2 border-primary-light/40 bg-bg-secondary p-4 text-center">
+                  <p className="mb-1 font-[family-name:var(--font-press-start)] text-[8px] text-primary-light">
+                    AREA
+                  </p>
                   <p className="font-[family-name:var(--font-pixel)] text-2xl text-primary-light">
                     {PROFILE.location}
                   </p>
-                  <p className="mt-1 text-xs text-text-dark">拠点</p>
+                  <p className="mt-1 font-[family-name:var(--font-pixel)] text-[10px] text-text-dark">
+                    拠点
+                  </p>
                 </div>
               </div>
             </div>
-          </PixelBorder>
+          </div>
         </Container>
       </Section>
 

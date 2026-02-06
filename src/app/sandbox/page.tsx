@@ -6,6 +6,7 @@ import { Section } from '@/components/layout/section';
 import { SectionTitle } from '@/components/ui/section-title';
 
 import { getSandboxes } from '@/lib/microcms/sandboxes';
+import { MOCK_SANDBOXES } from '@/lib/mock';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 
 export const revalidate = 3600; // 1時間
@@ -23,6 +24,7 @@ export const metadata: Metadata = genMeta({
  */
 export default async function SandboxPage() {
   const sandboxesData = await getSandboxes().catch(() => null);
+  const sandboxes = sandboxesData?.contents.length ? sandboxesData.contents : MOCK_SANDBOXES;
 
   return (
     <Section>
@@ -31,15 +33,11 @@ export default async function SandboxPage() {
           サンドボックス
         </SectionTitle>
 
-        {sandboxesData && sandboxesData.contents.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {sandboxesData.contents.map((sandbox) => (
-              <SandboxCard key={sandbox.id} sandbox={sandbox} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-text-sub">準備中です。</p>
-        )}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {sandboxes.map((sandbox) => (
+            <SandboxCard key={sandbox.id} sandbox={sandbox} />
+          ))}
+        </div>
       </Container>
     </Section>
   );

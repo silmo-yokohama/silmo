@@ -6,6 +6,7 @@ import { Section } from '@/components/layout/section';
 import { SectionTitle } from '@/components/ui/section-title';
 
 import { getCareers } from '@/lib/microcms/careers';
+import { MOCK_CAREERS } from '@/lib/mock';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 
 export const revalidate = 86400; // 24時間
@@ -23,6 +24,7 @@ export const metadata: Metadata = genMeta({
  */
 export default async function CareerPage() {
   const careersData = await getCareers().catch(() => null);
+  const careers = careersData?.contents.length ? careersData.contents : MOCK_CAREERS;
 
   return (
     <Section>
@@ -31,11 +33,7 @@ export default async function CareerPage() {
           職務経歴
         </SectionTitle>
 
-        {careersData && careersData.contents.length > 0 ? (
-          <CareerTimeline careers={careersData.contents} />
-        ) : (
-          <p className="text-center text-text-sub">準備中です。</p>
-        )}
+        <CareerTimeline careers={careers} />
       </Container>
     </Section>
   );

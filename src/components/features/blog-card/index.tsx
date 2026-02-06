@@ -13,17 +13,16 @@ type BlogCardProps = {
 };
 
 /**
- * ブログ記事カード
- * ホバー時にピクセルアート風グロー・スキャンラインエフェクトが発動する
+ * ブログ記事カード（RPGメッセージログ風）
+ * ホバー時にピクセルグロー・スキャンラインエフェクトが発動する
  */
 export function BlogCard({ blog }: BlogCardProps) {
   return (
     <Link href={`/blog/${blog.id}`} className="group">
       <motion.div
-        className="relative flex h-full flex-col overflow-hidden rounded-lg border border-text-dark/20 bg-bg-card transition-colors duration-300 group-hover:border-primary/60"
+        className="relative flex h-full flex-col overflow-hidden border-2 border-text-dark/30 bg-bg-card transition-all duration-300 group-hover:border-primary"
         whileHover={{
-          scale: 1.02,
-          boxShadow: '0 0 24px 2px rgba(0, 161, 151, 0.2), 0 0 48px 4px rgba(248, 182, 43, 0.08)',
+          boxShadow: '0 0 20px 2px rgba(0, 161, 151, 0.25), inset 0 0 20px rgba(0, 161, 151, 0.05)',
         }}
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
@@ -42,42 +41,59 @@ export function BlogCard({ blog }: BlogCardProps) {
           }}
         />
 
-        {/* ホバー時 上部アクセントライン */}
-        <div className="absolute left-0 right-0 top-0 z-10 h-[2px] scale-x-0 bg-gradient-to-r from-primary via-accent to-primary-light transition-transform duration-500 group-hover:scale-x-100" />
+        {/* 上部アクセントライン */}
+        <div className="h-[3px] w-full bg-gradient-to-r from-primary via-accent to-primary-light opacity-60 transition-opacity duration-300 group-hover:opacity-100" />
 
         {/* サムネイル */}
-        {blog.thumbnail && (
-          <div className="relative aspect-video overflow-hidden">
+        {blog.thumbnail ? (
+          <div className="relative aspect-video overflow-hidden border-b-2 border-text-dark/20">
             <Image
               src={blog.thumbnail.url}
               alt={blog.title}
               fill
-              className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+              className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-110"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-bg-card/80 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg-card/90 to-transparent" />
+          </div>
+        ) : (
+          /* サムネイルなし時のピクセルパターン */
+          <div className="flex aspect-video items-center justify-center border-b-2 border-text-dark/20 bg-bg-secondary">
+            <span className="font-[family-name:var(--font-pixel)] text-2xl text-text-dark/30" aria-hidden="true">
+              BLOG
+            </span>
           </div>
         )}
 
         {/* コンテンツ */}
-        <div className="flex flex-1 flex-col gap-3 p-5">
-          {/* カテゴリとタグ */}
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="primary">{blog.category}</Badge>
-            <span className="text-xs text-text-dark">{formatDateShort(blog.publishedAt!)}</span>
+        <div className="flex flex-1 flex-col gap-2 p-4">
+          {/* カテゴリと日付 */}
+          <div className="flex items-center gap-2">
+            <Badge variant="accent">{blog.category}</Badge>
+            <span className="font-[family-name:var(--font-press-start)] text-[7px] text-text-dark">
+              {formatDateShort(blog.publishedAt!)}
+            </span>
           </div>
 
           {/* タイトル */}
-          <h3 className="text-lg font-bold text-text-main transition-colors duration-200 group-hover:text-primary">
+          <h3 className="font-[family-name:var(--font-pixel)] text-sm text-text-main transition-colors duration-200 group-hover:text-primary">
             {blog.title}
           </h3>
 
           {/* 概要 */}
           {blog.description && (
-            <p className="text-sm leading-relaxed text-text-sub">
-              {truncate(blog.description, 100)}
+            <p className="text-xs leading-relaxed text-text-sub">
+              {truncate(blog.description, 80)}
             </p>
           )}
+
+          {/* READ MORE（RPGコマンド風） */}
+          <div className="mt-auto border-t border-text-dark/20 pt-2">
+            <span className="flex items-center gap-1.5 font-[family-name:var(--font-pixel)] text-[10px] text-primary transition-colors group-hover:text-accent">
+              <span className="text-accent" aria-hidden="true">▶</span>
+              READ MORE
+            </span>
+          </div>
         </div>
       </motion.div>
     </Link>
