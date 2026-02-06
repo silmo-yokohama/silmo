@@ -24,7 +24,8 @@ const sizeStyles = {
 
 /**
  * 汎用ボタンコンポーネント
- * ピクセル風デザインとモダンデザインの両方に対応
+ * ピクセル風デザイン（pixel=true）は角丸なし + ピクセルフォント + pixel-border
+ * 通常デザインは角丸なし + 標準フォントで統一
  */
 export function Button({
   children,
@@ -37,8 +38,8 @@ export function Button({
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center font-bold transition-all duration-200',
-        pixel ? 'pixel-border rounded-none' : 'rounded-lg',
+        'inline-flex items-center justify-center rounded-none font-bold transition-all duration-200',
+        pixel && 'pixel-border font-[family-name:var(--font-pixel)]',
         variantStyles[variant],
         sizeStyles[size],
         'disabled:cursor-not-allowed disabled:opacity-50',

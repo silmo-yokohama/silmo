@@ -37,7 +37,9 @@
  * =================================== */
 @font-face {
   font-family: 'PixelMplus12';
-  src: url('/fonts/PixelMplus12-Regular.woff2') format('woff2');
+  src:
+    url('/fonts/PixelMplus12-Regular.woff2') format('woff2'),
+    url('/fonts/PixelMplus12-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -151,6 +153,260 @@ body {
   }
   50% {
     box-shadow: 0 0 0 8px rgba(0, 161, 151, 0);
+  }
+}
+
+/* ===================================
+ * CRT / レトロゲーム風エフェクト
+ * =================================== */
+
+/* スキャンライン（画面全体にかけるオーバーレイ） */
+@keyframes scanline-scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
+.scanline-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  animation: scanline-scroll 0.1s linear infinite;
+}
+
+/* グリッチエフェクト */
+@keyframes glitch-1 {
+  0%, 100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-3px, 2px);
+  }
+  40% {
+    clip-path: inset(40% 0 30% 0);
+    transform: translate(3px, -1px);
+  }
+  60% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(-2px, 1px);
+  }
+  80% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(2px, -2px);
+  }
+}
+
+@keyframes glitch-2 {
+  0%, 100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(50% 0 20% 0);
+    transform: translate(3px, -2px);
+  }
+  40% {
+    clip-path: inset(10% 0 60% 0);
+    transform: translate(-3px, 1px);
+  }
+  60% {
+    clip-path: inset(30% 0 40% 0);
+    transform: translate(2px, 2px);
+  }
+  80% {
+    clip-path: inset(70% 0 5% 0);
+    transform: translate(-2px, -1px);
+  }
+}
+
+/* グリッチテキスト用コンテナ */
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.glitch-text::before {
+  color: var(--color-accent);
+  animation: glitch-1 3s infinite linear alternate-reverse;
+  opacity: 0.7;
+}
+
+.glitch-text::after {
+  color: var(--color-primary-light);
+  animation: glitch-2 3s infinite linear alternate-reverse;
+  opacity: 0.7;
+}
+
+/* フローティングピクセルパーティクル */
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(80%) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(-80%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%) scale(0);
+  }
+}
+
+@keyframes float-drift {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+/* ピクセルグリッドアニメーション（ヒーロー背景用） */
+@keyframes grid-pulse {
+  0%, 100% {
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.08;
+  }
+}
+
+/* カードパワーアップエフェクト */
+@keyframes card-powerup {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(0, 161, 151, 0),
+      0 0 0 0 rgba(248, 182, 43, 0);
+  }
+  50% {
+    box-shadow:
+      0 0 20px 2px rgba(0, 161, 151, 0.3),
+      0 0 40px 4px rgba(248, 182, 43, 0.1);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(0, 161, 151, 0),
+      0 0 0 0 rgba(248, 182, 43, 0);
+  }
+}
+
+/* ピクセル風ボーダーのパルス */
+@keyframes pixel-border-pulse {
+  0%, 100% {
+    box-shadow:
+      0 -4px 0 0 var(--color-primary),
+      4px 0 0 0 var(--color-primary),
+      0 4px 0 0 var(--color-primary),
+      -4px 0 0 0 var(--color-primary),
+      -4px -4px 0 0 var(--color-primary),
+      4px -4px 0 0 var(--color-primary),
+      4px 4px 0 0 var(--color-primary),
+      -4px 4px 0 0 var(--color-primary);
+  }
+  50% {
+    box-shadow:
+      0 -4px 0 0 var(--color-accent),
+      4px 0 0 0 var(--color-accent),
+      0 4px 0 0 var(--color-accent),
+      -4px 0 0 0 var(--color-accent),
+      -4px -4px 0 0 var(--color-accent),
+      4px -4px 0 0 var(--color-accent),
+      4px 4px 0 0 var(--color-accent),
+      -4px 4px 0 0 var(--color-accent);
+  }
+}
+
+/* テキストシマー（キラキラ）エフェクト */
+@keyframes text-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--color-accent) 25%,
+    var(--color-primary-light) 50%,
+    var(--color-accent) 75%,
+    var(--color-primary) 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 4s linear infinite;
+}
+
+/* レトロコンソール風の点滅ドット */
+@keyframes retro-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ピクセルノイズ */
+@keyframes pixel-noise {
+  0%, 100% {
+    background-position: 0 0;
+  }
+  10% {
+    background-position: -5% -10%;
+  }
+  20% {
+    background-position: -15% 5%;
+  }
+  30% {
+    background-position: 7% -25%;
+  }
+  40% {
+    background-position: 20% 25%;
+  }
+  50% {
+    background-position: -25% 10%;
+  }
+  60% {
+    background-position: 15% 5%;
+  }
+  70% {
+    background-position: 0% 15%;
+  }
+  80% {
+    background-position: 25% 35%;
+  }
+  90% {
+    background-position: -10% 10%;
   }
 }
 
