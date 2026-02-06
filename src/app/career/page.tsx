@@ -11,9 +11,9 @@ import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 export const revalidate = 86400; // 24時間
 
 export const metadata: Metadata = genMeta({
-  title: '職務経歴',
+  title: 'キャリア',
   description:
-    'SilMo（清水陽平）の受託開発・職務経歴一覧。フロントエンド開発を中心とした案件実績を紹介します。',
+    'SilMo（清水陽平）の受託開発・キャリア一覧。フロントエンド開発を中心とした案件実績を紹介します。',
   path: '/career',
 });
 
@@ -29,7 +29,7 @@ export default async function CareerPage() {
     <Section>
       <Container size="md">
         <SectionTitle as="h1" sub="Career">
-          職務経歴
+          キャリア
         </SectionTitle>
 
         <CareerTimeline careers={careers} />
