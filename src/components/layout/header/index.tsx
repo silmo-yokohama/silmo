@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -28,10 +29,18 @@ export function Header() {
           {/* ロゴ */}
           <Link
             href="/"
-            className="font-[family-name:var(--font-pixel)] text-xl text-primary transition-colors hover:text-primary-light"
+            className="transition-opacity hover:opacity-80"
             onClick={close}
           >
-            SilMo
+            <Image
+              src="/images/logo.png"
+              alt="SilMo"
+              width={120}
+              height={36}
+              className="block"
+              style={{ imageRendering: 'pixelated' }}
+              priority
+            />
           </Link>
 
           {/* PC用ナビゲーション（RPGメニュー風） */}

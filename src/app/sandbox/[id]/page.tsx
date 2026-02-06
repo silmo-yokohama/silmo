@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -119,6 +120,20 @@ export default async function SandboxDetailPage({ params }: Props) {
                 {sandbox.title}
               </h1>
             </div>
+
+            {/* サムネイル */}
+            {sandbox.thumbnail && (
+              <div className="relative aspect-video overflow-hidden border-2 border-text-dark/30">
+                <Image
+                  src={sandbox.thumbnail.url}
+                  alt={sandbox.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 720px"
+                  priority
+                />
+              </div>
+            )}
 
             {/* 使用技術（EQUIPMENT風） */}
             {sandbox.technologies && sandbox.technologies.length > 0 && (
