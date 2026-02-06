@@ -11,6 +11,7 @@ import { SITE } from '@/lib/constants';
 import { MOCK_CAREERS } from '@/lib/mock';
 import { getAllCareerIds, getCareerById } from '@/lib/microcms/careers';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
+import { formatPeriod } from '@/lib/utils';
 
 export const revalidate = 86400; // 24時間
 
@@ -72,8 +73,6 @@ export default async function CareerDetailPage({ params }: Props) {
     if (!career) notFound();
   }
 
-  const isCompanyVisible = career.disclosureLevel === '公開' && career.companyName;
-
   return (
     <Section>
       <Container size="md">
@@ -96,15 +95,15 @@ export default async function CareerDetailPage({ params }: Props) {
               {/* 期間・ロール */}
               <div className="mb-3 flex flex-wrap items-center gap-3">
                 <span className="font-[family-name:var(--font-press-start)] text-[9px] text-primary">
-                  {career.period}
+                  {formatPeriod(career.start, career.period)}
                 </span>
                 {career.role && (
                   <Badge variant="accent">{career.role}</Badge>
                 )}
               </div>
 
-              {/* 会社名（公開案件のみ） */}
-              {isCompanyVisible && (
+              {/* 会社名（入力されている場合のみ表示） */}
+              {career.companyName && (
                 <p className="mb-2 font-[family-name:var(--font-pixel)] text-xs text-text-dark">
                   &gt; {career.companyName}
                 </p>
@@ -116,8 +115,8 @@ export default async function CareerDetailPage({ params }: Props) {
               </h1>
             </div>
 
-            {/* サムネイル（公開案件のみ） */}
-            {career.thumbnail && career.disclosureLevel === '公開' && (
+            {/* サムネイル */}
+            {career.thumbnail && (
               <div className="relative aspect-video overflow-hidden border-2 border-text-dark/30">
                 <Image
                   src={career.thumbnail.url}

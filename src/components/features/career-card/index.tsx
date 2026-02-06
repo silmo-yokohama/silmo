@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { Badge } from '@/components/ui/badge';
 import type { Career } from '@/types/career';
+import { formatPeriod } from '@/lib/utils';
 
 type CareerCardProps = {
   career: Career;
@@ -10,17 +11,15 @@ type CareerCardProps = {
 
 /**
  * 職務経歴カード（RPGクエスト報告書風）
- * 開示レベルに応じて表示内容を制御する
+ * companyNameの有無で会社名の表示を制御する
  */
 export function CareerCard({ career }: CareerCardProps) {
-  const isCompanyVisible = career.disclosureLevel === '公開' && career.companyName;
-
   return (
     <Link href={`/career/${career.id}`} className="block">
     <div className="rpg-box rounded-none p-5 transition-all duration-300 hover:border-accent">
       <div className="flex flex-col gap-4 sm:flex-row">
-        {/* サムネイル（公開案件のみ） */}
-        {career.thumbnail && career.disclosureLevel === '公開' && (
+        {/* サムネイル */}
+        {career.thumbnail && (
           <div className="relative h-32 w-full shrink-0 overflow-hidden border-2 border-text-dark/30 sm:w-48">
             <Image
               src={career.thumbnail.url}
@@ -37,7 +36,7 @@ export function CareerCard({ career }: CareerCardProps) {
           {/* 期間とロール（クエスト情報風） */}
           <div className="flex flex-wrap items-center gap-3 border-b border-text-dark/20 pb-2">
             <span className="font-[family-name:var(--font-press-start)] text-[8px] text-primary">
-              {career.period}
+              {formatPeriod(career.start, career.period)}
             </span>
             {career.role && (
               <span className="font-[family-name:var(--font-pixel)] text-xs text-accent">
@@ -51,8 +50,8 @@ export function CareerCard({ career }: CareerCardProps) {
             )}
           </div>
 
-          {/* 会社名（公開案件のみ） */}
-          {isCompanyVisible && (
+          {/* 会社名（入力されている場合のみ表示） */}
+          {career.companyName && (
             <p className="font-[family-name:var(--font-pixel)] text-[10px] text-text-dark">
               &gt; {career.companyName}
             </p>

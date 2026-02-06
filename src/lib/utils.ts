@@ -39,6 +39,20 @@ export function formatDateShort(dateString: string): string {
 }
 
 /**
+ * 職務経歴の期間を "YYYY年M月〜YYYY年M月" 形式で表示する
+ * @param start - 開始日（ISO 8601）
+ * @param end - 終了日（ISO 8601）。未指定の場合は「現在」
+ * @returns "2023年4月〜2024年3月" 形式の文字列
+ */
+export function formatPeriod(start: string, end?: string): string {
+  const fmt = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return `${d.getFullYear()}年${d.getMonth() + 1}月`;
+  };
+  return `${fmt(start)}〜${end ? fmt(end) : '現在'}`;
+}
+
+/**
  * 文字列を指定文字数で切り詰め、末尾に「...」を付与する
  * @param text - 元のテキスト
  * @param maxLength - 最大文字数
