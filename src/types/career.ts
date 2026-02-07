@@ -12,8 +12,8 @@ export type Career = {
   period?: string;
   /** 担当ロール */
   role?: string;
-  /** 使用技術 */
-  technologies?: string[];
+  /** 使用技術（カンマ区切りテキスト） */
+  technologies?: string;
   /** 会社名（未入力の場合は「非公開」扱い） */
   companyName?: string;
   /** スクリーンショット */
@@ -22,6 +22,8 @@ export type Career = {
   achievements?: string;
   /** チーム規模 */
   teamSize?: string;
+  /** 受託制作フラグ（true=受託制作、未設定/false=常駐案件） */
+  isProduction?: boolean;
   /** 表示順（新しい順） */
   order: number;
 } & MicroCMSDate & {

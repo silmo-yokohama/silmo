@@ -10,7 +10,7 @@ import { Section } from '@/components/layout/section';
 import { SITE } from '@/lib/constants';
 import { getAllCareerIds, getCareerById } from '@/lib/microcms/careers';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
-import { formatPeriod } from '@/lib/utils';
+import { formatPeriod, parseTechnologies } from '@/lib/utils';
 
 export const revalidate = 86400; // 24時間
 
@@ -151,13 +151,13 @@ export default async function CareerDetailPage({ params }: Props) {
             )}
 
             {/* 使用技術（装備風） */}
-            {career.technologies && career.technologies.length > 0 && (
+            {career.technologies && parseTechnologies(career.technologies).length > 0 && (
               <div className="border-t border-text-dark/20 pt-4">
                 <p className="mb-2 font-[family-name:var(--font-press-start)] text-[8px] text-text-dark">
                   EQUIPMENT
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {career.technologies.map((tech) => (
+                  {parseTechnologies(career.technologies).map((tech) => (
                     <Badge key={tech} variant="outline">
                       {tech}
                     </Badge>

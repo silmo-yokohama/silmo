@@ -62,3 +62,16 @@ export function truncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + '...';
 }
+
+/**
+ * カンマ区切りの技術名文字列を配列に変換する
+ * @param technologies - カンマ区切りの技術名文字列（例: "Angular, Java, Spring Boot"）
+ * @returns トリミングされた技術名の配列。空文字は除外
+ */
+export function parseTechnologies(technologies?: string): string[] {
+  if (!technologies) return [];
+  return technologies
+    .split(',')
+    .map((tech) => tech.trim())
+    .filter(Boolean);
+}

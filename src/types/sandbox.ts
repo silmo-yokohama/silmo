@@ -1,7 +1,7 @@
 import type { MicroCMSDate, MicroCMSImage } from 'microcms-js-sdk';
 
-/** サンドボックスのステータス値 */
-export type SandboxStatusValue = '開発中' | '完成' | 'メンテナンス中' | 'アーカイブ';
+/** サンドボックスの目的値 */
+export type SandboxPurposeValue = '学習' | '技術検証' | 'プロダクト' | 'ポートフォリオ';
 
 /** サンドボックス（個人開発プロジェクト）の型定義 */
 export type Sandbox = {
@@ -11,16 +11,14 @@ export type Sandbox = {
   description: string;
   /** サムネイル */
   thumbnail?: MicroCMSImage;
-  /** 使用技術 */
-  technologies?: string[];
+  /** 使用技術（カンマ区切りテキスト） */
+  technologies?: string;
   /** 公開URL（デモサイト等） */
   siteUrl?: string;
   /** GitHubリポジトリURL */
   githubUrl?: string;
-  /** 開発目的 */
-  purpose?: string;
-  /** ステータス（セレクトフィールド。microCMSから配列で返る） */
-  status?: SandboxStatusValue[];
+  /** 開発目的（セレクトフィールド。microCMSから配列で返る） */
+  purpose?: SandboxPurposeValue[];
 } & MicroCMSDate & {
     id: string;
   };
