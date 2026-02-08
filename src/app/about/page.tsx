@@ -15,31 +15,31 @@ const HOBBIES = [
     icon: '/images/hobbies/game.png',
     label: 'ゲーム',
     name: 'GAME',
-    description: 'RPG・アクション問わず。レトロゲームからインディーズまで幅広く。',
+    description: '一人で黙々とRPGするのも、みんなで一緒に狩りに行ったりパーティゲームするのも好き。',
   },
   {
     icon: '/images/hobbies/baseball.png',
     label: '野球',
     name: 'BASEBALL',
-    description: '横浜DeNAベイスターズを応援。球場観戦が至福の時間。',
+    description: '横浜DeNAベイスターズファンですが、プロ野球自体が好き。小中高と野球やってました。',
   },
   {
     icon: '/images/hobbies/basketball.png',
     label: 'バスケ',
     name: 'BASKETBALL',
-    description: 'NBA観戦が好き。プレーも時々。',
+    description: 'B.LEAGUEを見てます。横浜エクセレンスを応援。スラムダンクだとリョーちん推し。',
   },
   {
     icon: '/images/hobbies/beer.png',
     label: 'お酒',
     name: 'SAKE',
-    description: 'ビール・日本酒・ウイスキー。横浜の美味しいお店を開拓中。',
+    description: '何でも飲みますが、カクテルが特に好きです。Bar巡りが趣味。',
   },
   {
     icon: '/images/hobbies/cooking.png',
     label: '料理',
     name: 'COOKING',
-    description: '自炊派。和食からイタリアンまで気分で作る。',
+    description: '最近ハマりはじめました。色んな人のレシピを参考に作ってます。',
   },
 ] as const;
 
