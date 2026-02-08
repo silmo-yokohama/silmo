@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SilMo - ポートフォリオサイト
 
-## Getting Started
+フリーランスフロントエンドエンジニア **SilMo（清水陽平）** のポートフォリオサイトです。
 
-First, run the development server:
+🌐 **https://silmo.jp**
+
+## このサイトについて
+
+フリーランスとして活動する中で、自分の経歴・スキル・制作物を一箇所にまとめて発信するために作ったポートフォリオサイトです。案件を探しているクライアントや、一緒に仕事をする仲間に「自分が何をできる人間か」を伝えることを目的としています。
+
+技術的には、普段の業務で使っている Next.js + TypeScript を採用し、ポートフォリオ自体が技術力のアウトプットにもなるようにしています。コンテンツ管理には microCMS を使い、ブログ記事やキャリア情報をブラウザから更新できる運用にしています。
+
+### テーマ：レトロゲーム × モダン Web
+
+小さい頃から好きだったレトロゲーム（16-bit 時代の RPG）の世界観をモチーフにしています。ダークテーマをベースに、RPG のメニュー画面やステータス画面を思わせる UI、ピクセルフォント、CRT スキャンライン風のオーバーレイなど、遊び心のあるデザインに仕上げました。「エンジニアのポートフォリオ」にありがちな無機質さを避けて、見ていて楽しいサイトを目指しています。
+
+## 技術スタック
+
+| カテゴリ | 技術 |
+|---------|------|
+| フレームワーク | Next.js 16 (App Router) |
+| UI | React 19 |
+| 言語 | TypeScript 5 |
+| スタイリング | Tailwind CSS v4 |
+| CMS | microCMS |
+| ホスティング | Vercel |
+| バリデーション | Zod 4 |
+| フォーム | React Hook Form 7 |
+| アニメーション | motion |
+| アクセス解析 | Google Analytics 4 |
+
+## デザインコンセプト
+
+- **ダークテーマ** × レトロゲーム（16-bit）のピクセルアート美学
+- RPG 風 UI 要素（`.rpg-box`, `.rpg-label`, `.rpg-bar` 等）
+- ピクセルフォント：見出しに PixelMplus12、英語補助に Press Start 2P
+- 本文：Noto Sans JP
+
+## ページ構成
+
+| ページ | パス | 内容 |
+|--------|------|------|
+| ホーム | `/` | Hero + サンドボックス紹介 + 最新ブログ |
+| プロフィール | `/about` | RPG 風ステータス画面・趣味・スキル |
+| キャリア | `/career` | 常駐案件タイムライン + 受託制作一覧 |
+| サンドボックス | `/sandbox` | 個人開発プロジェクト一覧 |
+| ブログ | `/blog` | 技術ブログ記事一覧 |
+| お問い合わせ | `/contact` | フォーム（Honeypot + レート制限） |
+
+## 開発
+
+### 必要な環境
+
+- Node.js 20+
+- npm
+
+### セットアップ
 
 ```bash
+# 依存インストール
+npm install
+
+# 環境変数を設定
+cp .env.example .env.local
+# .env.local を編集して各値を設定
+
+# 開発サーバー起動
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 環境変数
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| 変数名 | 説明 |
+|--------|------|
+| `MICROCMS_SERVICE_DOMAIN` | microCMS サービスドメイン |
+| `MICROCMS_API_KEY` | microCMS API キー |
+| `NEXT_PUBLIC_GA4_ID` | Google Analytics 4 測定 ID |
+| `REVALIDATION_SECRET` | Webhook キャッシュ破棄用シークレット |
+| `DRAFT_SECRET` | プレビューモード用シークレット |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### スクリプト
 
-## Learn More
+| コマンド | 内容 |
+|---------|------|
+| `npm run dev` | 開発サーバー起動（Turbopack） |
+| `npm run build` | プロダクションビルド |
+| `npm run start` | プロダクションサーバー起動 |
+| `npm run lint` | ESLint 実行 |
+| `npm run format` | Prettier 実行 |
+| `npm run test` | テスト実行 |
 
-To learn more about Next.js, take a look at the following resources:
+## ライセンス
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+このリポジトリのソースコードは個人のポートフォリオサイト用です。コンテンツ・デザインの無断転載はご遠慮ください。
