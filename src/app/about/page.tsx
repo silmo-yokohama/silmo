@@ -102,7 +102,7 @@ export default function AboutPage() {
               </div>
 
               {/* 自己紹介文 */}
-              <p className="leading-relaxed text-text-sub">{PROFILE.bio}</p>
+              <p className="leading-relaxed text-text-sub">神奈川県横浜市を拠点に活動するフロントエンドエンジニアです。仕事と趣味に生きてます。<br />愛猫（きなこ）に貢ぐため、一生懸命働いてます。</p>
 
               {/* ステータスパラメータ（RPGステータス画面風） */}
               <div className="grid gap-4 sm:grid-cols-3">
