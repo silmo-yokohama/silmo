@@ -21,11 +21,11 @@ export const PROFILE = {
   handle: 'SilMo',
   role: 'フリーランス フロントエンドエンジニア',
   location: '横浜',
-  bio: 'Nuxt3/Next.jsを中心としたフロントエンド開発を得意とするフリーランスエンジニア。ユーザー体験を重視した高品質なWebアプリケーションの開発に取り組んでいます。',
+  bio: 'Next.js/Nuxt3を中心としたフロントエンド開発を得意とするフリーランスエンジニア。ユーザー体験を重視した高品質なWebアプリケーションの開発に取り組んでいます。',
   birthday: '1990-02-06',
   career: {
-    startYear: 2015,
-    freelanceStartYear: 2021,
+    startYear: 2008,
+    freelanceStartYear: 2013,
   },
 } as const;
 
@@ -60,18 +60,21 @@ export const TECH_SKILLS = {
     skills: [
       { name: 'React / Next.js', level: 5 },
       { name: 'Vue.js / Nuxt 3', level: 5 },
-      { name: 'TypeScript', level: 5 },
       { name: 'Tailwind CSS', level: 4 },
       { name: 'HTML / CSS', level: 5 },
+      { name: 'TypeScript', level: 5 },
       { name: 'JavaScript', level: 5 },
+      { name: 'jQuery', level: 5 },
+      { name: 'Astro', level: 2 },
     ],
   },
   backend: {
     label: 'バックエンド',
     skills: [
-      { name: 'Node.js', level: 3 },
+      { name: 'Node.js', level: 4 },
       { name: 'Go', level: 2 },
       { name: 'PHP / Laravel', level: 3 },
+      { name: 'PHP / WordPress', level: 5 },
     ],
   },
   tools: {
@@ -79,7 +82,7 @@ export const TECH_SKILLS = {
     skills: [
       { name: 'Git / GitHub', level: 5 },
       { name: 'Docker', level: 3 },
-      { name: 'Figma', level: 3 },
+      { name: 'Figma', level: 1 },
       { name: 'Vercel', level: 4 },
       { name: 'microCMS', level: 4 },
     ],
