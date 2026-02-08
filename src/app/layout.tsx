@@ -49,8 +49,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main className="flex-1">{children}</main>
         <Footer />
 
-        {/* Google Analytics 4 */}
-        <GoogleAnalytics gaId="G-HFSJE5CH78" />
+        {/* Google Analytics 4（環境変数未設定時はスキップ） */}
+        {process.env.NEXT_PUBLIC_GA4_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA4_ID} />
+        )}
       </body>
     </html>
   );
