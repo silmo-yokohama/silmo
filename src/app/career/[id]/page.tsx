@@ -8,9 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
 import { SITE } from '@/lib/constants';
-import { MOCK_CAREERS } from '@/lib/mock';
 import { getAllCareerIds, getCareerById } from '@/lib/microcms/careers';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
+import { formatPeriod, parseTechnologies } from '@/lib/utils';
 
 export const revalidate = 86400; // 24時間
 
@@ -31,14 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/career/${id}`,
     });
   } catch {
-    const mock = MOCK_CAREERS.find((c) => c.id === id);
-    if (mock) {
-      return genMeta({
-        title: mock.title,
-        description: `${mock.title} - ${mock.role || ''}`,
-        path: `/career/${id}`,
-      });
-    }
     return genMeta({ title: '経歴が見つかりません', noIndex: true });
   }
 }
@@ -49,11 +41,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export async function generateStaticParams() {
   try {
     const ids = await getAllCareerIds();
-    const mockIds = MOCK_CAREERS.map((c) => c.id);
-    const allIds = [...new Set([...ids, ...mockIds])];
-    return allIds.map((id) => ({ id }));
+    return ids.map((id) => ({ id }));
   } catch {
-    return MOCK_CAREERS.map((c) => ({ id: c.id }));
+    return [];
   }
 }
 
@@ -68,11 +58,8 @@ export default async function CareerDetailPage({ params }: Props) {
   try {
     career = await getCareerById(id);
   } catch {
-    career = MOCK_CAREERS.find((c) => c.id === id);
-    if (!career) notFound();
+    notFound();
   }
-
-  const isCompanyVisible = career.disclosureLevel === '公開' && career.companyName;
 
   return (
     <Section>
@@ -96,15 +83,15 @@ export default async function CareerDetailPage({ params }: Props) {
               {/* 期間・ロール */}
               <div className="mb-3 flex flex-wrap items-center gap-3">
                 <span className="font-[family-name:var(--font-press-start)] text-[9px] text-primary">
-                  {career.period}
+                  {formatPeriod(career.start, career.period)}
                 </span>
                 {career.role && (
                   <Badge variant="accent">{career.role}</Badge>
                 )}
               </div>
 
-              {/* 会社名（公開案件のみ） */}
-              {isCompanyVisible && (
+              {/* 会社名（入力されている場合のみ表示） */}
+              {career.companyName && (
                 <p className="mb-2 font-[family-name:var(--font-pixel)] text-xs text-text-dark">
                   &gt; {career.companyName}
                 </p>
@@ -116,8 +103,8 @@ export default async function CareerDetailPage({ params }: Props) {
               </h1>
             </div>
 
-            {/* サムネイル（公開案件のみ） */}
-            {career.thumbnail && career.disclosureLevel === '公開' && (
+            {/* サムネイル */}
+            {career.thumbnail && (
               <div className="relative aspect-video overflow-hidden border-2 border-text-dark/30">
                 <Image
                   src={career.thumbnail.url}
@@ -164,13 +151,13 @@ export default async function CareerDetailPage({ params }: Props) {
             )}
 
             {/* 使用技術（装備風） */}
-            {career.technologies && career.technologies.length > 0 && (
+            {career.technologies && parseTechnologies(career.technologies).length > 0 && (
               <div className="border-t border-text-dark/20 pt-4">
                 <p className="mb-2 font-[family-name:var(--font-press-start)] text-[8px] text-text-dark">
                   EQUIPMENT
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {career.technologies.map((tech) => (
+                  {parseTechnologies(career.technologies).map((tech) => (
                     <Badge key={tech} variant="outline">
                       {tech}
                     </Badge>

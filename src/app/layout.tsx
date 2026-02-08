@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { JetBrains_Mono, Noto_Sans_JP, Press_Start_2P } from 'next/font/google';
 
 import { Footer } from '@/components/layout/footer';
@@ -47,6 +48,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+
+        {/* Google Analytics 4（環境変数未設定時はスキップ） */}
+        {process.env.NEXT_PUBLIC_GA4_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA4_ID} />
+        )}
       </body>
     </html>
   );

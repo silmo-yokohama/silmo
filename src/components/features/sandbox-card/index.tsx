@@ -6,25 +6,26 @@ import Link from 'next/link';
 
 import { Badge } from '@/components/ui/badge';
 import type { Sandbox } from '@/types/sandbox';
+import { parseTechnologies } from '@/lib/utils';
 
 type SandboxCardProps = {
   sandbox: Sandbox;
 };
 
-/** ステータスに対応するバッジバリアント */
-const statusVariant: Record<string, 'primary' | 'accent' | 'outline' | 'muted'> = {
-  完成: 'primary',
-  開発中: 'accent',
-  メンテナンス中: 'outline',
-  アーカイブ: 'muted',
+/** 開発目的に対応するバッジバリアント */
+const purposeVariant: Record<string, 'primary' | 'accent' | 'outline' | 'muted'> = {
+  学習: 'accent',
+  技術検証: 'primary',
+  プロダクト: 'primary',
+  ポートフォリオ: 'outline',
 };
 
-/** ステータスに対応する英語ラベル */
-const statusLabel: Record<string, string> = {
-  完成: 'COMPLETE',
-  開発中: 'IN DEV',
-  メンテナンス中: 'MAINT',
-  アーカイブ: 'ARCHIVE',
+/** 開発目的に対応する英語ラベル */
+const purposeLabel: Record<string, string> = {
+  学習: 'LEARNING',
+  技術検証: 'TECH DEMO',
+  プロダクト: 'PRODUCT',
+  ポートフォリオ: 'PORTFOLIO',
 };
 
 /**
@@ -33,6 +34,10 @@ const statusLabel: Record<string, string> = {
  * ホバー時にピクセルグロー・スキャンラインエフェクトが発動する
  */
 export function SandboxCard({ sandbox }: SandboxCardProps) {
+  /** セレクトフィールドの配列から最初の値を取得 */
+  const purpose = sandbox.purpose?.[0] ?? '';
+  const technologies = parseTechnologies(sandbox.technologies);
+
   return (
     <Link href={`/sandbox/${sandbox.id}`} className="block">
     <motion.div
@@ -72,10 +77,10 @@ export function SandboxCard({ sandbox }: SandboxCardProps) {
           />
           {/* 画像オーバーレイ */}
           <div className="absolute inset-0 bg-gradient-to-t from-bg-card/90 to-transparent" />
-          {/* ステータスバッジ（画像内） */}
+          {/* 開発目的バッジ（画像内） */}
           <div className="absolute bottom-2 left-3">
-            <Badge variant={statusVariant[sandbox.status] || 'muted'}>
-              {statusLabel[sandbox.status] || sandbox.status}
+            <Badge variant={purposeVariant[purpose] || 'muted'}>
+              {purposeLabel[purpose] || purpose}
             </Badge>
           </div>
         </div>
@@ -99,10 +104,10 @@ export function SandboxCard({ sandbox }: SandboxCardProps) {
               />
             ))}
           </div>
-          {/* ステータスバッジ */}
+          {/* 開発目的バッジ */}
           <div className="absolute bottom-2 left-3">
-            <Badge variant={statusVariant[sandbox.status] || 'muted'}>
-              {statusLabel[sandbox.status] || sandbox.status}
+            <Badge variant={purposeVariant[purpose] || 'muted'}>
+              {purposeLabel[purpose] || purpose}
             </Badge>
           </div>
         </div>
@@ -116,19 +121,14 @@ export function SandboxCard({ sandbox }: SandboxCardProps) {
         </h3>
 
         {/* 使用技術（装備リスト風） */}
-        {sandbox.technologies && sandbox.technologies.length > 0 && (
+        {technologies.length > 0 && (
           <div className="flex flex-wrap gap-1">
-            {sandbox.technologies.map((tech) => (
+            {technologies.map((tech) => (
               <Badge key={tech} variant="outline">
                 {tech}
               </Badge>
             ))}
           </div>
-        )}
-
-        {/* 開発目的 */}
-        {sandbox.purpose && (
-          <p className="text-xs leading-relaxed text-text-sub">{sandbox.purpose}</p>
         )}
 
         {/* 詳細リンク（RPGコマンド風） */}

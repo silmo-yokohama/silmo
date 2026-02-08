@@ -6,7 +6,6 @@ import { Section } from '@/components/layout/section';
 import { SectionTitle } from '@/components/ui/section-title';
 
 import { getBlogs } from '@/lib/microcms/blogs';
-import { MOCK_BLOGS } from '@/lib/mock';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 
 export const revalidate = 3600; // 1時間
@@ -24,7 +23,7 @@ export const metadata: Metadata = genMeta({
  */
 export default async function BlogPage() {
   const blogsData = await getBlogs().catch(() => null);
-  const blogs = blogsData?.contents.length ? blogsData.contents : MOCK_BLOGS;
+  const blogs = blogsData?.contents ?? [];
 
   return (
     <Section>

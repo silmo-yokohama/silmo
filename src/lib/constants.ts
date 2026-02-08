@@ -46,8 +46,8 @@ export const SOCIAL_LINKS = {
 /** ナビゲーション定義 */
 export const NAV_ITEMS = [
   { href: '/', label: 'ホーム' },
-  { href: '/about', label: '自己紹介' },
-  { href: '/career', label: '職務経歴' },
+  { href: '/about', label: 'プロフィール' },
+  { href: '/career', label: 'キャリア' },
   { href: '/sandbox', label: 'サンドボックス' },
   { href: '/blog', label: 'ブログ' },
   { href: '/contact', label: 'お問い合わせ' },

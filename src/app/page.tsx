@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { SectionTitle } from '@/components/ui/section-title';
 
 import { getBlogs } from '@/lib/microcms/blogs';
-import { MOCK_BLOGS, MOCK_SANDBOXES } from '@/lib/mock';
 import { getSandboxes } from '@/lib/microcms/sandboxes';
 import { getPersonJsonLd, getWebSiteJsonLd } from '@/lib/seo/json-ld';
 
@@ -40,23 +39,16 @@ export default async function HomePage() {
       <Hero />
 
       {/* サンドボックスショーケース（メインコンテンツ） */}
-      <SandboxShowcase
-        sandboxes={
-          sandboxesData?.contents.length
-            ? sandboxesData.contents
-            : MOCK_SANDBOXES.slice(0, 6)
-        }
-      />
+      {sandboxesData?.contents.length ? (
+        <SandboxShowcase sandboxes={sandboxesData.contents} />
+      ) : null}
 
       {/* 最新ブログ */}
       <Section secondary>
         <Container>
           <SectionTitle sub="Blog">最新の記事</SectionTitle>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {(blogsData?.contents.length
-              ? blogsData.contents
-              : MOCK_BLOGS.slice(0, 3)
-            ).map((blog) => (
+            {(blogsData?.contents ?? []).map((blog) => (
               <BlogCard key={blog.id} blog={blog} />
             ))}
           </div>

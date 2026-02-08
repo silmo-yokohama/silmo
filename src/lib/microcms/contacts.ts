@@ -14,7 +14,8 @@ export async function createContact(data: Omit<ContactFormData, 'honeypot'>) {
     content: {
       name: data.name,
       email: data.email,
-      subject: data.subject,
+      // microCMSのセレクトフィールドは配列型で送信する必要がある
+      subject: [data.subject],
       message: data.message,
     },
   });

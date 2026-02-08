@@ -44,8 +44,8 @@ const HOBBIES = [
 ] as const;
 
 export const metadata: Metadata = genMeta({
-  title: '自己紹介',
-  description: `${PROFILE.handle}（${PROFILE.name}）のプロフィール。${PROFILE.role}として活動中。`,
+  title: 'プロフィール',
+  description: `${PROFILE.handle}（${PROFILE.name}）のプロフィール。${PROFILE.role}として活動中。フロントエンド開発の技術スキルと趣味を紹介。`,
   path: '/about',
 });
 
@@ -64,7 +64,7 @@ export default function AboutPage() {
       <Section>
         <Container size="md">
           <SectionTitle as="h1" sub="About">
-            自己紹介
+            プロフィール
           </SectionTitle>
 
           {/* RPG風ステータスウィンドウ */}

@@ -35,5 +35,6 @@ export const client = createSafeClient('MICROCMS_API_KEY');
 /**
  * microCMS APIクライアント（WRITE用）
  * お問い合わせ送信専用。APIルート内でのみ使用する
+ * ※ Hobbyプランではキーが1つのため、GET用と同じキーを使用
  */
-export const writeClient = createSafeClient('MICROCMS_WRITE_API_KEY');
+export const writeClient = createSafeClient('MICROCMS_API_KEY');

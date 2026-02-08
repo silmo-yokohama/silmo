@@ -6,7 +6,6 @@ import { Section } from '@/components/layout/section';
 import { SectionTitle } from '@/components/ui/section-title';
 
 import { getSandboxes } from '@/lib/microcms/sandboxes';
-import { MOCK_SANDBOXES } from '@/lib/mock';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 
 export const revalidate = 3600; // 1時間
@@ -24,7 +23,7 @@ export const metadata: Metadata = genMeta({
  */
 export default async function SandboxPage() {
   const sandboxesData = await getSandboxes().catch(() => null);
-  const sandboxes = sandboxesData?.contents.length ? sandboxesData.contents : MOCK_SANDBOXES;
+  const sandboxes = sandboxesData?.contents ?? [];
 
   return (
     <Section>

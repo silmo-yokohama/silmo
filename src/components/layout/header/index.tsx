@@ -33,12 +33,11 @@ export function Header() {
             onClick={close}
           >
             <Image
-              src="/images/logo.png"
+              src="/images/logo-white.png"
               alt="SilMo"
-              width={120}
+              width={69}
               height={36}
               className="block"
-              style={{ imageRendering: 'pixelated' }}
               priority
             />
           </Link>

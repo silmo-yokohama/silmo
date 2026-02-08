@@ -7,10 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/layout/section';
-import { MOCK_SANDBOXES } from '@/lib/mock';
 import { getAllSandboxIds, getSandboxById } from '@/lib/microcms/sandboxes';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
 import { SITE } from '@/lib/constants';
+import { parseTechnologies } from '@/lib/utils';
 
 export const revalidate = 3600; // 1時間
 
@@ -18,20 +18,20 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-/** ステータスに対応する英語ラベル */
-const statusLabel: Record<string, string> = {
-  完成: 'COMPLETE',
-  開発中: 'IN DEV',
-  メンテナンス中: 'MAINT',
-  アーカイブ: 'ARCHIVE',
+/** 開発目的に対応する英語ラベル */
+const purposeLabel: Record<string, string> = {
+  学習: 'LEARNING',
+  技術検証: 'TECH DEMO',
+  プロダクト: 'PRODUCT',
+  ポートフォリオ: 'PORTFOLIO',
 };
 
-/** ステータスに対応するバッジバリアント */
-const statusVariant: Record<string, 'primary' | 'accent' | 'outline' | 'muted'> = {
-  完成: 'primary',
-  開発中: 'accent',
-  メンテナンス中: 'outline',
-  アーカイブ: 'muted',
+/** 開発目的に対応するバッジバリアント */
+const purposeVariant: Record<string, 'primary' | 'accent' | 'outline' | 'muted'> = {
+  学習: 'accent',
+  技術検証: 'primary',
+  プロダクト: 'primary',
+  ポートフォリオ: 'outline',
 };
 
 /**
@@ -41,22 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   try {
     const sandbox = await getSandboxById(id);
+    const purposeText = sandbox.purpose?.join('・') || '';
     return genMeta({
       title: sandbox.title,
-      description: sandbox.purpose || `${sandbox.title} - ${SITE.name}の個人開発プロジェクト`,
+      description: purposeText || `${sandbox.title} - ${SITE.name}の個人開発プロジェクト`,
       path: `/sandbox/${id}`,
       ogImage: sandbox.thumbnail?.url,
     });
   } catch {
-    // モックデータからフォールバック
-    const mock = MOCK_SANDBOXES.find((s) => s.id === id);
-    if (mock) {
-      return genMeta({
-        title: mock.title,
-        description: mock.purpose || `${mock.title} - ${SITE.name}の個人開発プロジェクト`,
-        path: `/sandbox/${id}`,
-      });
-    }
     return genMeta({ title: 'プロジェクトが見つかりません', noIndex: true });
   }
 }
@@ -67,12 +59,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export async function generateStaticParams() {
   try {
     const ids = await getAllSandboxIds();
-    // microCMS + モックの両方のIDを生成
-    const mockIds = MOCK_SANDBOXES.map((s) => s.id);
-    const allIds = [...new Set([...ids, ...mockIds])];
-    return allIds.map((id) => ({ id }));
+    return ids.map((id) => ({ id }));
   } catch {
-    return MOCK_SANDBOXES.map((s) => ({ id: s.id }));
+    return [];
   }
 }
 
@@ -87,10 +76,12 @@ export default async function SandboxDetailPage({ params }: Props) {
   try {
     sandbox = await getSandboxById(id);
   } catch {
-    // モックデータからフォールバック
-    sandbox = MOCK_SANDBOXES.find((s) => s.id === id);
-    if (!sandbox) notFound();
+    notFound();
   }
+
+  /** セレクトフィールドの配列から最初の値を取得 */
+  const purpose = sandbox.purpose?.[0] ?? '';
+  const technologies = parseTechnologies(sandbox.technologies);
 
   return (
     <Section>
@@ -111,11 +102,13 @@ export default async function SandboxDetailPage({ params }: Props) {
           <div className="space-y-6 pt-2">
             {/* ヘッダー */}
             <div className="border-b border-text-dark/20 pb-4">
-              <div className="mb-3 flex flex-wrap items-center gap-2">
-                <Badge variant={statusVariant[sandbox.status] || 'muted'}>
-                  {statusLabel[sandbox.status] || sandbox.status}
-                </Badge>
-              </div>
+              {purpose && (
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <Badge variant={purposeVariant[purpose] || 'muted'}>
+                    {purposeLabel[purpose] || purpose}
+                  </Badge>
+                </div>
+              )}
               <h1 className="font-[family-name:var(--font-pixel)] text-2xl text-text-main pixel-text-shadow sm:text-3xl">
                 {sandbox.title}
               </h1>
@@ -136,28 +129,18 @@ export default async function SandboxDetailPage({ params }: Props) {
             )}
 
             {/* 使用技術（EQUIPMENT風） */}
-            {sandbox.technologies && sandbox.technologies.length > 0 && (
+            {technologies.length > 0 && (
               <div>
                 <p className="mb-2 font-[family-name:var(--font-press-start)] text-[8px] text-text-dark">
                   EQUIPMENT
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {sandbox.technologies.map((tech) => (
+                  {technologies.map((tech) => (
                     <Badge key={tech} variant="outline">
                       {tech}
                     </Badge>
                   ))}
                 </div>
-              </div>
-            )}
-
-            {/* 開発目的（MISSION風） */}
-            {sandbox.purpose && (
-              <div className="border-l-2 border-accent pl-4">
-                <p className="mb-1 font-[family-name:var(--font-press-start)] text-[8px] text-accent">
-                  MISSION
-                </p>
-                <p className="text-sm leading-relaxed text-text-sub">{sandbox.purpose}</p>
               </div>
             )}
 
