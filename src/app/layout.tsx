@@ -29,7 +29,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 // --- メタデータ ---
-export const metadata: Metadata = genMeta();
+export const metadata: Metadata = {
+  ...genMeta(),
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/images/apple-touch-icon.png',
+  },
+};
 
 /**
  * ルートレイアウト
