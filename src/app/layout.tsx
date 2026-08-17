@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { JetBrains_Mono, Noto_Sans_JP, Press_Start_2P } from 'next/font/google';
 
+import { ClarityInit } from '@/components/layout/clarity';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { generateMetadata as genMeta } from '@/lib/seo/metadata';
@@ -58,6 +59,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Google Analytics 4（環境変数未設定時はスキップ） */}
         {process.env.NEXT_PUBLIC_GA4_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA4_ID} />
+        )}
+
+        {/* Microsoft Clarity（環境変数未設定時はスキップ） */}
+        {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (
+          <ClarityInit projectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID} />
         )}
       </body>
     </html>
